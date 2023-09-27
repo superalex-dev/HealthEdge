@@ -1,4 +1,6 @@
-﻿namespace BackendProcessor.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace BackendProcessor.Models
 {
     public class User
     {
