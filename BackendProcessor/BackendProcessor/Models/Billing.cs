@@ -6,8 +6,11 @@ namespace BackendProcessor.Models
 
     public class Billing
     {
+        [Required]
+        [Key]
         public int BillId { get; set; }
 
+        [Required]
         public int PatientId { get; set; }
 
         [Required]

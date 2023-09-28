@@ -7,6 +7,7 @@ namespace BackendProcessor.Models
     {
         public int PatientId { get; set; }
 
+        [Key]
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }

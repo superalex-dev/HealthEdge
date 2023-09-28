@@ -4,10 +4,13 @@ namespace BackendProcessor.Models
 {
     public class Appointment
     {
+        [Required]
         public int AppointmentId { get; set; }
 
+        [Required]
         public int PatientId { get; set; }
 
+        [Required]
         public int DoctorId { get; set; }
 
         [Required]

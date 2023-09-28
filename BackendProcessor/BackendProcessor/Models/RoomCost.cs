@@ -5,6 +5,8 @@ namespace BackendProcessor.Models
 {
     public class RoomCost
     {
+        [Key]
+        [Required]
         public int RoomCostId { get; set; }
 
         [Required]

@@ -4,10 +4,14 @@ namespace BackendProcessor.Models
 {
     public class MedicalRecord
     {
+        [Required]
+        [Key]
         public int RecordId { get; set; }
 
+        [Required]
         public int PatientId { get; set; }
 
+        [Required]
         public int DoctorId { get; set; }
 
         [Required]

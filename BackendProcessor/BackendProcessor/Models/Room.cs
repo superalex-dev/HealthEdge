@@ -6,6 +6,7 @@ namespace BackendProcessor.Models
     {
         public int RoomId { get; set; }
 
+        [Key]
         [Required]
         [StringLength(20)]
         public string RoomNumber { get; set; }
@@ -14,6 +15,7 @@ namespace BackendProcessor.Models
         [StringLength(50)]
         public string RoomType { get; set; }
 
+        [Required]
         public bool IsOccupied { get; set; }
     }
 }
