@@ -1,0 +1,15 @@
+﻿using BackendProcessor.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace BackendProcessor.Repositories.Interfaces
+{
+    public interface IUserRepository
+    {
+        Task<IEnumerable<User>> GetUsersAsync();
+        Task<User> CreateUserAsync(User user);
+        Task<User> EditUserAsync(int userId, User user);
+        Task<bool> DeleteUserAsync(int Id);
+        Task<User> GetUserByIDAsync(int Id);
+        Task<int> GetTotalUsersCountAsync();
+    }
+}
