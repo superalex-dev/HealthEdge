@@ -1,4 +1,6 @@
-﻿namespace BackendProcessor.Repositories.Interfaces
+﻿using BackendProcessor.Models;
+
+namespace BackendProcessor.Repositories.Interfaces
 {
     public interface IDoctorRepository
     {
