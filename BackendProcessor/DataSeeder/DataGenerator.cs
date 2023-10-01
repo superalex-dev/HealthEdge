@@ -18,6 +18,8 @@ namespace DataSeeder
                 .RuleFor(d => d.Specialization, f => f.Commerce.Department())
                 .RuleFor(d => d.ContactNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(d => d.Email, f => f.Internet.Email());
+
+            return doctorFaker.Generate(count);
         }
 
         public static List<Patient> GeneratePatients(int count)
