@@ -9,7 +9,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<User> CreateUserAsync(User user);
         Task<User> EditUserAsync(int userId, User user);
         Task<bool> DeleteUserAsync(int Id);
-        Task<User> GetUserByIDAsync(int Id);
+        Task<User> GetUserByIdAsync(int Id);
         Task<int> GetTotalUsersCountAsync();
     }
 }

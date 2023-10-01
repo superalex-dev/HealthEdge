@@ -47,7 +47,7 @@ namespace BackendProcessor.Repositories
             return user;
         }
 
-        public async Task<User> GetUserByIDAsync(int Id)
+        public async Task<User> GetUserByIdAsync(int Id)
         {
             return await _context.Users.FindAsync(Id);
         }
