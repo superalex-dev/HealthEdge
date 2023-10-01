@@ -38,6 +38,10 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PatientFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -53,9 +57,9 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientFirstName");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Billing", b =>
@@ -72,14 +76,18 @@ namespace BackendProcessor.Migrations
                     b.Property<DateTime>("BillDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("PatientFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
                     b.HasKey("BillId");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientFirstName");
 
-                    b.ToTable("Billing");
+                    b.ToTable("Billing", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
@@ -92,8 +100,8 @@ namespace BackendProcessor.Migrations
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -117,7 +125,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("DoctorId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
@@ -136,6 +144,10 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("PatientFirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -151,18 +163,16 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("DoctorId");
 
-                    b.HasIndex("PatientId");
+                    b.HasIndex("PatientFirstName");
 
-                    b.ToTable("MedicalRecords");
+                    b.ToTable("MedicalRecords", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
                 {
-                    b.Property<int>("PatientId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PatientId"));
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -177,11 +187,6 @@ namespace BackendProcessor.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("Date");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("Gender")
                         .IsRequired()
                         .HasMaxLength(1)
@@ -192,35 +197,34 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("PatientId");
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
 
-                    b.ToTable("Patients");
+                    b.HasKey("FirstName");
+
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
                 {
-                    b.Property<int>("RoomId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomId"));
+                    b.Property<string>("RoomNumber")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("bit");
 
-                    b.Property<string>("RoomNumber")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
 
                     b.Property<string>("RoomType")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("RoomId");
+                    b.HasKey("RoomNumber");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.RoomCost", b =>
@@ -244,7 +248,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("RoomCostId");
 
-                    b.ToTable("RoomCosts");
+                    b.ToTable("RoomCosts", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
@@ -285,7 +289,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.VIPRoom", b =>
@@ -299,6 +303,10 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RoomNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("SpecialAmenities")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -306,9 +314,9 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("VIPRoomId");
 
-                    b.HasIndex("RoomId");
+                    b.HasIndex("RoomNumber");
 
-                    b.ToTable("VIPRooms");
+                    b.ToTable("VIPRooms", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>
@@ -321,7 +329,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasOne("BackendProcessor.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
+                        .HasForeignKey("PatientFirstName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -334,7 +342,7 @@ namespace BackendProcessor.Migrations
                 {
                     b.HasOne("BackendProcessor.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
+                        .HasForeignKey("PatientFirstName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -351,7 +359,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasOne("BackendProcessor.Models.Patient", "Patient")
                         .WithMany()
-                        .HasForeignKey("PatientId")
+                        .HasForeignKey("PatientFirstName")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -364,7 +372,7 @@ namespace BackendProcessor.Migrations
                 {
                     b.HasOne("BackendProcessor.Models.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId")
+                        .HasForeignKey("RoomNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
