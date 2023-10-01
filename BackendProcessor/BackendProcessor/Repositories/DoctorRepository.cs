@@ -1,8 +1,9 @@
 ﻿using BackendProcessor.Data;
 using BackendProcessor.Models;
+using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace BackendProcessor.Repositories.Interfaces
+namespace BackendProcessor.Repositories
 {
     public class DoctorRepository : IDoctorRepository
     {
