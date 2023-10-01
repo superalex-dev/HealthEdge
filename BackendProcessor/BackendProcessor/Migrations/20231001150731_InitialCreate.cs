@@ -32,8 +32,9 @@ namespace BackendProcessor.Migrations
                 name: "Patients",
                 columns: table => new
                 {
+                    PatientId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     FirstName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     DateOfBirth = table.Column<DateTime>(type: "Date", nullable: false),
                     Gender = table.Column<string>(type: "nvarchar(1)", maxLength: 1, nullable: false),
@@ -42,7 +43,7 @@ namespace BackendProcessor.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.FirstName);
+                    table.PrimaryKey("PK_Patients", x => x.PatientId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,14 +65,15 @@ namespace BackendProcessor.Migrations
                 name: "Rooms",
                 columns: table => new
                 {
+                    RoomId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     RoomNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    RoomId = table.Column<int>(type: "int", nullable: false),
                     RoomType = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     IsOccupied = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rooms", x => x.RoomNumber);
+                    table.PrimaryKey("PK_Rooms", x => x.RoomId);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,8 +104,7 @@ namespace BackendProcessor.Migrations
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     RecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Diagnosis = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Treatment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PatientFirstName = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    Treatment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -115,10 +116,10 @@ namespace BackendProcessor.Migrations
                         principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Appointments_Patients_PatientFirstName",
-                        column: x => x.PatientFirstName,
+                        name: "FK_Appointments_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "FirstName",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -130,17 +131,16 @@ namespace BackendProcessor.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     BillDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
-                    PatientFirstName = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    Amount = table.Column<decimal>(type: "decimal(10,2)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Billing", x => x.BillId);
                     table.ForeignKey(
-                        name: "FK_Billing_Patients_PatientFirstName",
-                        column: x => x.PatientFirstName,
+                        name: "FK_Billing_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "FirstName",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -154,8 +154,7 @@ namespace BackendProcessor.Migrations
                     DoctorId = table.Column<int>(type: "int", nullable: false),
                     RecordDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Diagnosis = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    Treatment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PatientFirstName = table.Column<string>(type: "nvarchar(50)", nullable: false)
+                    Treatment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -167,10 +166,10 @@ namespace BackendProcessor.Migrations
                         principalColumn: "DoctorId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_MedicalRecords_Patients_PatientFirstName",
-                        column: x => x.PatientFirstName,
+                        name: "FK_MedicalRecords_Patients_PatientId",
+                        column: x => x.PatientId,
                         principalTable: "Patients",
-                        principalColumn: "FirstName",
+                        principalColumn: "PatientId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -181,17 +180,16 @@ namespace BackendProcessor.Migrations
                     VIPRoomId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoomId = table.Column<int>(type: "int", nullable: false),
-                    SpecialAmenities = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
-                    RoomNumber = table.Column<string>(type: "nvarchar(20)", nullable: false)
+                    SpecialAmenities = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VIPRooms", x => x.VIPRoomId);
                     table.ForeignKey(
-                        name: "FK_VIPRooms_Rooms_RoomNumber",
-                        column: x => x.RoomNumber,
+                        name: "FK_VIPRooms_Rooms_RoomId",
+                        column: x => x.RoomId,
                         principalTable: "Rooms",
-                        principalColumn: "RoomNumber",
+                        principalColumn: "RoomId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -201,14 +199,14 @@ namespace BackendProcessor.Migrations
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Appointments_PatientFirstName",
+                name: "IX_Appointments_PatientId",
                 table: "Appointments",
-                column: "PatientFirstName");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Billing_PatientFirstName",
+                name: "IX_Billing_PatientId",
                 table: "Billing",
-                column: "PatientFirstName");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_MedicalRecords_DoctorId",
@@ -216,14 +214,14 @@ namespace BackendProcessor.Migrations
                 column: "DoctorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicalRecords_PatientFirstName",
+                name: "IX_MedicalRecords_PatientId",
                 table: "MedicalRecords",
-                column: "PatientFirstName");
+                column: "PatientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_VIPRooms_RoomNumber",
+                name: "IX_VIPRooms_RoomId",
                 table: "VIPRooms",
-                column: "RoomNumber");
+                column: "RoomId");
         }
 
         /// <inheritdoc />

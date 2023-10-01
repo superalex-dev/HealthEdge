@@ -23,7 +23,7 @@ namespace BackendProcessor.Models
         public string Specialization { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(50)]
         public string ContactNumber { get; set; }
 
         [Required]
