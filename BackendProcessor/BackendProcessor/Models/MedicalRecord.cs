@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackendProcessor.Models
 {
@@ -6,6 +7,7 @@ namespace BackendProcessor.Models
     {
         [Required]
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RecordId { get; set; }
 
         [Required]

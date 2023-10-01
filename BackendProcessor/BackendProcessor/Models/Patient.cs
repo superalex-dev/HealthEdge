@@ -5,6 +5,9 @@ namespace BackendProcessor.Models
 {
     public class Patient
     {
+        [Key]
+        [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PatientId { get; set; }
 
         [Key]

@@ -7,6 +7,7 @@ namespace BackendProcessor.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoomCostId { get; set; }
 
         [Required]
