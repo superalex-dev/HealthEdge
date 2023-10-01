@@ -10,7 +10,6 @@ namespace BackendProcessor.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int PatientId { get; set; }
 
-        [Key]
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }

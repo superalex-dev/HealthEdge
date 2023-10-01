@@ -10,7 +10,6 @@ namespace BackendProcessor.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoomId { get; set; }
 
-        [Key]
         [Required]
         [StringLength(20)]
         public string RoomNumber { get; set; }
