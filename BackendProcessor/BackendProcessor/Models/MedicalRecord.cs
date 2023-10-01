@@ -5,8 +5,8 @@ namespace BackendProcessor.Models
 {
     public class MedicalRecord
     {
-        [Required]
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RecordId { get; set; }
 

@@ -5,8 +5,8 @@ namespace BackendProcessor.Models
 {
     public class Room
     {
-        [Required]
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RoomId { get; set; }
 

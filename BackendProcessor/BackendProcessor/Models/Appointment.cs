@@ -5,6 +5,7 @@ namespace BackendProcessor.Models
 {
     public class Appointment
     {
+        [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AppointmentId { get; set; }

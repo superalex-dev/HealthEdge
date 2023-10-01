@@ -6,8 +6,8 @@ namespace BackendProcessor.Models
 
     public class Billing
     {
-        [Required]
         [Key]
+        [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int BillId { get; set; }
 
