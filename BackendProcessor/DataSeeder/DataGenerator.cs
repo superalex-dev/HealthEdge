@@ -10,6 +10,16 @@ namespace DataSeeder
 {
     public static class DataGenerator
     {
+        public static List<Doctor> GenerateDoctors(int count)
+        {
+            var doctorFaker = new Faker<Doctor>()
+                .RuleFor(d => d.FirstName, f => f.Name.FirstName())
+                .RuleFor(d => d.LastName, f => f.Name.LastName())
+                .RuleFor(d => d.Specialization, f => f.Commerce.Department())
+                .RuleFor(d => d.ContactNumber, f => f.Phone.PhoneNumber())
+                .RuleFor(d => d.Email, f => f.Internet.Email());
+        }
+
         public static List<Patient> GeneratePatients(int count)
         {
             var patientFaker = new Faker<Patient>()
