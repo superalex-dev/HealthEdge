@@ -35,25 +35,35 @@ namespace DataSeeder
             return patientFaker.Generate(count);
         }
 
-        //public static List<Room> GenerateRooms(int count)
-        //{
-        //    var roomFaker = new Faker<Room>()
-        //        .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Standart", "Deluxe", "VIP" }))
-        //        .RuleFor(r => r.IsOccupied, f => f.Random.Bool());
+        public static List<Room> GenerateRooms(int count)
+        {
+            var roomFaker = new Faker<Room>()
+                .RuleFor(r => r.RoomNumber, f => GenerateRandomRoomNumber(f))
+                .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Standart", "Deluxe", "VIP" }))
+                .RuleFor(r => r.IsOccupied, f => f.Random.Bool());
 
-        //    return roomFaker.Generate(count);
-        //}
+            return roomFaker.Generate(count);
+        }
 
-        //public static List<User> GenerateUsers(int count)
-        //{
-        //    var userFaker = new Faker<User>()
-        //        .RuleFor(u => u.FirstName, f => f.Name.FirstName())
-        //        .RuleFor(u => u.LastName, f => f.Name.LastName())
-        //        .RuleFor(u => u.UserName, f => f.Internet.UserName())
-        //        .RuleFor(u => u.Email, f => f.Internet.Email())
-        //        .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
+        static string GenerateRandomRoomNumber(Faker faker)
+        {
+            int floorNumber = faker.Random.Number(1, 10);
+            int roomNumberOnFloor = faker.Random.Number(1, 20);
 
-        //    return userFaker.Generate(count);
-        //}
+            return $"{floorNumber:D2}{roomNumberOnFloor:D2}";
+        }
+
+        public static List<User> GenerateUsers(int count)
+        {
+            var userFaker = new Faker<User>()
+                .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+                .RuleFor(u => u.LastName, f => f.Name.LastName())
+                .RuleFor(u => u.UserName, f => f.Internet.UserName())
+                .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(p => p.Password, f => f.Internet.Password())
+                .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
+
+            return userFaker.Generate(count);
+        }
     }
 }
