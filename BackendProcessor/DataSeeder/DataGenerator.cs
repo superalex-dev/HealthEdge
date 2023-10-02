@@ -65,5 +65,14 @@ namespace DataSeeder
 
             return userFaker.Generate(count);
         }
+
+        public static List<RoomCost> GenerateRoomCosts(int count)
+        {
+            var roomCostFaker = new Faker<RoomCost>()
+                .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Standart", "Deluxe", "VIP" }))
+                .RuleFor(r => r.CostPerNight, f => f.Random.Number(100, 1000));
+
+            return roomCostFaker.Generate(count);
+        }
     }
 }

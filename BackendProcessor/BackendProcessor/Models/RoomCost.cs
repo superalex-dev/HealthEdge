@@ -15,11 +15,6 @@ namespace BackendProcessor.Models
         public string RoomType { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal DailyRate { get; set; }
-
-        [Required]
-        [Column(TypeName = "decimal(10,2)")]
-        public decimal WeeklyRate { get; set; }
+        public float CostPerNight { get; set; }
     }
 }
