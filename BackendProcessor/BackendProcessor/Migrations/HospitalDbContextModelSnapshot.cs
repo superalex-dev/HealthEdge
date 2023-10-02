@@ -55,7 +55,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("Appointments", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Billing", b =>
@@ -79,7 +79,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Billing");
+                    b.ToTable("Billing", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
@@ -117,7 +117,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("DoctorId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
@@ -153,7 +153,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("MedicalRecords");
+                    b.ToTable("MedicalRecords", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
@@ -194,7 +194,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("PatientId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
@@ -220,7 +220,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("RoomId");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("Rooms", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.RoomCost", b =>
@@ -241,7 +241,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("RoomCostId");
 
-                    b.ToTable("RoomCosts");
+                    b.ToTable("RoomCosts", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
@@ -282,7 +282,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.VIPRoom", b =>
@@ -305,7 +305,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("VIPRooms");
+                    b.ToTable("VIPRooms", (string)null);
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>
