@@ -26,8 +26,5 @@ namespace BackendProcessor.Models
 
         [Required]
         public bool IsOccupied { get; set; }
-
-        [Required]
-        public bool IsReady { get; set; }
     }
 }

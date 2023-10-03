@@ -8,26 +8,26 @@ namespace Application
     {
         public static async Task Main(string[] args)
         {
-            var optionsBuilder = new DbContextOptionsBuilder<HospitalDbContext>();
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HealthEdgeDB;Integrated Security=True;");
+            //var optionsBuilder = new DbContextOptionsBuilder<HospitalDbContext>();
+            //optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HealthEdgeDB;Integrated Security=True;");
 
-            using var dbContext = new HospitalDbContext(optionsBuilder.Options);
+            //using var dbContext = new HospitalDbContext(optionsBuilder.Options);
 
-            var doctors = DataGenerator.GenerateDoctors(10);
-            var patients = DataGenerator.GeneratePatients(100);
-            var rooms = DataGenerator.GenerateRooms(20);
-            var users = DataGenerator.GenerateUsers(30);
-            var roomCosts = DataGenerator.GenerateRoomCosts(20);
+            //var doctors = DataGenerator.GenerateDoctors(10);
+            //var patients = DataGenerator.GeneratePatients(100);
+            //var rooms = DataGenerator.GenerateRooms(20);
+            //var users = DataGenerator.GenerateUsers(30);
+            //var roomCosts = DataGenerator.GenerateRoomCosts(20);
 
-            await dbContext.Doctors.AddRangeAsync(doctors);
-            await dbContext.Patients.AddRangeAsync(patients);
-            await dbContext.Rooms.AddRangeAsync(rooms);
-            await dbContext.Users.AddRangeAsync(users);
-            await dbContext.RoomCosts.AddRangeAsync(roomCosts);
+            //await dbContext.Doctors.AddRangeAsync(doctors);
+            //await dbContext.Patients.AddRangeAsync(patients);
+            //await dbContext.Rooms.AddRangeAsync(rooms);
+            //await dbContext.Users.AddRangeAsync(users);
+            //await dbContext.RoomCosts.AddRangeAsync(roomCosts);
 
-            await dbContext.SaveChangesAsync();
+            //await dbContext.SaveChangesAsync();
 
-            Console.WriteLine("Completed successfully!");
+            //Console.WriteLine("Completed successfully!");
         }
     }
 }
