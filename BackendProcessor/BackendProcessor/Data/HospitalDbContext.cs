@@ -21,17 +21,12 @@ namespace BackendProcessor.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                var configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                    .AddUserSecrets<HospitalDbContext>()
-                    .Build();
+           var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
 
-                var connectionString = configuration.GetConnectionString("HospitalDbConnection");
-                optionsBuilder.UseNpgsql(connectionString);
-            }
+            optionsBuilder.UseNpgsql("ConnectionStringIOK");
         }
 
     }
