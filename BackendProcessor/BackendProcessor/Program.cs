@@ -14,7 +14,7 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<HospitalDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HospitalDbContext")));
+builder.Services.AddDbContext<HospitalDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("HospitalDbContext")));
 
 var app = builder.Build();
 

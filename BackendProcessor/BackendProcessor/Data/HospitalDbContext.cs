@@ -15,19 +15,23 @@ namespace BackendProcessor.Data
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Billing> Billing { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<RoomCost> RoomCosts { get; set; }
         public DbSet<VIPRoom> VIPRooms { get; set; }
         public DbSet<User> Users { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            if (!optionsBuilder.IsConfigured)
+            {
+                var configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                    .AddUserSecrets<HospitalDbContext>()
+                    .Build();
 
-            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=HealthEdgeDB;Integrated Security=True;");
+                var connectionString = configuration.GetConnectionString("HospitalDbConnection");
+                optionsBuilder.UseNpgsql(connectionString);
+            }
         }
 
     }
