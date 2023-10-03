@@ -19,6 +19,15 @@ namespace BackendProcessor.Models
         public string RoomType { get; set; }
 
         [Required]
+        public int RoomCapacity { get; set; }
+
+        [Required]
+        public int RoomPrice { get; set; }
+
+        [Required]
         public bool IsOccupied { get; set; }
+
+        [Required]
+        public bool IsReady { get; set; }
     }
 }
