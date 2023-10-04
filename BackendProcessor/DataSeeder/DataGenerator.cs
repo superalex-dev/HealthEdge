@@ -56,17 +56,17 @@ namespace DataSeeder
 
             return rooms;
         }
-        //public static List<User> GenerateUsers(int count)
-        //{
-        //    var userFaker = new Faker<User>()
-        //        .RuleFor(u => u.FirstName, f => f.Name.FirstName())
-        //        .RuleFor(u => u.LastName, f => f.Name.LastName())
-        //        .RuleFor(u => u.UserName, f => f.Internet.UserName())
-        //        .RuleFor(u => u.Email, f => f.Internet.Email())
-        //        .RuleFor(p => p.Password, f => f.Internet.Password())
-        //        .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
+        public static List<User> GenerateUsers(int count)
+        {
+            var userFaker = new Faker<User>()
+                .RuleFor(u => u.FirstName, f => f.Name.FirstName())
+                .RuleFor(u => u.LastName, f => f.Name.LastName())
+                .RuleFor(u => u.UserName, f => f.Internet.UserName())
+                .RuleFor(u => u.Email, f => f.Internet.Email())
+                .RuleFor(p => p.Password, f => f.Internet.Password())
+                .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
 
-        //    return userFaker.Generate(count);
-        //}
+            return userFaker.Generate(count);
+        }
     }
 }
