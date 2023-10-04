@@ -64,7 +64,7 @@ namespace DataSeeder
                 .RuleFor(u => u.UserName, f => f.Internet.UserName())
                 .RuleFor(u => u.Email, f => f.Internet.Email())
                 .RuleFor(p => p.Password, f => f.Internet.Password())
-                .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
+                .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2).ToUniversalTime());
 
             return userFaker.Generate(count);
         }
