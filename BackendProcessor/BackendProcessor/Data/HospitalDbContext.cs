@@ -24,9 +24,11 @@ namespace BackendProcessor.Data
            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+                .AddUserSecrets<HospitalDbContext>()
                 .Build();
 
-            optionsBuilder.UseNpgsql("ConnectionStringIOK");
+            string connectionString = configuration.GetConnectionString("HospitalDbConnection");
+            optionsBuilder.UseNpgsql(connectionString);
         }
 
     }

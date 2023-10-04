@@ -12,7 +12,7 @@ namespace BackendProcessor.Models
 
         [Required]
         [StringLength(20)]
-        public string RoomNumber { get; set; }
+        public int RoomNumber { get; set; }
 
         [Required]
         [StringLength(50)]

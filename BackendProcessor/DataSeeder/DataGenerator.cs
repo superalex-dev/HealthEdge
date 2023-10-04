@@ -35,24 +35,27 @@ namespace DataSeeder
             return patientFaker.Generate(count);
         }
 
-        //public static List<Room> GenerateRooms(int count)
-        //{
-        //    var roomFaker = new Faker<Room>()
-        //        .RuleFor(r => r.RoomNumber, f => GenerateRandomRoomNumber(f))
-        //        .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Standart", "Deluxe", "VIP" }))
-        //        .RuleFor(r => r.IsOccupied, f => f.Random.Bool());
+        public static List<Room> GenerateRooms(int count)
+        {
+            var roomFaker = new Faker<Room>()
+                .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Single", "Duo", "Standart", "Deluxe", "VIP" }))
+                .RuleFor(r => r.IsOccupied, f => f.Random.Bool());
 
-        //    return roomFaker.Generate(count);
-        //}
+            var rooms = new List<Room>();
 
-        //static string GenerateRandomRoomNumber(Faker faker)
-        //{
-        //    int floorNumber = faker.Random.Number(1, 10);
-        //    int roomNumberOnFloor = faker.Random.Number(1, 20);
+            for (int floor = 1; floor <= 9 && rooms.Count < count; floor++)
+            {
+                for (int roomsPerFloor = 1; roomsPerFloor <= 10 && rooms.Count < count; roomsPerFloor++)
+                {
+                    int roomNumber = floor * 100 + roomsPerFloor;
+                    var room = roomFaker.Generate();
+                    room.RoomNumber = roomNumber;
+                    rooms.Add(room);
+                }
+            }
 
-        //    return $"{floorNumber:D2}{roomNumberOnFloor:D2}";
-        //}
-
+            return rooms;
+        }
         //public static List<User> GenerateUsers(int count)
         //{
         //    var userFaker = new Faker<User>()
@@ -64,15 +67,6 @@ namespace DataSeeder
         //        .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2));
 
         //    return userFaker.Generate(count);
-        //}
-
-        //public static List<RoomCost> GenerateRoomCosts(int count)
-        //{
-        //    var roomCostFaker = new Faker<RoomCost>()
-        //        .RuleFor(r => r.RoomType, f => f.PickRandom(new[] { "Standart", "Deluxe", "VIP" }))
-        //        .RuleFor(r => r.CostPerNight, f => f.Random.Number(100, 1000));
-
-        //    return roomCostFaker.Generate(count);
         //}
     }
 }
