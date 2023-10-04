@@ -27,10 +27,10 @@ namespace BackendProcessor.Controllers
             return Ok(patients);
         }
 
-        [HttpGet("patients/get/{id}")]
-        public async Task<IActionResult> GetPatientAsync(int patientId)
+        [HttpGet("patients/get/{Id}")]
+        public async Task<IActionResult> GetPatientByIdAsync(int Id)
         {
-            Patient patient = await _patientRepository.GetPatient(patientId);
+            var patient = await _patientRepository.GetPatientByIdAsync(Id);
 
             if (patient == null)
             {
@@ -50,7 +50,7 @@ namespace BackendProcessor.Controllers
 
             await _patientRepository.AddPatient(patient);
 
-            return CreatedAtAction(nameof(GetPatientAsync), new { patientId = patient.PatientId }, patient);
+            return CreatedAtAction(nameof(GetPatientByIdAsync), new { patientId = patient.PatientId }, patient);
         }
 
         [HttpPut("patients/edit/{id}")]

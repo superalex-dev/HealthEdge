@@ -27,10 +27,10 @@ namespace BackendProcessor.Controllers
             return Ok(doctors);
         }
 
-        [HttpGet("doctors/get/{id}")]
-        public async Task<IActionResult> GetDoctorAsync(int doctorId)
+        [HttpGet("doctors/get/{Id}")]
+        public async Task<IActionResult> GetDoctorAsync(int Id)
         {
-            Doctor doctor = await _doctorRepository.GetDoctor(doctorId);
+            Doctor doctor = await _doctorRepository.GetDoctor(Id);
 
             if (doctor == null)
             {

@@ -5,7 +5,7 @@ namespace BackendProcessor.Repositories.Interfaces
     public interface IPatientRepository
     {
         Task<IEnumerable<Patient>> GetAllPatients();
-        Task<Patient> GetPatient(int id);
+        Task<Patient> GetPatientByIdAsync(int Id);
         Task AddPatient(Patient patient);
         Task UpdatePatient(Patient patient);
         Task DeletePatient(int id);

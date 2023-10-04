@@ -19,9 +19,9 @@ namespace BackendProcessor.Repositories
             return await _context.Patients.ToListAsync();
         }
 
-        public async Task<Patient> GetPatient(int id)
+        public async Task<Patient> GetPatientByIdAsync(int Id)
         {
-            return await _context.Patients.FindAsync(id);
+            return await _context.Patients.FindAsync(Id);
         }
 
         public async Task AddPatient(Patient patient)
