@@ -53,7 +53,7 @@ namespace BackendProcessor.Controllers
             return CreatedAtAction(nameof(GetPatientByIdAsync), new { patientId = patient.PatientId }, patient);
         }
 
-        [HttpPut("patients/edit/{id}")]
+        [HttpPut("patients/edit/{Id}")]
         public async Task<IActionResult> EditPatientAsync(int patientId, [FromBody] Patient patient)
         {
             if (patient == null || patientId != patient.PatientId)
@@ -66,7 +66,7 @@ namespace BackendProcessor.Controllers
             return NoContent();
         }
 
-        [HttpDelete("patients/delete/{id}")]
+        [HttpDelete("patients/delete/{Id}")]
         public async Task<IActionResult> DeletePatientAsync(int patientId)
         {
             await _patientRepository.DeletePatient(patientId);
