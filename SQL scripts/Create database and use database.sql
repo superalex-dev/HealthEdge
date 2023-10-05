@@ -1,5 +1,0 @@
-CREATE DATABASE HealthEdgeDB
-GO
-
-USE HealthEdgeDB
-GO
