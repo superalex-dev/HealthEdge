@@ -6,7 +6,7 @@ namespace BackendProcessor.Models
     {
         [Required]
         [StringLength(100)]
-        public string UserName { get; set; }
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100)]
