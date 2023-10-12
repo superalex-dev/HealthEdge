@@ -4,9 +4,6 @@ namespace BackendProcessor.Repositories.Interfaces
 {
     public interface IAuthenticationRepository
     {
-        public interface IAuthenticationRepository
-        {
-            Task<AuthenticatedResponseModel> Login(UserLogin user);
-        }
+        Task<AuthenticatedResponseModel> Login(UserLogin user);
     }
 }

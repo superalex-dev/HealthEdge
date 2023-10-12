@@ -11,34 +11,37 @@ namespace BackendProcessor.Repositories
 {
     public class AuthenticationRepository : IAuthenticationRepository
     {
-        private readonly HospitalDbContext _context;
+        private readonly HospitalDbContext context;
+
+        public AuthenticationRepository(DbContextOptions<HospitalDbContext> options)
+        {
+            context = new HospitalDbContext(options);
+        }
+
         public async Task<AuthenticatedResponseModel> Login(UserLogin user)
         {
-            User doesUserExist = await _context.Users
+            User doesUserExist = await context.Users
                 .Where(u => u.Email == user.Email && u.Password == user.Password)
                 .FirstOrDefaultAsync();
-
-            JwtSecurityToken tokenOptions = null;
 
             if (doesUserExist != null)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                tokenOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:44300",
-                    audience: "https://localhost:44300",
+                var tokeOptions = new JwtSecurityToken(
+                    issuer: "https://localhost:5001",
+                    audience: "https://localhost:5001",
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
-                    signingCredentials: signinCredentials);
+                    signingCredentials: signinCredentials
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+
+                return new AuthenticatedResponseModel { Token = tokenString };
             }
 
-            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return new AuthenticatedResponseModel
-            {
-                Token = tokenString
-            };
-
-            //return null;
+            return null;
         }
     }
 }
