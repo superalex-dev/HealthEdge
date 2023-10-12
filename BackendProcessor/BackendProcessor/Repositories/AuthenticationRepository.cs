@@ -29,8 +29,8 @@ namespace BackendProcessor.Repositories
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokeOptions = new JwtSecurityToken(
-                    issuer: "https://localhost:5001",
-                    audience: "https://localhost:5001",
+                    issuer: "https://localhost:7147",
+                    audience: "https://localhost:7147",
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(5),
                     signingCredentials: signinCredentials
