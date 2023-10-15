@@ -30,6 +30,11 @@ namespace BackendProcessor.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task<int> GetTotalPatientsCountAsync()
+        {
+            return await _context.Patients.CountAsync();
+        }
+
         public async Task UpdatePatient(Patient patient)
         {
             _context.Entry(patient).State = EntityState.Modified;

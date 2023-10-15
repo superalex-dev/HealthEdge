@@ -53,6 +53,14 @@ namespace BackendProcessor.Controllers
             return CreatedAtAction(nameof(GetPatientByIdAsync), new { patientId = patient.PatientId }, patient);
         }
 
+        [HttpGet("patients/count")]
+        public async Task<IActionResult> GetPatientCount()
+        {
+            int count = await _patientRepository.GetTotalPatientsCountAsync();
+
+            return Ok(count);
+        }
+
         [HttpPut("patients/edit/{Id}")]
         public async Task<IActionResult> EditPatientAsync(int Id, [FromBody] Patient patient)
         {
