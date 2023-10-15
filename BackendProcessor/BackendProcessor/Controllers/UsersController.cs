@@ -59,9 +59,9 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPut("users/edit/{Id}")]
-        public async Task<IActionResult> EditUserAsync(int userId, [FromBody] User user)
+        public async Task<IActionResult> EditUserAsync(int Id, [FromBody] User user)
         {
-            User editedUser = await _userRepository.EditUserAsync(userId, user);
+            User editedUser = await _userRepository.EditUserAsync(Id, user);
 
             if (editedUser == null)
             {
@@ -72,13 +72,13 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpDelete("users/delete/{Id}")]
-        public async Task<IActionResult> DeleteUserAsync(int userId)
+        public async Task<IActionResult> DeleteUserAsync(int Id)
         {
-            bool isDeleted = await _userRepository.DeleteUserAsync(userId);
+            bool isDeleted = await _userRepository.DeleteUserAsync(Id);
 
             if (!isDeleted)
             {
-                return NotFound(userId);
+                return NotFound(Id);
             }
 
             return Ok();
