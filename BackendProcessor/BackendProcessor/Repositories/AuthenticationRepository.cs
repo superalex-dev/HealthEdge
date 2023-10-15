@@ -28,7 +28,7 @@ namespace BackendProcessor.Repositories
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@345"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-                var tokeOptions = new JwtSecurityToken(
+                var tokenOptions = new JwtSecurityToken(
                     issuer: "https://localhost:7147",
                     audience: "https://localhost:7147",
                     claims: new List<Claim>(),
@@ -36,7 +36,7 @@ namespace BackendProcessor.Repositories
                     signingCredentials: signinCredentials
                 );
 
-                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
                 return new AuthenticatedResponseModel { Token = tokenString };
             }
