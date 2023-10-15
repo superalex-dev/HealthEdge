@@ -54,9 +54,9 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPut("doctors/edit/{Id}")]
-        public async Task<IActionResult> EditDoctorAsync(int doctorId, [FromBody] Doctor doctor)
+        public async Task<IActionResult> EditDoctorAsync(int Id, [FromBody] Doctor doctor)
         {
-            if (doctor == null || doctorId != doctor.DoctorId)
+            if (doctor == null || Id != doctor.DoctorId)
             {
                 return BadRequest();
             }
@@ -67,9 +67,9 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpDelete("doctors/delete/{Id}")]
-        public async Task<IActionResult> DeleteDoctorAsync(int doctorId)
+        public async Task<IActionResult> DeleteDoctorAsync(int Id)
         {
-            await _doctorRepository.DeleteDoctor(doctorId);
+            await _doctorRepository.DeleteDoctor(Id);
 
             return NoContent();
         }
