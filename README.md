@@ -7,11 +7,11 @@
 ---
 
 ## Table of Contents
-- [Features](#Features)
-- [Installation](#Installation)
-- [Usage](#Usage)
-- [Support](#Support)
-- [License](#License)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Support](#support)
+- [License](#license)
 
 ---
 
