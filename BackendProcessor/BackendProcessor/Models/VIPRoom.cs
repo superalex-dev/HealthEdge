@@ -8,7 +8,7 @@ namespace BackendProcessor.Models
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int VIPRoomId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int RoomId { get; set; }

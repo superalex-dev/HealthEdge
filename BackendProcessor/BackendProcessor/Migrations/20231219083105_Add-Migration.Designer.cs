@@ -3,6 +3,7 @@ using System;
 using BackendProcessor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendProcessor.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231219083105_Add-Migration")]
+    partial class AddMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +27,11 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("AppointmentId"));
 
                     b.Property<string>("Diagnosis")
                         .IsRequired()
@@ -49,7 +52,7 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.HasKey("Id");
+                    b.HasKey("AppointmentId");
 
                     b.HasIndex("DoctorId");
 
@@ -60,11 +63,11 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.Billing", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BillId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BillId"));
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(10,2)");
@@ -75,7 +78,7 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("BillId");
 
                     b.HasIndex("PatientId");
 
@@ -122,11 +125,11 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RecordId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RecordId"));
 
                     b.Property<string>("Diagnosis")
                         .IsRequired()
@@ -147,7 +150,7 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RecordId");
 
                     b.HasIndex("DoctorId");
 
@@ -199,11 +202,11 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("RoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RoomId"));
 
                     b.Property<bool>("IsOccupied")
                         .HasColumnType("boolean");
@@ -223,7 +226,7 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoomId");
 
                     b.ToTable("Rooms");
                 });
@@ -271,11 +274,11 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.VIPRoom", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("VIPRoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VIPRoomId"));
 
                     b.Property<int>("RoomId")
                         .HasColumnType("integer");
@@ -285,7 +288,7 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.HasKey("Id");
+                    b.HasKey("VIPRoomId");
 
                     b.HasIndex("RoomId");
 

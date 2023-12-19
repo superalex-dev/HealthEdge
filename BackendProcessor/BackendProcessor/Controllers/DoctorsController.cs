@@ -48,15 +48,17 @@ namespace BackendProcessor.Controllers
                 return BadRequest();
             }
 
+            doctor.Id = 0;
+
             await _doctorRepository.AddDoctor(doctor);
 
-            return CreatedAtAction(nameof(GetDoctorAsync), new { doctorId = doctor.DoctorId }, doctor);
+            return CreatedAtAction(nameof(GetDoctorAsync), new { doctorId = doctor.Id }, doctor);
         }
 
         [HttpPut("doctors/edit/{Id}")]
         public async Task<IActionResult> EditDoctorAsync(int Id, [FromBody] Doctor doctor)
         {
-            if (doctor == null || Id != doctor.DoctorId)
+            if (doctor == null || Id != doctor.Id)
             {
                 return BadRequest();
             }

@@ -9,7 +9,7 @@ namespace BackendProcessor.Models
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int BillId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public int PatientId { get; set; }
