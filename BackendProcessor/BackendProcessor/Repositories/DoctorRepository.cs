@@ -45,5 +45,16 @@ namespace BackendProcessor.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+
+        public async Task DeleteMultipleDoctors(IEnumerable<int> ids)
+        {
+            var doctors = _context.Doctors.Where(d => ids.Contains(d.Id));
+            
+            if (doctors.Any())
+            {
+                _context.Doctors.RemoveRange(doctors);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

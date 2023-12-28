@@ -9,5 +9,6 @@ namespace BackendProcessor.Repositories.Interfaces
         Task AddDoctor(Doctor doctor);
         Task UpdateDoctor(Doctor doctor);
         Task DeleteDoctor(int id);
+        Task DeleteMultipleDoctors(IEnumerable<int> ids);
     }
 }

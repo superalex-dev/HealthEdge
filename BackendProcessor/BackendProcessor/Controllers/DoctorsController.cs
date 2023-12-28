@@ -75,5 +75,13 @@ namespace BackendProcessor.Controllers
 
             return NoContent();
         }
+        
+        [HttpDelete("doctors/delete-multiple")]
+        public async Task<IActionResult> DeleteMultipleDoctorsAsync([FromBody] IEnumerable<int> ids)
+        {
+            await _doctorRepository.DeleteMultipleDoctors(ids);
+
+            return NoContent();
+        }
     }
 }
