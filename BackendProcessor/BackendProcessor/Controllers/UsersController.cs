@@ -74,14 +74,9 @@ namespace BackendProcessor.Controllers
         [HttpDelete("users/delete/{Id}")]
         public async Task<IActionResult> DeleteUserAsync(int Id)
         {
-            bool isDeleted = await _userRepository.DeleteUserAsync(Id);
-
-            if (!isDeleted)
-            {
-                return NotFound(Id);
-            }
-
-            return Ok();
+            await _userRepository.DeleteUserAsync(Id);
+            
+            return NoContent();
         }
     }
 }
