@@ -22,17 +22,14 @@ namespace BackendProcessor.Repositories
             return user;
         }
 
-        public async Task<bool> DeleteUserAsync(int Id)
+        public async Task DeleteUserAsync(int Id)
         {
             var user = await _context.Users.FindAsync(Id);
-            if (user == null)
+            if (user != null)
             {
-                return false;
+                _context.Users.Remove(user);
+                await _context.SaveChangesAsync();
             }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-            return true;
         }
 
         public async Task<User> EditUserAsync(int userId, User user)
