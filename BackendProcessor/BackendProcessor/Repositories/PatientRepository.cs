@@ -24,7 +24,7 @@ namespace BackendProcessor.Repositories
             return await _context.Patients.FindAsync(Id);
         }
 
-        public async Task AddPatient(Patient patient)
+        public async Task AddPatientAsync(Patient patient)
         {
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
@@ -35,13 +35,13 @@ namespace BackendProcessor.Repositories
             return await _context.Patients.CountAsync();
         }
 
-        public async Task UpdatePatient(Patient patient)
+        public async Task UpdatePatientAsync(Patient patient)
         {
             _context.Entry(patient).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeletePatient(int id)
+        public async Task DeletePatientAsync(int id)
         {
             var patient = await _context.Patients.FindAsync(id);
             if (patient != null)

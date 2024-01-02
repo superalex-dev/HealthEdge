@@ -48,7 +48,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest();
             }
 
-            await _patientRepository.AddPatient(patient);
+            await _patientRepository.AddPatientAsync(patient);
 
             return CreatedAtAction(nameof(GetPatientByIdAsync), new { patientId = patient.Id }, patient);
         }
@@ -69,7 +69,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest();
             }
 
-            await _patientRepository.UpdatePatient(patient);
+            await _patientRepository.UpdatePatientAsync(patient);
 
             return NoContent();
         }
@@ -77,7 +77,7 @@ namespace BackendProcessor.Controllers
         [HttpDelete("patients/delete/{Id}")]
         public async Task<IActionResult> DeletePatientAsync(int Id)
         {
-            await _patientRepository.DeletePatient(Id);
+            await _patientRepository.DeletePatientAsync(Id);
 
             return NoContent();
         }

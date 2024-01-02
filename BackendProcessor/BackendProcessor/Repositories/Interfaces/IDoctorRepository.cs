@@ -5,10 +5,10 @@ namespace BackendProcessor.Repositories.Interfaces
     public interface IDoctorRepository
     {
         Task<IEnumerable<Doctor>> GetAllDoctors();
-        Task<Doctor> GetDoctor(int id);
-        Task AddDoctor(Doctor doctor);
-        Task UpdateDoctor(Doctor doctor);
-        Task DeleteDoctor(int id);
-        Task DeleteMultipleDoctors(IEnumerable<int> ids);
+        Task<Doctor> GetDoctorAsync(int id);
+        Task AddDoctorAsync(Doctor doctor);
+        Task UpdateDoctorAsync(Doctor doctor);
+        Task DeleteDoctorAsync(int id);
+        Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids);
     }
 }

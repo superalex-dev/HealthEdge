@@ -19,24 +19,24 @@ namespace BackendProcessor.Repositories
             return await _context.Doctors.ToListAsync();
         }
 
-        public async Task<Doctor> GetDoctor(int id)
+        public async Task<Doctor> GetDoctorAsync(int id)
         {
             return await _context.Doctors.FindAsync(id);
         }
 
-        public async Task AddDoctor(Doctor doctor)
+        public async Task AddDoctorAsync(Doctor doctor)
         {
             _context.Doctors.Add(doctor);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateDoctor(Doctor doctor)
+        public async Task UpdateDoctorAsync(Doctor doctor)
         {
             _context.Entry(doctor).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteDoctor(int id)
+        public async Task DeleteDoctorAsync(int id)
         {
             var doctor = await _context.Doctors.FindAsync(id);
             if (doctor != null)
@@ -46,7 +46,7 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task DeleteMultipleDoctors(IEnumerable<int> ids)
+        public async Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids)
         {
             var doctors = _context.Doctors.Where(d => ids.Contains(d.Id));
             

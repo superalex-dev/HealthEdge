@@ -30,7 +30,7 @@ namespace BackendProcessor.Controllers
         [HttpGet("doctors/get/{Id}")]
         public async Task<IActionResult> GetDoctorAsync(int Id)
         {
-            Doctor doctor = await _doctorRepository.GetDoctor(Id);
+            Doctor doctor = await _doctorRepository.GetDoctorAsync(Id);
 
             if (doctor == null)
             {
@@ -50,7 +50,7 @@ namespace BackendProcessor.Controllers
 
             doctor.Id = 0;
 
-            await _doctorRepository.AddDoctor(doctor);
+            await _doctorRepository.AddDoctorAsync(doctor);
 
             return CreatedAtAction(nameof(GetDoctorAsync), new { doctorId = doctor.Id }, doctor);
         }
@@ -63,7 +63,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest();
             }
 
-            await _doctorRepository.UpdateDoctor(doctor);
+            await _doctorRepository.UpdateDoctorAsync(doctor);
 
             return NoContent();
         }
@@ -71,7 +71,7 @@ namespace BackendProcessor.Controllers
         [HttpDelete("doctors/delete/{Id}")]
         public async Task<IActionResult> DeleteDoctorAsync(int Id)
         {
-            await _doctorRepository.DeleteDoctor(Id);
+            await _doctorRepository.DeleteDoctorAsync(Id);
 
             return NoContent();
         }
@@ -79,7 +79,7 @@ namespace BackendProcessor.Controllers
         [HttpDelete("doctors/delete-multiple")]
         public async Task<IActionResult> DeleteMultipleDoctorsAsync([FromBody] IEnumerable<int> ids)
         {
-            await _doctorRepository.DeleteMultipleDoctors(ids);
+            await _doctorRepository.DeleteMultipleDoctorsAsync(ids);
 
             return NoContent();
         }
