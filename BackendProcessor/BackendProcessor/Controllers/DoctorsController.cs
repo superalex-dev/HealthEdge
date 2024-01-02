@@ -40,19 +40,17 @@ namespace BackendProcessor.Controllers
             return Ok(doctor);
         }
 
-        [HttpPost("doctors/add")]
-        public async Task<IActionResult> AddDoctorAsync([FromBody] Doctor doctor)
+        [HttpPost("doctors/create")]
+        public async Task<IActionResult> CreateDoctorAsync([FromBody] Doctor doctor)
         {
-            if (doctor == null)
+            Doctor createdDoctor = await _doctorRepository.CreateDoctorAsync(doctor);
+            
+            if (createdDoctor == null)
             {
                 return BadRequest();
             }
 
-            doctor.Id = 0;
-
-            await _doctorRepository.AddDoctorAsync(doctor);
-
-            return CreatedAtAction(nameof(GetDoctorAsync), new { doctorId = doctor.Id }, doctor);
+            return Ok(createdDoctor);
         }
 
         [HttpPut("doctors/edit/{Id}")]

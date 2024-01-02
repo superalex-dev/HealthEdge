@@ -6,7 +6,7 @@ namespace BackendProcessor.Repositories.Interfaces
     {
         Task<IEnumerable<Doctor>> GetAllDoctors();
         Task<Doctor> GetDoctorAsync(int id);
-        Task AddDoctorAsync(Doctor doctor);
+        Task<Doctor> CreateDoctorAsync(Doctor doctor);
         Task UpdateDoctorAsync(Doctor doctor);
         Task DeleteDoctorAsync(int id);
         Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids);

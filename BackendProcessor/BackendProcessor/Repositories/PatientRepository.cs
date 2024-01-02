@@ -24,10 +24,11 @@ namespace BackendProcessor.Repositories
             return await _context.Patients.FindAsync(Id);
         }
 
-        public async Task AddPatientAsync(Patient patient)
+        public async Task<Patient> CreatePatientAsync(Patient patient)
         {
             _context.Patients.Add(patient);
             await _context.SaveChangesAsync();
+            return patient;
         }
 
         public async Task<int> GetTotalPatientsCountAsync()

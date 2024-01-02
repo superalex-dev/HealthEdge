@@ -6,7 +6,7 @@ namespace BackendProcessor.Repositories.Interfaces
     {
         Task<IEnumerable<Patient>> GetAllPatients();
         Task<Patient> GetPatientByIdAsync(int Id);
-        Task AddPatientAsync(Patient patient);
+        Task<Patient> CreatePatientAsync(Patient patient);
         Task<int> GetTotalPatientsCountAsync();
         Task UpdatePatientAsync(Patient patient);
         Task DeletePatientAsync(int id);
