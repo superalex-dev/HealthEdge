@@ -14,7 +14,7 @@ namespace BackendProcessor.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllDoctors()
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
         {
             return await _context.Doctors.ToListAsync();
         }

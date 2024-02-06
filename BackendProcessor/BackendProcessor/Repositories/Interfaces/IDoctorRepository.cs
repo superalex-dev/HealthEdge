@@ -4,7 +4,7 @@ namespace BackendProcessor.Repositories.Interfaces
 {
     public interface IDoctorRepository
     {
-        Task<IEnumerable<Doctor>> GetAllDoctors();
+        Task<IEnumerable<Doctor>> GetAllDoctorsAsync();
         Task<Doctor> GetDoctorAsync(int id);
         Task<Doctor> CreateDoctorAsync(Doctor doctor);
         Task UpdateDoctorAsync(Doctor doctor);

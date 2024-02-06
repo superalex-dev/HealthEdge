@@ -17,7 +17,7 @@ namespace BackendProcessor.Controllers
         [HttpGet("doctors/get")]
         public async Task<IActionResult> GetDoctorsAsync()
         {
-            IEnumerable<Doctor> doctors = await _doctorRepository.GetAllDoctors();
+            IEnumerable<Doctor> doctors = await _doctorRepository.GetAllDoctorsAsync();
 
             if (doctors == null || doctors.Count() == 0)
             {
