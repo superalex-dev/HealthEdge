@@ -48,6 +48,13 @@ namespace BackendProcessor.Controllers
         [HttpPost("users/create")]
         public async Task<IActionResult> CreateUserAsync([FromBody] User user)
         {
+            var existingUser = await _userRepository.GetUserByUsernameEmail(user.UserName, user.Email);
+
+            if (existingUser != null)
+            {
+                return Conflict("A user with this username or email already exists.");
+            }
+
             User createdUser = await _userRepository.CreateUserAsync(user);
 
             if (createdUser == null)
@@ -61,6 +68,20 @@ namespace BackendProcessor.Controllers
         [HttpPut("users/edit/{Id}")]
         public async Task<IActionResult> EditUserAsync(int Id, [FromBody] User user)
         {
+            var currentUser = await _userRepository.GetUserByIdAsync(Id);
+
+            if (currentUser == null) 
+            {
+                return NotFound("User not found.");
+            }
+
+            var existingUser = await _userRepository.GetUserByUsernameEmail(user.UserName, user.Email);
+
+            if (existingUser != null)
+            {
+                return Conflict("A user with this username or email already exists.");
+            }
+
             User editedUser = await _userRepository.EditUserAsync(Id, user);
 
             if (editedUser == null)

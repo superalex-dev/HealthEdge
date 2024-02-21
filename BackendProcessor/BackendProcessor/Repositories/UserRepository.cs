@@ -58,5 +58,11 @@ namespace BackendProcessor.Repositories
         {
             return await _context.Users.CountAsync();
         }
+        public async Task<User> GetUserByUsernameEmail(string username, string email)
+        {
+            return await _context.Users
+                .Where(u => u.UserName == username || u.Email == email)
+                .FirstOrDefaultAsync();
+        }
     }
 }

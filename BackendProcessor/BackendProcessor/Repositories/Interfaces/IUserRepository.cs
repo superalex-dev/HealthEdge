@@ -11,5 +11,6 @@ namespace BackendProcessor.Repositories.Interfaces
         Task DeleteUserAsync(int Id);
         Task<User> GetUserByIdAsync(int Id);
         Task<int> GetTotalUsersCountAsync();
+        Task<User> GetUserByUsernameEmail(string username, string email);
     }
 }
