@@ -31,5 +31,23 @@ namespace BackendProcessor.Data
             optionsBuilder.UseNpgsql(connectionString);
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.UserName)
+                .IsUnique();
+
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
+
+            modelBuilder.Entity<Doctor>()
+                .HasIndex(d => d.ContactNumber)
+                .IsUnique();
+
+            modelBuilder.Entity<Patient>()
+                .HasIndex(p => p.ContactNumber)
+                .IsUnique();
+        }
     }
 }

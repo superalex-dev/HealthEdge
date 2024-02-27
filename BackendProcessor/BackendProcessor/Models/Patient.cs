@@ -18,6 +18,10 @@ namespace BackendProcessor.Models
         [StringLength(50)]
         public string LastName { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string Email { get; set; }
+
         [Column(TypeName = "Date")]
         public DateTime DateOfBirth { get; set; }
 

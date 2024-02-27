@@ -30,7 +30,8 @@ namespace DataSeeder
                 .RuleFor(p => p.DateOfBirth, f => f.Date.Past(80))
                 .RuleFor(p => p.Gender, f => f.PickRandom(new[] { "M", "F" }))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(p => p.Address, f => f.Address.FullAddress());
+                .RuleFor(p => p.Address, f => f.Address.FullAddress())
+                .RuleFor(p => p.Email, f => f.Internet.Email());
 
             return patientFaker.Generate(count);
         }
