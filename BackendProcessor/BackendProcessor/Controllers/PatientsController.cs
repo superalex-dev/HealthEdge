@@ -8,10 +8,12 @@ namespace BackendProcessor.Controllers
     public class PatientsController : ControllerBase
     {
         private readonly IPatientRepository _patientRepository;
+        private readonly IUserRepository _userRepository;
 
-        public PatientsController(IPatientRepository patientRepository)
+        public PatientsController(IPatientRepository patientRepository, IUserRepository userRepository)
         {
             _patientRepository = patientRepository;
+            _userRepository = userRepository;
         }
 
         [HttpGet("patients/get")]
@@ -40,9 +42,20 @@ namespace BackendProcessor.Controllers
             return Ok(patient);
         }
 
-        [HttpPost("patients/create")]
-        public async Task<IActionResult> CreatePatientAsync([FromBody] Patient patient)
+        [HttpPost("patients/create/{userId}")]
+        public async Task<IActionResult> CreatePatientAsync(int userId, [FromBody] Patient patient)
         {
+            var user = await _userRepository.GetUserByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            patient.FirstName = user.FirstName;
+            patient.LastName = user.LastName;
+            patient.Email = user.Email;
+
             Patient createdPatient = await _patientRepository.CreatePatientAsync(patient);
             
             if (createdPatient == null)
