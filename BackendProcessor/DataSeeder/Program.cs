@@ -18,7 +18,7 @@ namespace Application
             var doctors = DataGenerator.GenerateDoctors(10);
             var patients = DataGenerator.GeneratePatients(100);
             var rooms = DataGenerator.GenerateRooms(50);
-            var users = DataGenerator.GenerateUsers(30);
+            var users = DataGenerator.GenerateUsers(100);
 
             await dbContext.Doctors.AddRangeAsync(doctors);
             await dbContext.Patients.AddRangeAsync(patients);

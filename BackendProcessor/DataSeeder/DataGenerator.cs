@@ -1,5 +1,6 @@
 ﻿using BackendProcessor.Models;
 using Bogus;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,12 @@ namespace DataSeeder
                 .RuleFor(u => u.LastName, f => f.Name.LastName())
                 .RuleFor(u => u.UserName, f => f.Internet.UserName())
                 .RuleFor(u => u.Email, f => f.Internet.Email())
-                .RuleFor(p => p.Password, f => f.Internet.Password())
+                .RuleFor(u => u.Password, f => Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: f.Internet.Password(),
+                    salt: new byte[128 / 8],
+                    prf: KeyDerivationPrf.HMACSHA256,
+                    iterationCount: 10000,
+                    numBytesRequested: 256 / 8)))
                 .RuleFor(u => u.DateOfCreation, f => f.Date.Past(2).ToUniversalTime());
 
             return userFaker.Generate(count);

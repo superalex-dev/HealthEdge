@@ -1,5 +1,6 @@
 ﻿using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendProcessor.Controllers
@@ -54,6 +55,14 @@ namespace BackendProcessor.Controllers
             {
                 return Conflict("A user with this username or email already exists.");
             }
+
+            user.Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                password: user.Password,
+                salt: new byte[128 / 8],
+                prf: KeyDerivationPrf.HMACSHA256,
+                iterationCount: 10000,
+                numBytesRequested: 256 / 8));
+
 
             User createdUser = await _userRepository.CreateUserAsync(user);
 
