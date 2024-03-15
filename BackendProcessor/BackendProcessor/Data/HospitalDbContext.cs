@@ -46,8 +46,9 @@ namespace BackendProcessor.Data
                 .IsUnique();
 
             modelBuilder.Entity<Patient>()
-                .HasIndex(p => p.ContactNumber)
-                .IsUnique();
+                .HasOne(p => p.User)
+                .WithMany(u => u.Patients)
+                .HasForeignKey(p => p.UserId);
         }
     }
 }

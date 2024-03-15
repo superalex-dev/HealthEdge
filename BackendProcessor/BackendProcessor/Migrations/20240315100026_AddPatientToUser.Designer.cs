@@ -3,6 +3,7 @@ using System;
 using BackendProcessor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendProcessor.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240315100026_AddPatientToUser")]
+    partial class AddPatientToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -55,7 +58,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Billing", b =>
@@ -79,7 +82,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Billing", (string)null);
+                    b.ToTable("Billing");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
@@ -120,7 +123,7 @@ namespace BackendProcessor.Migrations
                     b.HasIndex("ContactNumber")
                         .IsUnique();
 
-                    b.ToTable("Doctors", (string)null);
+                    b.ToTable("Doctors");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
@@ -156,7 +159,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("MedicalRecords", (string)null);
+                    b.ToTable("MedicalRecords");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
@@ -207,7 +210,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
@@ -238,7 +241,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
@@ -285,7 +288,7 @@ namespace BackendProcessor.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.VIPRoom", b =>
@@ -308,7 +311,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("VIPRooms", (string)null);
+                    b.ToTable("VIPRooms");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>

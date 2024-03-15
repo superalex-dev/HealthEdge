@@ -36,5 +36,10 @@ namespace BackendProcessor.Models
         [Required]
         [StringLength(255)]
         public string Address { get; set; }
+
+        [ForeignKey("UserId")]
+        public int UserId { get; set; }
+
+        public User User { get; set; }
     }
 }
