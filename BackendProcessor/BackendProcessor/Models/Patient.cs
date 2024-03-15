@@ -38,7 +38,7 @@ namespace BackendProcessor.Models
         public string Address { get; set; }
 
         [ForeignKey("UserId")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         public User User { get; set; }
     }

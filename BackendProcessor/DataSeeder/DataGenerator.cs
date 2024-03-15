@@ -23,8 +23,9 @@ namespace DataSeeder
             return doctorFaker.Generate(count);
         }
 
-        public static List<Patient> GeneratePatients(int count)
+        public static List<Patient> GeneratePatients(int count, List<User> users)
         {
+            var userIds = users.Select(u => u.Id).ToList();
             var patientFaker = new Faker<Patient>()
                 .RuleFor(p => p.FirstName, f => f.Name.FirstName())
                 .RuleFor(p => p.LastName, f => f.Name.LastName())
@@ -32,7 +33,8 @@ namespace DataSeeder
                 .RuleFor(p => p.Gender, f => f.PickRandom(new[] { "M", "F" }))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(p => p.Address, f => f.Address.FullAddress())
-                .RuleFor(p => p.Email, f => f.Internet.Email());
+                .RuleFor(p => p.Email, f => f.Internet.Email())
+                .RuleFor(p => p.UserId, f => f.PickRandom(userIds));
 
             return patientFaker.Generate(count);
         }
