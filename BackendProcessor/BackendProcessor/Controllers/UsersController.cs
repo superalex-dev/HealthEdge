@@ -1,4 +1,5 @@
-﻿using BackendProcessor.Models;
+﻿using BackendProcessor.Data.Dto;
+using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace BackendProcessor.Controllers
 {
     public class UserController : ControllerBase
     {
-        private IUserRepository _userRepository { get; set; }
+        private readonly IUserRepository _userRepository;
 
         public UserController(IUserRepository userRepository)
         {
@@ -47,31 +48,43 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPost("users/create")]
-        public async Task<IActionResult> CreateUserAsync([FromBody] User user)
+        public async Task<IActionResult> CreateUserAsync([FromBody] UserCreationDto userDto)
         {
-            var existingUser = await _userRepository.GetUserByUsernameEmail(user.UserName, user.Email);
+            var existingUser = await _userRepository.GetUserByUsernameEmail(userDto.UserName, userDto.Email);
 
             if (existingUser != null)
             {
                 return Conflict("A user with this username or email already exists.");
             }
 
-            user.Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: user.Password,
-                salt: new byte[128 / 8],
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-
-            User createdUser = await _userRepository.CreateUserAsync(user);
-
-            if (createdUser == null)
+            var user = new User
             {
-                return BadRequest();
-            }
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                UserName = userDto.UserName,
+                Email = userDto.Email,
+                Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                    password: userDto.Password,
+                    salt: new byte[128 / 8],
+                    prf: KeyDerivationPrf.HMACSHA256,
+                    iterationCount: 10000,
+                    numBytesRequested: 256 / 8)),
+                DateOfCreation = DateTime.UtcNow
+            };
 
-            return Ok(createdUser);
+            var createdUser = await _userRepository.CreateUserAsync(user);
+
+            var userReturnDto = new UserDto
+            {
+                Id = createdUser.Id,
+                FirstName = createdUser.FirstName,
+                LastName = createdUser.LastName,
+                UserName = createdUser.UserName,
+                Email = createdUser.Email,
+                DateOfCreation = createdUser.DateOfCreation
+            };
+
+            return Ok(userReturnDto);
         }
 
         [HttpPut("users/edit/{Id}")]
