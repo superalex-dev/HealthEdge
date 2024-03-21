@@ -1,4 +1,5 @@
-﻿using BackendProcessor.Models;
+﻿using BackendProcessor.Data.Dto;
+using BackendProcessor.Models;
 using BackendProcessor.Repositories;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -43,7 +44,7 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPost("patients/create/{userId}")]
-        public async Task<IActionResult> CreatePatientAsync(int userId, [FromBody] Patient patient)
+        public async Task<IActionResult> CreatePatientAsync(int userId, [FromBody] PatientCreationDto patientDto)
         {
             var user = await _userRepository.GetUserByIdAsync(userId);
 
@@ -51,19 +52,40 @@ namespace BackendProcessor.Controllers
             {
                 return NotFound("User not found.");
             }
-
-            patient.FirstName = user.FirstName;
-            patient.LastName = user.LastName;
-            patient.Email = user.Email;
-
-            Patient createdPatient = await _patientRepository.CreatePatientAsync(patient);
             
-            if (createdPatient == null)
+            var patient = new Patient
             {
-                return BadRequest();
+                FirstName = patientDto.FirstName,
+                LastName = patientDto.LastName,
+                Email = patientDto.Email,
+                DateOfBirth = patientDto.DateOfBirth,
+                Gender = patientDto.Gender,
+                ContactNumber = patientDto.ContactNumber,
+                Address = patientDto.Address,
+                UserId = userId
+            };
+
+            var createdPatient = await _patientRepository.CreatePatientAsync(patient);
+
+            var patientResponseDto = new PatientDto
+            {
+                Id = createdPatient.Id,
+                FirstName = createdPatient.FirstName,
+                LastName = createdPatient.LastName,
+                Email = createdPatient.Email,
+                DateOfBirth = createdPatient.DateOfBirth,
+                Gender = createdPatient.Gender,
+                ContactNumber = createdPatient.ContactNumber,
+                Address = createdPatient.Address,
+                UserId = userId
+            };
+
+            if (patientResponseDto == null)
+            {
+                return BadRequest("Failed to create patient.");
             }
-            
-            return Ok(createdPatient);
+
+            return Ok(patientResponseDto); 
         }
 
         [HttpGet("patients/count")]

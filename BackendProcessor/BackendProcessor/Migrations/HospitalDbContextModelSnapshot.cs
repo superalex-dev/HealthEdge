@@ -117,9 +117,6 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ContactNumber")
-                        .IsUnique();
-
                     b.ToTable("Doctors", (string)null);
                 });
 
@@ -200,7 +197,7 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("UserId")
+                    b.Property<int?>("UserId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -364,9 +361,7 @@ namespace BackendProcessor.Migrations
                 {
                     b.HasOne("BackendProcessor.Models.User", "User")
                         .WithMany("Patients")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

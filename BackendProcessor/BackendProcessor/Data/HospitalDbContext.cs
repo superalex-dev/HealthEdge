@@ -21,7 +21,7 @@ namespace BackendProcessor.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           var configuration = new ConfigurationBuilder()
+            var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .AddUserSecrets<HospitalDbContext>()
@@ -53,21 +53,21 @@ namespace BackendProcessor.Data
                 entity.Property(d => d.ContactNumber).IsRequired();
                 entity.Property(d => d.Email).IsRequired();
             });
-            
+
             modelBuilder.Entity<Patient>(entity =>
-                    {
-                        entity.HasKey(p => p.Id);
-                        entity.HasOne(p => p.User)
-                              .WithMany(u => u.Patients)
-                              .HasForeignKey(p => p.UserId);
-                        
-                        entity.Property(p => p.FirstName).IsRequired();
-                        entity.Property(p => p.LastName).IsRequired();
-                        entity.Property(p => p.DateOfBirth).IsRequired();
-                        entity.Property(p => p.Gender).IsRequired();
-                        entity.Property(p => p.ContactNumber).IsRequired();
-                        entity.Property(p => p.Address).IsRequired();
-                    });
+            {
+                entity.HasKey(p => p.Id);
+                entity.HasOne(p => p.User)
+                    .WithMany(u => u.Patients)
+                    .HasForeignKey(p => p.UserId);
+
+                entity.Property(p => p.FirstName).IsRequired();
+                entity.Property(p => p.LastName).IsRequired();
+                entity.Property(p => p.DateOfBirth).IsRequired();
+                entity.Property(p => p.Gender).IsRequired();
+                entity.Property(p => p.ContactNumber).IsRequired();
+                entity.Property(p => p.Address).IsRequired();
+            });
         }
     }
 }
