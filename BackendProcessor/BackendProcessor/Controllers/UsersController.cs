@@ -88,23 +88,29 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPut("users/edit/{Id}")]
-        public async Task<IActionResult> EditUserAsync(int Id, [FromBody] User user)
+        public async Task<IActionResult> EditUserAsync(int Id, [FromBody] EditUserDto userDto)
         {
             var currentUser = await _userRepository.GetUserByIdAsync(Id);
 
-            if (currentUser == null) 
+            if (currentUser == null)
             {
                 return NotFound("User not found.");
             }
-
-            var existingUser = await _userRepository.GetUserByUsernameEmail(user.UserName, user.Email);
-
-            if (existingUser != null)
+            
+            if (!string.IsNullOrEmpty(userDto.Email) && currentUser.Email != userDto.Email)
             {
-                return Conflict("A user with this username or email already exists.");
+                var existingUserWithEmailOrUserName = await _userRepository.GetUserByUsernameEmail(userDto.Email, userDto.UserName);
+                if (existingUserWithEmailOrUserName != null)
+                {
+                    return Conflict("A user with this email or user name already exists.");
+                }
             }
+            
+            currentUser.FirstName = userDto.FirstName;
+            currentUser.LastName = userDto.LastName;
+            currentUser.Email = userDto.Email;
 
-            User editedUser = await _userRepository.EditUserAsync(Id, user);
+            var editedUser = await _userRepository.EditUserAsync(Id, currentUser);
 
             if (editedUser == null)
             {
