@@ -9,7 +9,6 @@ function LoginPage() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-  
     try{
       axios.post('http://localhost:5239/login', {
         username: username,
@@ -20,9 +19,19 @@ function LoginPage() {
         const decoded = jwtDecode(token);
         localStorage.setItem('username', decoded.sub);
         window.location.href = '/dashboard';
+      }).catch((error) => {
+        if (error.response) {
+          console.log(error.response.data);
+          console.log(error.response.status);
+          console.log(error.response.headers);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log('Error', error.message);
+        }
       });
-    } catch(err){
-      console.log(err);
+    } catch (error) {
+      console.error(error);
     }
   };
 
