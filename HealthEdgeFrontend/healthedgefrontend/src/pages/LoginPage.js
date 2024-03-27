@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
 import './LoginPage.css';
 
 function LoginPage() {
@@ -7,7 +9,21 @@ function LoginPage() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Add login logic here
+  
+    try{
+      axios.post('http://localhost:5239/login', {
+        username: username,
+        password: password
+      }).then((response) => {
+        const token = response.data.accessToken;
+        localStorage.setItem('token', token);
+        const decoded = jwtDecode(token);
+        localStorage.setItem('username', decoded.sub);
+        window.location.href = '/dashboard';
+      });
+    } catch(err){
+      console.log(err);
+    }
   };
 
   return (

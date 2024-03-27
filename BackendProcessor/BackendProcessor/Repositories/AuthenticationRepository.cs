@@ -26,6 +26,15 @@ namespace BackendProcessor.Repositories
 
             if (doesUserExist != null)
             {
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, doesUserExist.Password);
+                Console.WriteLine($"Password is valid: {isPasswordValid}");
+                
+                if (!isPasswordValid)
+                {
+                    Console.WriteLine("Passwords do not match");
+                    return null;
+                }
+
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("superSecretKey@34500000000000000000000"));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
                 var tokenOptions = new JwtSecurityToken(
