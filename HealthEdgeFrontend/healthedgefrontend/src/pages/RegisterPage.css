@@ -1,0 +1,105 @@
+.register-page {
+  display: flex;
+  height: 100vh;
+  color: #333;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.form-container {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo {
+  max-width: 150px;
+}
+
+.register-form {
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+
+.input-row > input {
+  flex: 1;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+input[type="text"], input[type="email"], input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  background-color: #4A90E2;
+  color: white;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #3D7AB5;
+}
+
+.error {
+  color: #D8000C;
+  background-color: #FFD2D2;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.inspiration-container {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFC371 0%, #FF5F6D 100%);
+  color: #fff;
+}
+
+.testimonial blockquote {
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.user-count {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .register-page {
+    flex-direction: column;
+  }
+  .form-container, .inspiration-container {
+    width: 100%;
+    padding: 20px;
+  }
+}

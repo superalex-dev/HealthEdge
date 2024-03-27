@@ -1,31 +1,30 @@
-// LoginPage.js
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // For navigation after login
+import { useNavigate } from 'react-router-dom';
 import {jwtDecode} from 'jwt-decode';
-import './LoginPage.css'; // Make sure your CSS path is correct
+import './LoginPage.css';
 
 function LoginPage() {
-  const [email, setEmail] = useState(''); // Changed from username to email
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(''); // Reset any error message
+    setError('');
     try {
       const response = await axios.post('http://localhost:5239/login', {
-        email, // Adjusted for email
+        email,
         password,
       });
       const { token } = response.data;
       localStorage.setItem('token', token);
       const decoded = jwtDecode(token);
-      localStorage.setItem('user', decoded.sub); // You might want to store more than just username/email
-      navigate('/dashboard'); // Navigate to dashboard or your target route
+      localStorage.setItem('user', decoded.sub);
+      navigate('/dashboard');
     } catch (error) {
-      // A more detailed error handling can be implemented here
+      //TODO:more detailed error handling
       setError('Failed to login. Please check your credentials and try again.');
       console.error(error);
     }
