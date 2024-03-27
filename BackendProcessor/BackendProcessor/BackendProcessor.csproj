@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="Bogus" Version="35.5.0" />
     <PackageReference Include="FluentValidation" Version="11.9.0" />
     <PackageReference Include="libphonenumber-csharp" Version="8.13.32" />

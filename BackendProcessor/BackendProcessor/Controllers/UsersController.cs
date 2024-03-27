@@ -63,12 +63,7 @@ namespace BackendProcessor.Controllers
                 LastName = userDto.LastName,
                 UserName = userDto.UserName,
                 Email = userDto.Email,
-                Password = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                    password: userDto.Password,
-                    salt: new byte[128 / 8],
-                    prf: KeyDerivationPrf.HMACSHA256,
-                    iterationCount: 10000,
-                    numBytesRequested: 256 / 8)),
+                Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
                 DateOfCreation = DateTime.UtcNow
             };
 
