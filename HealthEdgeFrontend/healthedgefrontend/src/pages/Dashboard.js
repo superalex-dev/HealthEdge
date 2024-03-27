@@ -8,6 +8,7 @@ const Dashboard = () => {
       <nav>
         <ul>
           <li><Link to="/book-appointment">Book Appointment</Link></li>
+          <li><Link to="/">Login</Link></li>
         </ul>
       </nav>
     </div>
