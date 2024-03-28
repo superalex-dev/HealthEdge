@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/joy";
-import { Input } from "@mui/joy";
 import "./RegisterPage.css";
 
 function RegisterPage() {
@@ -40,6 +39,10 @@ function RegisterPage() {
       console.error(error);
     }
   };
+
+  const handleLoginClick = () => {
+    navigate("/login");
+  }
 
   return (
     <div className="register-page">
@@ -99,6 +102,9 @@ function RegisterPage() {
           />
           <Button color="primary" type="submit" fullWidth>
             Create account
+          </Button>
+          <Button color="danger" type="button" onClick={handleLoginClick}>
+            Already have an account
           </Button>
         </form>
       </div>

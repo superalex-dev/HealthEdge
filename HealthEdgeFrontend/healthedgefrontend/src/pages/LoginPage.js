@@ -31,6 +31,10 @@ function LoginPage() {
     }
   };
 
+  const handleJoinUsClick = () => {
+    navigate('/register');
+  };
+
   return (
     <div className="login-wrapper">
       <div className="login-form">
@@ -54,6 +58,7 @@ function LoginPage() {
           />
           {/* <button type="submit">Log in</button> */}
           <Button color="primary" type="submit">Log in</Button>
+          <Button color="danger" type="button" onClick={handleJoinUsClick}>Join us</Button>
         </form>
       </div>
     </div>
