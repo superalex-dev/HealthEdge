@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '@mui/joy';
 import {jwtDecode} from 'jwt-decode';
 import './LoginPage.css';
 
@@ -51,7 +52,8 @@ function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <button type="submit">Log in</button>
+          {/* <button type="submit">Log in</button> */}
+          <Button color="primary" type="submit">Log in</Button>
         </form>
       </div>
     </div>

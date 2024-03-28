@@ -24,6 +24,8 @@
 }
 
 .register-form {
+  display: flex;
+  flex-direction: column;
   max-width: 400px;
   width: 100%;
   margin: 0 auto;
@@ -31,7 +33,7 @@
 
 .input-row {
   display: flex;
-  gap: 10px;
+  gap: 20px;
 }
 
 .input-row > input {
@@ -44,14 +46,13 @@ h2 {
 }
 
 input[type="text"], input[type="email"], input[type="password"] {
-  width: 100%;
   padding: 10px;
   margin-bottom: 1rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.submit-btn {
+/* .submit-btn {
   width: 100%;
   padding: 15px;
   border: none;
@@ -64,7 +65,7 @@ input[type="text"], input[type="email"], input[type="password"] {
 
 .submit-btn:hover {
   background-color: #3D7AB5;
-}
+} */
 
 .error {
   color: #D8000C;
