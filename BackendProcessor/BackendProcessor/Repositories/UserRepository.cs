@@ -31,6 +31,17 @@ namespace BackendProcessor.Repositories
                 await _context.SaveChangesAsync();
             }
         }
+        
+        public async Task DeleteMultipleUsersAsync(IEnumerable<int> ids)
+        {
+            var users = _context.Users.Where(u => ids.Contains(u.Id));
+            
+            if (users.Any())
+            {
+                _context.Users.RemoveRange(users);
+                await _context.SaveChangesAsync();
+            }
+        }
 
         public async Task<User> EditUserAsync(int userId, User user)
         {

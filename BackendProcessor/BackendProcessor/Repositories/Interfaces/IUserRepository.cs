@@ -9,6 +9,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<User> CreateUserAsync(User user);
         Task<User> EditUserAsync(int userId, User user);
         Task DeleteUserAsync(int Id);
+        Task DeleteMultipleUsersAsync(IEnumerable<int> ids);
         Task<User> GetUserByIdAsync(int Id);
         Task<int> GetTotalUsersCountAsync();
         Task<User> GetUserByUsernameEmail(string username, string email);

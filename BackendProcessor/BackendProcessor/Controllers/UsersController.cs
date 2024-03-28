@@ -122,5 +122,13 @@ namespace BackendProcessor.Controllers
             
             return NoContent();
         }
+        
+        [HttpDelete("users/delete-multiple")]
+        public async Task<IActionResult> DeleteMultipleUsersAsync([FromBody] IEnumerable<int> userIds)
+        {
+            await _userRepository.DeleteMultipleUsersAsync(userIds);
+
+            return Ok();
+        }
     }
 }
