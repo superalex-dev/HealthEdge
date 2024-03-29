@@ -26,22 +26,24 @@ namespace BackendProcessor.Repositories
 
         public async Task<Doctor> CreateDoctorAsync(Doctor doctor)
         {
-            var lastDoctorUsername = await _context.Doctors
+            var lastDoctor = await _context.Doctors
                 .OrderByDescending(d => d.Username)
-                .Select(d => d.Username)
                 .FirstOrDefaultAsync();
 
             int nextNumber = 1;
-
-            if (lastDoctorUsername != null)
+            if (lastDoctor != null && !string.IsNullOrEmpty(lastDoctor.Username))
             {
-                string lastNumberStr = lastDoctorUsername.Substring("healthedge".Length);
-                if (int.TryParse(lastNumberStr, out int lastNumber))
+                var prefixLength = "healthedge".Length;
+                if (lastDoctor.Username.Length > prefixLength)
                 {
-                    nextNumber = lastNumber + 1;
+                    var lastNumberStr = lastDoctor.Username.Substring(prefixLength);
+                    if (int.TryParse(lastNumberStr, out var lastNumber))
+                    {
+                        nextNumber = lastNumber + 1;
+                    }
                 }
             }
-            
+
             doctor.Username = $"healthedge{nextNumber:0000}";
 
             _context.Doctors.Add(doctor);
