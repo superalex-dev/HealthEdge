@@ -11,12 +11,28 @@ namespace DataSeeder
 {
     public static class DataGenerator
     {
+        private static int doctorUsernameSequence = 1;
+        
+        static readonly List<string> medicalSpecializations = new List<string>
+        {
+            "Cardiology",
+            "Dermatology",
+            "Emergency Medicine",
+            "General Surgery",
+            "Neurology",
+            "Obstetrics and Gynecology",
+            "Oncology",
+            "Pediatrics",
+            "Psychiatry",
+            "Radiology"
+        };
         public static List<Doctor> GenerateDoctors(int count)
         {
             var doctorFaker = new Faker<Doctor>()
                 .RuleFor(d => d.FirstName, f => f.Name.FirstName())
                 .RuleFor(d => d.LastName, f => f.Name.LastName())
-                .RuleFor(d => d.Specialization, f => f.Commerce.Department())
+                .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
+                .RuleFor(d => d.Specialization, f => f.PickRandom(medicalSpecializations))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(d => d.Email, f => f.Internet.Email());
 
