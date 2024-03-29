@@ -17,6 +17,10 @@ namespace BackendProcessor.Models
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
+        
+        [Required] 
+        [StringLength(15)]
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100)]

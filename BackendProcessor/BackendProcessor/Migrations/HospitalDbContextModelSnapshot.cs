@@ -17,7 +17,7 @@ namespace BackendProcessor.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -55,7 +55,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Appointments", (string)null);
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Billing", b =>
@@ -79,7 +79,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("Billing", (string)null);
+                    b.ToTable("Billing");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
@@ -115,9 +115,14 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Doctors", (string)null);
+                    b.ToTable("Doctors");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
@@ -153,7 +158,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("PatientId");
 
-                    b.ToTable("MedicalRecords", (string)null);
+                    b.ToTable("MedicalRecords");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
@@ -204,7 +209,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Patients", (string)null);
+                    b.ToTable("Patients");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
@@ -235,7 +240,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Rooms", (string)null);
+                    b.ToTable("Rooms");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
@@ -282,7 +287,7 @@ namespace BackendProcessor.Migrations
                     b.HasIndex("UserName")
                         .IsUnique();
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.VIPRoom", b =>
@@ -305,7 +310,7 @@ namespace BackendProcessor.Migrations
 
                     b.HasIndex("RoomId");
 
-                    b.ToTable("VIPRooms", (string)null);
+                    b.ToTable("VIPRooms");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>
