@@ -38,22 +38,11 @@ namespace BackendProcessor.Data
                 entity.HasKey(u => u.Id);
                 entity.HasIndex(u => u.UserName).IsUnique();
                 entity.HasIndex(u => u.Email).IsUnique();
-                entity.Property(u => u.FirstName).IsRequired();
-                entity.Property(u => u.LastName).IsRequired();
-                entity.Property(u => u.Password).IsRequired();
-                entity.Property(u => u.DateOfCreation).IsRequired();
             });
 
             modelBuilder.Entity<Doctor>(entity =>
             {
                 entity.HasKey(d => d.Id);
-                entity.Property(d => d.FirstName).IsRequired();
-                entity.Property(d => d.LastName).IsRequired();
-                entity.Property(d => d.Specialization).IsRequired();
-                entity.Property(d => d.IsPediatrician).IsRequired();
-                entity.Property(d => d.City).IsRequired();
-                entity.Property(d => d.ContactNumber).IsRequired();
-                entity.Property(d => d.Email).IsRequired();
             });
 
             modelBuilder.Entity<Patient>(entity =>
@@ -63,17 +52,10 @@ namespace BackendProcessor.Data
                     .WithMany(u => u.Patients)
                     .HasForeignKey(p => p.UserId);
 
-                modelBuilder.Entity<Patient>()
-                .HasMany(p => p.Appointments)
-                .WithOne(a => a.Patient)
-                .HasForeignKey(a => a.PatientId);
-
-                entity.Property(p => p.FirstName).IsRequired();
-                entity.Property(p => p.LastName).IsRequired();
-                entity.Property(p => p.DateOfBirth).IsRequired();
-                entity.Property(p => p.Gender).IsRequired();
-                entity.Property(p => p.ContactNumber).IsRequired();
-                entity.Property(p => p.Address).IsRequired();
+                entity.HasMany(p => p.Appointments)
+                    .WithOne(a => a.Patient)
+                    .HasForeignKey(a => a.PatientId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Appointment>(entity =>
@@ -81,10 +63,13 @@ namespace BackendProcessor.Data
                 entity.HasKey(a => a.Id);
                 entity.HasOne(a => a.Patient)
                     .WithMany(p => p.Appointments)
-                    .HasForeignKey(a => a.PatientId);
+                    .HasForeignKey(a => a.PatientId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
                 entity.HasOne(a => a.Doctor)
                     .WithMany(d => d.Appointments)
-                    .HasForeignKey(a => a.DoctorId);
+                    .HasForeignKey(a => a.DoctorId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

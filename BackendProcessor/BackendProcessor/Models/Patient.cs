@@ -41,11 +41,16 @@ namespace BackendProcessor.Models
         [StringLength(255)]
         public string Address { get; set; }
 
+        public Patient()
+        {
+            Appointments = new List<Appointment>();
+        }
+        
         [ForeignKey("UserId")]
         public int? UserId { get; set; }
         
         public User? User { get; set; }
-
+        
         public ICollection<Appointment> Appointments { get; set; }
     }
 }
