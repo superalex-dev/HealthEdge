@@ -16,15 +16,15 @@ namespace Application
             await using var dbContext = new HospitalDbContext(optionsBuilder.Options);
 
             var doctors = DataGenerator.GenerateDoctors(48);
-            //var users = DataGenerator.GenerateUsers(100);
-            //await dbContext.Users.AddRangeAsync(users);
+            var users = DataGenerator.GenerateUsers(100);
+            await dbContext.Users.AddRangeAsync(users);
             await dbContext.SaveChangesAsync();
-            //var patients = DataGenerator.GeneratePatients(100, users);
-            //var rooms = DataGenerator.GenerateRooms(50);
+            var patients = DataGenerator.GeneratePatients(100, users);
+            var rooms = DataGenerator.GenerateRooms(50);
 
             await dbContext.Doctors.AddRangeAsync(doctors);
-            //await dbContext.Patients.AddRangeAsync(patients);
-            //await dbContext.Rooms.AddRangeAsync(rooms);
+            await dbContext.Patients.AddRangeAsync(patients);
+            await dbContext.Rooms.AddRangeAsync(rooms);
 
             await dbContext.SaveChangesAsync();
 
