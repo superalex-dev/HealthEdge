@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/joy";
 import "./RegisterPage.css";
+import { login } from "../utils/authUtils";
+import { LoginPage } from './LoginPage';
 
 function RegisterPage() {
   const [user, setUser] = useState({
@@ -32,7 +34,8 @@ function RegisterPage() {
         user
       );
       if (response.status === 200) {
-        navigate("/login");
+        login(user.email, user.password, navigate, setError);        
+        navigate("/dashboard");
       }
     } catch (error) {
       setError("Registration failed. Please try again.");
