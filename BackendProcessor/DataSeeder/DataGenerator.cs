@@ -26,6 +26,58 @@ namespace DataSeeder
             "Psychiatry",
             "Radiology"
         };
+
+        static readonly List<string> cities = new List<string>
+        {
+            "Sofia",
+            "Plovdiv",
+            "Varna",
+            "Burgas",
+            "Ruse",
+            "Pleven",
+            "Sliven",
+            "Dobrich",
+            "Shumen",
+            "Pernik",
+            "Haskovo",
+            "Yambol",
+            "Blagoevgrad",
+            "Veliko Tarnovo",
+            "Vratsa",
+            "Gabrovo",
+            "Asenovgrad",
+            "Vidin",
+            "Kazanlak",
+            "Kyustendil",
+            "Kardzhali",
+            "Montana",
+            "Lovech",
+            "Silistra",
+            "Targovishte",
+            "Dupnitsa",
+            "Svishtov",
+            "Smolyan",
+            "Petrich",
+            "Samokov",
+            "Lom",
+            "Karlovo",
+            "Sevlievo",
+            "Nova Zagora",
+            "Velingrad",
+            "Cherven Bryag",
+            "Troyan",
+            "Aytos",
+            "Byala Slatina",
+            "Botevgrad",
+            "Gotse Delchev",
+            "Berkovitsa",
+            "Pazardzhik",
+            "Harmanli",
+            "Karnobat",
+            "Svilengrad",
+            "Radomir",
+            "Radnevo"
+        };
         public static List<Doctor> GenerateDoctors(int count)
         {
             var doctorFaker = new Faker<Doctor>()
@@ -34,7 +86,9 @@ namespace DataSeeder
                 .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
                 .RuleFor(d => d.Specialization, f => f.PickRandom(medicalSpecializations))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(d => d.Email, f => f.Internet.Email());
+                .RuleFor(d => d.Email, f => f.Internet.Email())
+                .RuleFor(d => d.City, f => f.PickRandom(cities))
+                .RuleFor(d => d.IsPediatrician, f => f.Random.Bool());
 
             return doctorFaker.Generate(count);
         }
