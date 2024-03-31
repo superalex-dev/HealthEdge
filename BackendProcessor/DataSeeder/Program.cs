@@ -17,14 +17,27 @@ namespace Application
 
             var doctors = DataGenerator.GenerateDoctors(48);
             var users = DataGenerator.GenerateUsers(100);
-            await dbContext.Users.AddRangeAsync(users);
-            await dbContext.SaveChangesAsync();
+            //await dbContext.Users.AddRangeAsync(users);
+            //await dbContext.SaveChangesAsync();
             var patients = DataGenerator.GeneratePatients(100, users);
             var rooms = DataGenerator.GenerateRooms(50);
+            var appointments = DataGenerator.GenerateAppointments(100, patients, doctors, rooms);
 
+            await dbContext.Users.AddRangeAsync(users);
             await dbContext.Doctors.AddRangeAsync(doctors);
+            await dbContext.SaveChangesAsync();
+
             await dbContext.Patients.AddRangeAsync(patients);
-            await dbContext.Rooms.AddRangeAsync(rooms);
+            await dbContext.SaveChangesAsync();
+
+            await dbContext.Appointments.AddRangeAsync(appointments);
+            await dbContext.SaveChangesAsync();
+
+
+            //await dbContext.Doctors.AddRangeAsync(doctors);
+            //await dbContext.Patients.AddRangeAsync(patients);
+            //await dbContext.Rooms.AddRangeAsync(rooms);
+            //await dbContext.Appointments.AddRangeAsync(appointments);
 
             await dbContext.SaveChangesAsync();
 

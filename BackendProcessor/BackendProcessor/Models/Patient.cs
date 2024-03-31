@@ -30,6 +30,10 @@ namespace BackendProcessor.Models
         public string Gender { get; set; }
 
         [Required]
+        [StringLength(4)]
+        public string BloodType { get; set; }
+
+        [Required]
         [StringLength(50)]
         public string ContactNumber { get; set; }
 
@@ -41,5 +45,7 @@ namespace BackendProcessor.Models
         public int? UserId { get; set; }
         
         public User? User { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }

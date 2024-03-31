@@ -50,6 +50,8 @@ namespace BackendProcessor.Data
                 entity.Property(d => d.FirstName).IsRequired();
                 entity.Property(d => d.LastName).IsRequired();
                 entity.Property(d => d.Specialization).IsRequired();
+                entity.Property(d => d.IsPediatrician).IsRequired();
+                entity.Property(d => d.City).IsRequired();
                 entity.Property(d => d.ContactNumber).IsRequired();
                 entity.Property(d => d.Email).IsRequired();
             });
@@ -61,12 +63,28 @@ namespace BackendProcessor.Data
                     .WithMany(u => u.Patients)
                     .HasForeignKey(p => p.UserId);
 
+                modelBuilder.Entity<Patient>()
+                .HasMany(p => p.Appointments)
+                .WithOne(a => a.Patient)
+                .HasForeignKey(a => a.PatientId);
+
                 entity.Property(p => p.FirstName).IsRequired();
                 entity.Property(p => p.LastName).IsRequired();
                 entity.Property(p => p.DateOfBirth).IsRequired();
                 entity.Property(p => p.Gender).IsRequired();
                 entity.Property(p => p.ContactNumber).IsRequired();
                 entity.Property(p => p.Address).IsRequired();
+            });
+
+            modelBuilder.Entity<Appointment>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.HasOne(a => a.Patient)
+                    .WithMany(p => p.Appointments)
+                    .HasForeignKey(a => a.PatientId);
+                entity.HasOne(a => a.Doctor)
+                    .WithMany(d => d.Appointments)
+                    .HasForeignKey(a => a.DoctorId);
             });
         }
     }

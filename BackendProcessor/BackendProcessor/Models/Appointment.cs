@@ -11,13 +11,25 @@ namespace BackendProcessor.Models
         public int Id { get; set; }
 
         [Required]
+        [ForeignKey("PatientId")]
         public int PatientId { get; set; }
 
         [Required]
+        [ForeignKey("DoctorId")]
         public int DoctorId { get; set; }
 
         [Required]
         public DateTime RecordDate { get; set; }
+
+        // Always 1H
+        [Required]
+        public DateTime AppointmentDate { get; set; }
+
+        public int RoomNumber { get; set; }
+
+        public bool IsCancelled { get; set; }
+
+        public bool IsCompleted { get; set; }
 
         [Required]
         [StringLength(255)]

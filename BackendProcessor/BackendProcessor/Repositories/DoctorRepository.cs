@@ -2,6 +2,7 @@
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendProcessor.Repositories
 {
@@ -31,9 +32,11 @@ namespace BackendProcessor.Repositories
                 .FirstOrDefaultAsync();
 
             int nextNumber = 1;
+
             if (lastDoctor != null && !string.IsNullOrEmpty(lastDoctor.Username))
             {
                 var prefixLength = "healthedge".Length;
+
                 if (lastDoctor.Username.Length > prefixLength)
                 {
                     var lastNumberStr = lastDoctor.Username.Substring(prefixLength);
@@ -46,7 +49,7 @@ namespace BackendProcessor.Repositories
 
             doctor.Username = $"healthedge{nextNumber:0000}";
 
-            _context.Doctors.Add(doctor);
+            await _context.Doctors.AddAsync(doctor);
             await _context.SaveChangesAsync();
             return doctor;
         }
@@ -60,6 +63,7 @@ namespace BackendProcessor.Repositories
         public async Task DeleteDoctorAsync(int id)
         {
             var doctor = await _context.Doctors.FindAsync(id);
+
             if (doctor != null)
             {
                 _context.Doctors.Remove(doctor);
@@ -69,13 +73,37 @@ namespace BackendProcessor.Repositories
 
         public async Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids)
         {
-            var doctors = _context.Doctors.Where(d => ids.Contains(d.Id));
+            var doctors = await _context.Doctors.Where(d => ids.Contains(d.Id)).ToListAsync();
             
             if (doctors.Any())
             {
                 _context.Doctors.RemoveRange(doctors);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<ICollection<Doctor>> SearchForDoctorAsync(string specialization, bool needsToBeAPediatrician, string cityPreference)
+        {
+            var query = _context.Doctors.AsQueryable();
+
+            if (!string.IsNullOrEmpty(specialization))
+            {
+                query = query.Where(d => d.Specialization == specialization);
+            }
+
+            if (!string.IsNullOrEmpty(cityPreference))
+            {
+                query = query.Where(d => d.City == cityPreference);
+            }
+
+            if (needsToBeAPediatrician)
+            {
+                query = query.Where(d => d.IsPediatrician);
+            }
+
+            var doctors = await query.Include(d => d.Appointments).ToListAsync();
+
+            return doctors;
         }
     }
 }
