@@ -26,6 +26,8 @@ namespace DataSeeder
             "Psychiatry",
             "Radiology"
         };
+        
+        //31.03 before 13:00
         public static List<Doctor> GenerateDoctors(int count)
         {
             var doctorFaker = new Faker<Doctor>()
