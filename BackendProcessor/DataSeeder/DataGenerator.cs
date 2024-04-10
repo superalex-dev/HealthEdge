@@ -234,6 +234,7 @@ namespace DataSeeder
             "Ceftolozane-tazobactam",
         };
 
+
         public static List<Doctor> GenerateDoctors(int count)
         {
             var doctorFaker = new Faker<Doctor>()
@@ -249,7 +250,7 @@ namespace DataSeeder
             return doctorFaker.Generate(count);
         }
 
-        public static List<Patient> GeneratePatients(int count, List<User> users)
+        public static List<Patient> GeneratePatients(int count, ICollection<User> users)
         {
             var userIds = users.Select(u => u.Id).ToList();
             var patientFaker = new Faker<Patient>()
@@ -305,7 +306,7 @@ namespace DataSeeder
             return userFaker.Generate(count);
         }
 
-        public static List<Appointment> GenerateAppointments(int count, ICollection<Patient> patients, ICollection<Doctor> doctors, ICollection<Room> rooms)
+        public static List<Appointment> GenerateAppointments(int count, ICollection<Patient> patients, List<Doctor> doctors, ICollection<Room> rooms)
         {
             var appointmentFaker = new Faker<Appointment>()
                 .RuleFor(a => a.RecordDate, f => f.Date.Future(1))
@@ -313,13 +314,12 @@ namespace DataSeeder
                 .RuleFor(a => a.Treatment, f => f.PickRandom(treatments))
                 .RuleFor(a => a.AppointmentDate, f => f.Date.Future(1))
                 .RuleFor(a => a.PatientId, f => f.PickRandom(patients).Id)
-                .RuleFor(a => a.DoctorId, f => f.PickRandom(doctors).Id)
+                 .RuleFor(a => a.DoctorId, f => f.PickRandom(doctors).Id)
                 .RuleFor(a => a.RoomNumber, f => f.PickRandom(rooms).RoomNumber)
                 .RuleFor(a => a.IsCancelled, f => f.Random.Bool())
                 .RuleFor(a => a.IsCompleted, f => f.Random.Bool());
 
             return appointmentFaker.Generate(count);
         }
-
     }
 }
