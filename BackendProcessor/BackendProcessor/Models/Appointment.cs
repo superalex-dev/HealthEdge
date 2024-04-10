@@ -11,11 +11,11 @@ namespace BackendProcessor.Models
         public int Id { get; set; }
 
         [Required]
-        [ForeignKey("PatientId")]
+        //[ForeignKey("PatientId")]
         public int PatientId { get; set; }
 
         [Required]
-        [ForeignKey("DoctorId")]
+        //[ForeignKey("DoctorId")]
         public int DoctorId { get; set; }
 
         [Required]

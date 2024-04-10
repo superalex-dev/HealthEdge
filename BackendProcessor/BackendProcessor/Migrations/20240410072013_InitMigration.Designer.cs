@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendProcessor.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20240329090138_AddDoctorUsernameAndGeneratedUsernameByPattern")]
-    partial class AddDoctorUsernameAndGeneratedUsernameByPattern
+    [Migration("20240410072013_InitMigration")]
+    partial class InitMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace BackendProcessor.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("AppointmentDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Diagnosis")
                         .IsRequired()
                         .HasMaxLength(255)
@@ -41,11 +44,20 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsCancelled")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("RecordDate")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Treatment")
                         .IsRequired()
@@ -93,6 +105,11 @@ namespace BackendProcessor.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -107,6 +124,9 @@ namespace BackendProcessor.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
+
+                    b.Property<bool>("IsPediatrician")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -176,6 +196,11 @@ namespace BackendProcessor.Migrations
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
+
+                    b.Property<string>("BloodType")
+                        .IsRequired()
+                        .HasMaxLength(4)
+                        .HasColumnType("character varying(4)");
 
                     b.Property<string>("ContactNumber")
                         .IsRequired()
@@ -284,12 +309,6 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.HasIndex("UserName")
-                        .IsUnique();
-
                     b.ToTable("Users");
                 });
 
@@ -319,13 +338,13 @@ namespace BackendProcessor.Migrations
             modelBuilder.Entity("BackendProcessor.Models.Appointment", b =>
                 {
                     b.HasOne("BackendProcessor.Models.Doctor", "Doctor")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("BackendProcessor.Models.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -383,6 +402,16 @@ namespace BackendProcessor.Migrations
                         .IsRequired();
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
