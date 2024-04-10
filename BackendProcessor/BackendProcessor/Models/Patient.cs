@@ -45,6 +45,6 @@ namespace BackendProcessor.Models
         
         public User? User { get; set; }
 
-        public IEnumerable<Appointment> Appointments { get; set; }
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }
