@@ -15,6 +15,7 @@ import {jwtDecode} from 'jwt-decode';
     const handleSubmit = (e) => {
       e.preventDefault();
       login(email, password, navigate, setError);
+      navigate ('/dashboard');
     };
 
   const handleJoinUsClick = () => {
@@ -43,7 +44,7 @@ import {jwtDecode} from 'jwt-decode';
             onChange={(e) => setPassword(e.target.value)}
           />
           {/* <button type="submit">Log in</button> */}
-          <Button color="primary" type="submit">Log in</Button>
+          <Button color="primary" type="submit" onClick={handleSubmit}>Log in</Button>
           <Button color="danger" type="button" onClick={handleJoinUsClick}>Join us</Button>
         </form>
       </div>

@@ -10,12 +10,17 @@ const PatientCard = ({ patient, onEdit, onDelete }) => {
   };
 
   return (
-    <div className="border border-gray-300 shadow rounded-md p-4 max-w-sm w-full mx-auto mb-4">
+    <div className="border border-gray-300 shadow rounded-md p-4 max-w-md w-full mx-auto mb-4">
       <div className="flex justify-between items-center">
         <div>
           <h3 className="text-lg font-semibold">{`${patient.firstName} ${patient.lastName}`}</h3>
           <p className="text-gray-600">Email: {patient.email}</p>
           <p className="text-gray-500">DOB: {new Date(patient.dateOfBirth).toLocaleDateString()}</p>
+          <p className="text-gray-500">Gender: {patient.gender}</p>
+          <p className="text-gray-500">Blood Type: {patient.bloodType}</p>
+          <p className='text-gray-500'>Phone: {patient.contactNumber}</p>
+          <p className='text-gray-500'>Address: {patient.address}</p>
+          <p className='text-gray-500'>UserId: {patient.userId}</p>
         </div>
         <div className="flex items-center">
           <button

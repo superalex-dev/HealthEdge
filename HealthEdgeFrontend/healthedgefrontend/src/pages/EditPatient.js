@@ -8,6 +8,11 @@ const EditPatient = () => {
     lastName: '',
     email: '',
     dateOfBirth: '',
+    gender: '',
+    bloodType: '',
+    contactNumber: '',
+    address: '',
+    userId: '',
   });
   const { id } = useParams();
   const navigate = useNavigate();
@@ -87,6 +92,14 @@ const EditPatient = () => {
             type="date"
             name="dateOfBirth"
             value={patient.dateOfBirth.slice(0, 10)}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+          <label className="block text-sm font-medium text-gray-700">Blood type:</label>
+          <input
+            type="text"
+            name="bloodType"
+            value={patient.bloodType}
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
