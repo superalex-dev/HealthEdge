@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const EditPatient = () => {
   const [patient, setPatient] = useState({
@@ -41,15 +43,30 @@ const EditPatient = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      await axios.put(`http://localhost:5239/patients/edit/${id}`, patient);
-      navigate('/patients');
-    } catch (error) {
-      console.error('Failed to update patient:', error);
-      // Optionally handle the error
-    }
+    confirmAlert({
+      title: 'Confirm to update',
+      message: 'Are you sure you want to update this patient?',
+      buttons: [
+        {
+          label: 'Yes',
+          onClick: async () => {
+            try {
+              await axios.put(`http://localhost:5239/patients/edit/${id}`, patient);
+              navigate('/patients');
+            } catch (error) {
+              console.error('Failed to update patient:', error);
+              // Optionally handle the error
+            }
+          }
+        },
+        {
+          label: 'No',
+          onClick: () => {}
+        }
+      ]
+    });
   };
 
   return (
@@ -95,6 +112,18 @@ const EditPatient = () => {
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Gender:</label>
+          <input
+            type="text"
+            name= "gender"
+            value = {patient.gender}
+            onChange = {handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div>
           <label className="block text-sm font-medium text-gray-700">Blood type:</label>
           <input
             type="text"
@@ -103,6 +132,28 @@ const EditPatient = () => {
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           />
+          </div>
+          <div>
+          <label className="block text-sm font-medium text-gray-700"> Contact Number:</label>
+          <input
+            type="text"
+            name="contactNumber"
+            value={patient.contactNumber}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+          </div>
+          <div>
+          <label className="block text-sm font-medium text-gray-700"> Address:</label>
+          <input
+            type="text"
+            name="address"
+            value={patient.address}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+          </div>
+          <div>
         </div>
         <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
           Update Patient

@@ -1,7 +1,5 @@
-// authUtils.js
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode'; // Ensure jwt-decode is correctly imported
+import { jwtDecode } from 'jwt-decode';
 
 export const login = async (email, password, navigate, setError) => {
   try {

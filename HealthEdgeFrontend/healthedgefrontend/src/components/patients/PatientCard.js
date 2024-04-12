@@ -16,11 +16,7 @@ const PatientCard = ({ patient, onEdit, onDelete }) => {
           <h3 className="text-lg font-semibold">{`${patient.firstName} ${patient.lastName}`}</h3>
           <p className="text-gray-600">Email: {patient.email}</p>
           <p className="text-gray-500">DOB: {new Date(patient.dateOfBirth).toLocaleDateString()}</p>
-          <p className="text-gray-500">Gender: {patient.gender}</p>
-          <p className="text-gray-500">Blood Type: {patient.bloodType}</p>
           <p className='text-gray-500'>Phone: {patient.contactNumber}</p>
-          <p className='text-gray-500'>Address: {patient.address}</p>
-          <p className='text-gray-500'>UserId: {patient.userId}</p>
         </div>
         <div className="flex items-center">
           <button
