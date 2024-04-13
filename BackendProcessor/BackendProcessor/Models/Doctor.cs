@@ -21,6 +21,13 @@ namespace BackendProcessor.Models
         [StringLength(15)]
         public string Username { get; set; }
 
+        [StringLength(30)]
+        public string City { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+
+        public bool IsPediatrician { get; set; }
+
         [Required]
         [StringLength(100)]
         public string Specialization { get; set; }

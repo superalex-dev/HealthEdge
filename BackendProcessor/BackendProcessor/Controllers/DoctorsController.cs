@@ -63,7 +63,7 @@ namespace BackendProcessor.Controllers
 
             await _doctorRepository.UpdateDoctorAsync(doctor);
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("doctors/delete/{Id}")]
@@ -71,7 +71,7 @@ namespace BackendProcessor.Controllers
         {
             await _doctorRepository.DeleteDoctorAsync(Id);
 
-            return NoContent();
+            return Ok();
         }
         
         [HttpDelete("doctors/delete-multiple")]
@@ -79,7 +79,20 @@ namespace BackendProcessor.Controllers
         {
             await _doctorRepository.DeleteMultipleDoctorsAsync(ids);
 
-            return NoContent();
+            return Ok();
+        }
+
+        [HttpGet("doctors/search")]
+        public async Task<IActionResult> SearchForDoctorAsync([FromQuery] string specialization, [FromQuery] bool needsToBeAPediatrician, [FromQuery] string cityPreference)
+        {
+            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specialization, needsToBeAPediatrician, cityPreference);
+
+            if (doctors == null || doctors.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(doctors);
         }
     }
 }
