@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Calendar from 'react-calendar'
 import './Dashboard.css'; 
 
 const Dashboard = () => {
@@ -14,7 +13,6 @@ const Dashboard = () => {
           <li><Link to="/patients">Patients</Link></li>
         </ul>
       </nav>
-      <Calendar />
     </div>
   );
 };
