@@ -40,16 +40,18 @@ public class AppointmentRepository : IAppointmentRepository
     {
         TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
         TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
-        
-        if (appointment.AppointmentTime.TimeOfDay < startOfWorkDay || 
-            appointment.AppointmentTime.TimeOfDay > endOfWorkDay)
+        TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
+
+        if (appointment.AppointmentTime.TimeOfDay < startOfWorkDay ||
+            appointment.AppointmentTime.TimeOfDay > endOfWorkDay - appointmentDuration)
         {
             throw new InvalidOperationException("Appointment time is outside of working hours.");
         }
 
         var existingAppointment = await _context.Appointments
             .FirstOrDefaultAsync(a => a.DoctorId == appointment.DoctorId &&
-                                      a.AppointmentTime == appointment.AppointmentTime);
+                                      a.AppointmentTime >= appointment.AppointmentTime &&
+                                      a.AppointmentTime < appointment.AppointmentTime + appointmentDuration);
 
         if (existingAppointment != null)
         {

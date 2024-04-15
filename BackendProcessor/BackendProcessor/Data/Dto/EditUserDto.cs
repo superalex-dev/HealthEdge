@@ -7,6 +7,13 @@ public class EditUserDto
     public string LastName { get; set; }
     public string UserName { get; set; }
     public string Email { get; set; }
-    public string Password { get; set; }
-    public DateTime DateOfCreation { get; set; }
+
+    public EditUserDto(int id, string firstName, string lastName, string userName, string email)
+    {
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        UserName = userName;
+        Email = email;
+    }
 }

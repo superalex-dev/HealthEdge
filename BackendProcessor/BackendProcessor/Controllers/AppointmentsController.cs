@@ -42,14 +42,25 @@ public class AppointmentsController : ControllerBase
     {
         return Ok(await _appointmentRepository.GetAppointmentsByPatientIdAsync(patientId));
     }
-    
+
     [HttpPost("create")]
     public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
     {
-        var createdAppointment = await _appointmentRepository.CreateAppointmentAsync(appointment);
-        return CreatedAtAction(nameof(GetAppointment), new { Id = createdAppointment.Id }, createdAppointment);
+        try
+        {
+            var createdAppointment = await _appointmentRepository.CreateAppointmentAsync(appointment);
+            return CreatedAtAction(nameof(GetAppointment), new { Id = createdAppointment.Id }, createdAppointment);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "An error occurred while creating the appointment.");
+        }
     }
-    
+
     [HttpPut("edit/{Id}")]
     public async Task<IActionResult> EditAppointment(int Id, Appointment appointment)
     {

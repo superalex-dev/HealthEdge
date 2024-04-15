@@ -10,4 +10,16 @@ public class PatientCreationDto
     public string ContactNumber { get; set; }
     public string Address { get; set; }
     public int UserId { get; set; }
+
+    public PatientCreationDto(string firstName, string lastName, string email, DateOnly dateOfBirth, string gender, string contactNumber, string address, int userId)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        Email = email;
+        DateOfBirth = dateOfBirth;
+        Gender = gender;
+        ContactNumber = contactNumber;
+        Address = address;
+        UserId = userId;
+    }
 }

@@ -52,7 +52,7 @@ namespace BackendProcessor.Controllers
             {
                 return NotFound("User not found.");
             }
-            
+
             var patient = new Patient
             {
                 FirstName = patientDto.FirstName,
@@ -85,7 +85,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest("Failed to create patient.");
             }
 
-            return Ok(patientResponseDto); 
+            return Ok(patientResponseDto);
         }
 
         [HttpGet("patients/count")]

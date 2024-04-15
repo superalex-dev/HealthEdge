@@ -256,7 +256,7 @@ namespace DataSeeder
             var patientFaker = new Faker<Patient>()
                 .RuleFor(p => p.FirstName, f => f.Name.FirstName())
                 .RuleFor(p => p.LastName, f => f.Name.LastName())
-                .RuleFor(p => p.DateOfBirth, f => f.Date.Past(80))
+                .RuleFor(p => p.DateOfBirth, f => f.Date.PastDateOnly(80))
                 .RuleFor(p => p.Gender, f => f.PickRandom(new[] { "M", "F" }))
                 .RuleFor(p => p.BloodType, f => f.PickRandom(patientBloodTypes))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
