@@ -6,6 +6,15 @@
         public int DoctorId { get; set; }
         public DateTime AppointmentTime { get; set; }
         public string Notes { get; set; }
-        public int Status { get; set; }
+        public string Status { get; set; }
+
+        public AppointmentCreationDto(int patientId, int doctorId, DateTime appointmentTime, string notes, string status)
+        {
+            PatientId = patientId;
+            DoctorId = doctorId;
+            AppointmentTime = appointmentTime;
+            Notes = notes;
+            Status = status;
+        }
     }
 }

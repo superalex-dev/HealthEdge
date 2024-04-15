@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -44,10 +45,19 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpPost("create")]
-    public async Task<ActionResult<Appointment>> CreateAppointment(Appointment appointment)
+    public async Task<ActionResult<Appointment>> CreateAppointment(AppointmentCreationDto appointmentDto)
     {
         try
         {
+            var appointment = new Appointment
+            {
+                PatientId = appointmentDto.PatientId,
+                DoctorId = appointmentDto.DoctorId,
+                AppointmentTime = appointmentDto.AppointmentTime,
+                Notes = appointmentDto.Notes,
+                Status = appointmentDto.Status
+            };
+
             var createdAppointment = await _appointmentRepository.CreateAppointmentAsync(appointment);
             return CreatedAtAction(nameof(GetAppointment), new { Id = createdAppointment.Id }, createdAppointment);
         }
