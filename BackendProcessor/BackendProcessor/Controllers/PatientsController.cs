@@ -116,5 +116,31 @@ namespace BackendProcessor.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("patients/search/{patientName}")]
+        public async Task<IActionResult> SearchPatientAsync(string patientName)
+        {
+            var patients = await _patientRepository.SearchPatientAsync(patientName);
+
+            if (patients == null || patients.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(patients);
+        }
+
+        [HttpGet("patients/searchByDateOfBirth/{patientDateOfBirth}")]
+        public async Task<IActionResult> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth)
+        {
+            var patients = await _patientRepository.SearchPatientByDateOfBirthAsync(patientDateOfBirth);
+
+            if (patients == null || patients.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(patients);
+        }
     }
 }

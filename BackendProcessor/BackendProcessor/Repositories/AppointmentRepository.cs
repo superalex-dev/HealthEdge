@@ -62,7 +62,7 @@ public class AppointmentRepository : IAppointmentRepository
         return appointment;
     }
 
-    public async Task UpdateAppointmentAsync(Appointment appointment)
+    public async Task EditAppointmentAsync(Appointment appointment)
     {
         _context.Entry(appointment).State = EntityState.Modified;
         await _context.SaveChangesAsync();

@@ -2,6 +2,7 @@
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Policy;
 
 namespace BackendProcessor.Repositories
 {
@@ -50,6 +51,24 @@ namespace BackendProcessor.Repositories
                 _context.Patients.Remove(patient);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Patient>> SearchPatientAsync(string patientName)
+        {
+            var patients = await _context.Patients
+                .Where(p => p.FirstName.Contains(patientName) || p.LastName.Contains(patientName))
+                .ToListAsync();
+
+            return patients;
+        }
+
+        public async Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth)
+        {
+            var patients = await _context.Patients
+                .Where(p => p.DateOfBirth == patientDateOfBirth)
+                .ToListAsync();
+
+            return patients;
         }
     }
 }

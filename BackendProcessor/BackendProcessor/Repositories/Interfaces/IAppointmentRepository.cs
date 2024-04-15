@@ -9,7 +9,7 @@ public interface IAppointmentRepository
     Task<IEnumerable<Appointment>> GetAppointmentsByDoctorIdAsync(int doctorId);
     Task<IEnumerable<Appointment>> GetAppointmentsByPatientIdAsync(int patientId);
     Task<Appointment> CreateAppointmentAsync(Appointment appointment);
-    Task UpdateAppointmentAsync(Appointment appointment);
+    Task EditAppointmentAsync(Appointment appointment);
     Task DeleteAppointmentAsync(int appointmentId);
     Task<IEnumerable<DateTime>> GetAvailableSlots(int doctorId, DateTime desiredDate);
 }

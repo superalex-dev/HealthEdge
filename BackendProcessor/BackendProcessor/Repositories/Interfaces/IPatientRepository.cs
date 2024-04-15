@@ -10,5 +10,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<int> GetTotalPatientsCountAsync();
         Task UpdatePatientAsync(Patient patient);
         Task DeletePatientAsync(int id);
+        Task<List<Patient>> SearchPatientAsync(string patientName);
+        Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth);
     }
 }
