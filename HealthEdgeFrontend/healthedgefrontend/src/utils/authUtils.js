@@ -12,8 +12,10 @@ export const login = async (email, password, navigate, setError) => {
     const decoded = jwtDecode(token);
     localStorage.setItem('user', JSON.stringify(decoded));
     navigate('/dashboard');
+    return true;
   } catch (error) {
     setError('Failed to login. Please check your credentials and try again.');
     console.error(error);
+    return false;
   }
 };
