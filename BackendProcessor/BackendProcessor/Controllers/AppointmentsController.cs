@@ -88,22 +88,24 @@ public class AppointmentsController : ControllerBase
         await _appointmentRepository.DeleteAppointmentAsync(Id);
         return NoContent();
     }
-    
-    [HttpGet("AvailableSlots/{doctorId}")]
-    public async Task<ActionResult<IEnumerable<DateTime>>> GetAvailableSlots(int doctorId, [FromQuery] DateTime date)
+
+    [HttpGet("availableSlots/{doctorId}")]
+    public async Task<ActionResult<DateTime?>> GetAvailaleSlots(int doctorId, [FromQuery] DateTime date)
     {
-        if (date == null)
+        if (date == default(DateTime))
         {
             return BadRequest("Date is required.");
         }
 
-        var availableSlots = await _appointmentRepository.GetAvailableSlots(doctorId, date);
+        DateTime utcDate = DateTime.SpecifyKind(date, DateTimeKind.Utc);
 
-        if (availableSlots == null || !availableSlots.Any())
+        var earliestAvailableSlot = await _appointmentRepository.GetAvailaleSlots(doctorId, utcDate);
+
+        if (earliestAvailableSlot == null)
         {
             return NotFound("No available slots for this date.");
         }
 
-        return Ok(availableSlots);
+        return Ok(earliestAvailableSlot);
     }
 }

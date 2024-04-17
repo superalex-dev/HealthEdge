@@ -79,19 +79,17 @@ public class AppointmentRepository : IAppointmentRepository
             await _context.SaveChangesAsync();
         }
     }
-    
-    public async Task<IEnumerable<DateTime>> GetAvailableSlots(int doctorId, DateTime desiredDate)
+
+    public async Task<DateTime?> GetAvailaleSlots(int doctorId, DateTime desiredDate)
     {
         TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
         TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
         TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
 
-        List<DateTime> availableSlots = new List<DateTime>();
-        
         DateTime currentSlot = desiredDate.Date + startOfWorkDay;
-        
+
         var appointments = await _context.Appointments
-            .Where(a => a.DoctorId == doctorId && 
+            .Where(a => a.DoctorId == doctorId &&
                         a.AppointmentTime.Date == desiredDate.Date)
             .ToListAsync();
 
@@ -99,11 +97,11 @@ public class AppointmentRepository : IAppointmentRepository
         {
             if (!appointments.Any(a => a.AppointmentTime == currentSlot))
             {
-                availableSlots.Add(currentSlot);
+                return currentSlot;
             }
             currentSlot = currentSlot.Add(appointmentDuration);
         }
 
-        return availableSlots;
+        return null;
     }
 }
