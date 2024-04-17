@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/joy';
-import { login } from '../utils/authUtils'; 
+import { login } from '../../utils/authUtils'; 
 import './LoginPage.css';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
