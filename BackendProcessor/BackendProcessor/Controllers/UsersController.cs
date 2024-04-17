@@ -69,15 +69,14 @@ namespace BackendProcessor.Controllers
 
             var createdUser = await _userRepository.CreateUserAsync(user);
 
-            var userReturnDto = new UserDto
-            {
-                Id = createdUser.Id,
-                FirstName = createdUser.FirstName,
-                LastName = createdUser.LastName,
-                UserName = createdUser.UserName,
-                Email = createdUser.Email,
-                DateOfCreation = createdUser.DateOfCreation
-            };
+            var userReturnDto = new UserDto(
+                createdUser.Id,
+                createdUser.FirstName,
+                createdUser.LastName,
+                createdUser.UserName,
+                createdUser.Email,
+                createdUser.DateOfCreation
+                );
 
             return Ok(userReturnDto);
         }

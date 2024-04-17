@@ -67,18 +67,17 @@ namespace BackendProcessor.Controllers
 
             var createdPatient = await _patientRepository.CreatePatientAsync(patient);
 
-            var patientResponseDto = new PatientDto
-            {
-                Id = createdPatient.Id,
-                FirstName = createdPatient.FirstName,
-                LastName = createdPatient.LastName,
-                Email = createdPatient.Email,
-                DateOfBirth = createdPatient.DateOfBirth,
-                Gender = createdPatient.Gender,
-                ContactNumber = createdPatient.ContactNumber,
-                Address = createdPatient.Address,
-                UserId = userId
-            };
+            var patientResponseDto = new PatientDto(
+                createdPatient.Id,
+                createdPatient.FirstName,
+                createdPatient.LastName,
+                createdPatient.Email,
+                createdPatient.DateOfBirth,
+                createdPatient.Gender,
+                createdPatient.ContactNumber,
+                createdPatient.Address,
+                userId
+            );
 
             if (patientResponseDto == null)
             {
