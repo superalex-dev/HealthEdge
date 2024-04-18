@@ -100,7 +100,7 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpGet("doctors/specializations")]
-        public async Task<IActionResult> GetSpecializations()
+        public async Task<IActionResult> GetSpecializations() 
         {
             var specializations = await _context.Doctors
                 .Select(d => d.Specialization)
@@ -108,7 +108,9 @@ namespace BackendProcessor.Controllers
                 .ToListAsync();
 
             if (!specializations.Any())
+            {
                 return NoContent();
+            }
 
             return Ok(specializations);
         }
@@ -122,7 +124,9 @@ namespace BackendProcessor.Controllers
                 .ToListAsync();
 
             if (!cities.Any())
+            {
                 return NoContent();
+            }
 
             return Ok(cities);
         }
