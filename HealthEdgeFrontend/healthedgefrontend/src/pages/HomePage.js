@@ -33,7 +33,6 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Implementation of search functionality goes here
     console.log('Search criteria:', search);
   };
 
