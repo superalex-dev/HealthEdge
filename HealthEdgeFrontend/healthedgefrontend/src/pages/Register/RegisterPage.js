@@ -35,7 +35,7 @@ function RegisterPage() {
       );
       if (response.status === 200) {
         login(user.email, user.password, navigate, setError);        
-        navigate("/dashboard");
+        navigate("/register");
       }
     } catch (error) {
       setError("Registration failed. Please try again.");
