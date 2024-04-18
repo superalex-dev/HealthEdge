@@ -1,6 +1,6 @@
 # HealthEdge: Revolutionizing Hospital Management
 
-![HealthEdge Logo](https://github.com/superalex-dev/HealthEdge/blob/master/assets/healthedgelogo.png)
+![HealthEdge Logo](https://github.com/superalex-dev/HealthEdge/HealthEdgeFrontend/healthedgefrontend/src/blob/master/assets/healthedgelogo.png)
 
 **HealthEdge** is a comprehensive and state-of-the-art **Hospital Management System** designed to streamline and enhance the operations of healthcare facilities. Combining cutting-edge technology with user-friendly interfaces, HealthEdge empowers healthcare professionals to deliver high-quality patient care efficiently.
 
