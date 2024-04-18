@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import PatientCard from '../components/patients/PatientCard';
+import PatientCard from '../../components/patients/PatientCard';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+
 const Patients = () => {
   const [patients, setPatients] = useState([]);
   const navigate = useNavigate();

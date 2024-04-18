@@ -23,7 +23,7 @@ namespace BackendProcessor.Models
         public string Email { get; set; }
 
         [Column(TypeName = "Date")]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
         [Required]
         [StringLength(1)]

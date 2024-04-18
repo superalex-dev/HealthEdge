@@ -38,12 +38,33 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> CreateAppointmentAsync(Appointment appointment)
     {
+        TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
+        TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
+        TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
+
+        if (appointment.AppointmentTime.TimeOfDay < startOfWorkDay ||
+            appointment.AppointmentTime.TimeOfDay > endOfWorkDay - appointmentDuration)
+        {
+            throw new InvalidOperationException("Appointment time is outside of working hours.");
+        }
+
+        var existingAppointment = await _context.Appointments
+            .FirstOrDefaultAsync(a => a.DoctorId == appointment.DoctorId &&
+                                      a.AppointmentTime >= appointment.AppointmentTime &&
+                                      a.AppointmentTime < appointment.AppointmentTime + appointmentDuration);
+
+        if (existingAppointment != null)
+        {
+            throw new InvalidOperationException("This time slot is already booked.");
+        }
+
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
+
         return appointment;
     }
 
-    public async Task UpdateAppointmentAsync(Appointment appointment)
+    public async Task EditAppointmentAsync(Appointment appointment)
     {
         _context.Entry(appointment).State = EntityState.Modified;
         await _context.SaveChangesAsync();
@@ -57,5 +78,30 @@ public class AppointmentRepository : IAppointmentRepository
             _context.Appointments.Remove(appointment);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public async Task<DateTime?> GetAvailaleSlots(int doctorId, DateTime desiredDate)
+    {
+        TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
+        TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
+        TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
+
+        DateTime currentSlot = desiredDate.Date + startOfWorkDay;
+
+        var appointments = await _context.Appointments
+            .Where(a => a.DoctorId == doctorId &&
+                        a.AppointmentTime.Date == desiredDate.Date)
+            .ToListAsync();
+
+        while (currentSlot.TimeOfDay <= endOfWorkDay - appointmentDuration)
+        {
+            if (!appointments.Any(a => a.AppointmentTime == currentSlot))
+            {
+                return currentSlot;
+            }
+            currentSlot = currentSlot.Add(appointmentDuration);
+        }
+
+        return null;
     }
 }

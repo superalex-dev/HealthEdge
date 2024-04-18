@@ -3,8 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/joy";
 import "./RegisterPage.css";
-import { login } from "../utils/authUtils";
-import { LoginPage } from './LoginPage';
+import { login } from "../../utils/authUtils";
+import { LoginPage } from '../Login/LoginPage';
 
 function RegisterPage() {
   const [user, setUser] = useState({

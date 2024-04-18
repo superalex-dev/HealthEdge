@@ -69,15 +69,14 @@ namespace BackendProcessor.Controllers
 
             var createdUser = await _userRepository.CreateUserAsync(user);
 
-            var userReturnDto = new UserDto
-            {
-                Id = createdUser.Id,
-                FirstName = createdUser.FirstName,
-                LastName = createdUser.LastName,
-                UserName = createdUser.UserName,
-                Email = createdUser.Email,
-                DateOfCreation = createdUser.DateOfCreation
-            };
+            var userReturnDto = new UserDto(
+                createdUser.Id,
+                createdUser.FirstName,
+                createdUser.LastName,
+                createdUser.UserName,
+                createdUser.Email,
+                createdUser.DateOfCreation
+                );
 
             return Ok(userReturnDto);
         }
@@ -91,7 +90,7 @@ namespace BackendProcessor.Controllers
             {
                 return NotFound("User not found.");
             }
-            
+
             if (!string.IsNullOrEmpty(userDto.Email) && currentUser.Email != userDto.Email)
             {
                 var existingUserWithEmailOrUserName = await _userRepository.GetUserByUsernameEmail(userDto.Email, userDto.UserName);
@@ -100,12 +99,15 @@ namespace BackendProcessor.Controllers
                     return Conflict("A user with this email or user name already exists.");
                 }
             }
-            
-            currentUser.FirstName = userDto.FirstName;
-            currentUser.LastName = userDto.LastName;
-            currentUser.Email = userDto.Email;
 
-            var editedUser = await _userRepository.EditUserAsync(Id, currentUser);
+            var editUserDto = new EditUserDto(currentUser.Id, currentUser.FirstName, currentUser.LastName, currentUser.UserName, currentUser.Email);
+
+            editUserDto.FirstName = userDto.FirstName;
+            editUserDto.LastName = userDto.LastName;
+            editUserDto.Email = userDto.Email;
+            editUserDto.UserName = userDto.UserName;
+
+            var editedUser = await _userRepository.EditUserAsync(Id, editUserDto);
 
             if (editedUser == null)
             {

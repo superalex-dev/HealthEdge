@@ -52,7 +52,7 @@ namespace BackendProcessor.Controllers
             {
                 return NotFound("User not found.");
             }
-            
+
             var patient = new Patient
             {
                 FirstName = patientDto.FirstName,
@@ -67,25 +67,24 @@ namespace BackendProcessor.Controllers
 
             var createdPatient = await _patientRepository.CreatePatientAsync(patient);
 
-            var patientResponseDto = new PatientDto
-            {
-                Id = createdPatient.Id,
-                FirstName = createdPatient.FirstName,
-                LastName = createdPatient.LastName,
-                Email = createdPatient.Email,
-                DateOfBirth = createdPatient.DateOfBirth,
-                Gender = createdPatient.Gender,
-                ContactNumber = createdPatient.ContactNumber,
-                Address = createdPatient.Address,
-                UserId = userId
-            };
+            var patientResponseDto = new PatientDto(
+                createdPatient.Id,
+                createdPatient.FirstName,
+                createdPatient.LastName,
+                createdPatient.Email,
+                createdPatient.DateOfBirth,
+                createdPatient.Gender,
+                createdPatient.ContactNumber,
+                createdPatient.Address,
+                userId
+            );
 
             if (patientResponseDto == null)
             {
                 return BadRequest("Failed to create patient.");
             }
 
-            return Ok(patientResponseDto); 
+            return Ok(patientResponseDto);
         }
 
         [HttpGet("patients/count")]
@@ -115,6 +114,32 @@ namespace BackendProcessor.Controllers
             await _patientRepository.DeletePatientAsync(Id);
 
             return NoContent();
+        }
+
+        [HttpGet("patients/search/{patientName}")]
+        public async Task<IActionResult> SearchPatientAsync(string patientName)
+        {
+            var patients = await _patientRepository.SearchPatientAsync(patientName);
+
+            if (patients == null || patients.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(patients);
+        }
+
+        [HttpGet("patients/searchByDateOfBirth/{patientDateOfBirth}")]
+        public async Task<IActionResult> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth)
+        {
+            var patients = await _patientRepository.SearchPatientByDateOfBirthAsync(patientDateOfBirth);
+
+            if (patients == null || patients.Count() == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(patients);
         }
     }
 }

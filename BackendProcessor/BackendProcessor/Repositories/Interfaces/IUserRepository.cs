@@ -1,4 +1,5 @@
-﻿using BackendProcessor.Models;
+﻿using BackendProcessor.Data.Dto;
+using BackendProcessor.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendProcessor.Repositories.Interfaces
@@ -7,7 +8,7 @@ namespace BackendProcessor.Repositories.Interfaces
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> CreateUserAsync(User user);
-        Task<User> EditUserAsync(int userId, User user);
+        Task<User> EditUserAsync(int Id, EditUserDto userDto);
         Task DeleteUserAsync(int Id);
         Task DeleteMultipleUsersAsync(IEnumerable<int> ids);
         Task<User> GetUserByIdAsync(int Id);

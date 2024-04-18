@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@mui/joy';
-import { login } from '../utils/authUtils'; 
-import {jwtDecode} from 'jwt-decode';
-  import './LoginPage.css';
+import { login } from '../../utils/authUtils'; 
+import './LoginPage.css';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
   export function LoginPage() {
     const [email, setEmail] = useState('');
@@ -12,10 +12,22 @@ import {jwtDecode} from 'jwt-decode';
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
       e.preventDefault();
-      login(email, password, navigate, setError);
-      navigate ('/dashboard');
+      const result = await login(email, password, navigate, setError);
+      if (result) {
+        navigate('/dashboard');
+      } else {
+        confirmAlert({
+          title: 'Error',
+          message: 'Invalid credentials. Please try again.',
+          buttons: [
+            {
+              label: 'Ok',
+            },
+          ],
+        });
+      }
     };
 
   const handleJoinUsClick = () => {

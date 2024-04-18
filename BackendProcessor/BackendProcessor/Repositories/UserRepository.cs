@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using BackendProcessor.Data;
 using BackendProcessor.Repositories.Interfaces;
 using BackendProcessor.Models;
+using BackendProcessor.Data.Dto;
 
 namespace BackendProcessor.Repositories
 {
@@ -43,15 +44,21 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task<User> EditUserAsync(int userId, User user)
+        public async Task<User> EditUserAsync(int id, EditUserDto userDto)
         {
-            if (userId != user.Id)
+            var user = await _context.Users.FindAsync(id);
+
+            if (user == null)
             {
                 return null;
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            user.FirstName = userDto.FirstName;
+            user.LastName = userDto.LastName;
+            user.Email = userDto.Email;
+
             await _context.SaveChangesAsync();
+
             return user;
         }
 

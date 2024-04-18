@@ -1,14 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/Login/LoginPage';
 import Dashboard from './pages/Dashboard';
-import RegisterPage from './pages/RegisterPage';
-import EditPatient from './pages/EditPatient';
+import RegisterPage from './pages/Register/RegisterPage';
+import EditPatient from './pages/Patients/EditPatient';
 import ProtectedRoute from './components/ProtectedRoute';
-import Patients from './pages/Patients';
-import PatientDetails from './pages/PatientDetails';
+import Patients from './pages/Patients/Patients';
+import PatientDetails from './pages/Patients/PatientDetails';
 import BookAppointment from './pages/BookAppointment';
+import HomePage from './pages/HomePage';
+import DoctorsList from './pages/DoctorsList';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/lekari" element={<DoctorsList />} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />

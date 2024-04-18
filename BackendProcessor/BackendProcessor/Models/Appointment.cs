@@ -29,6 +29,6 @@ namespace BackendProcessor.Models
         public string Status { get; set; }
 
         [StringLength(500)]
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 }
