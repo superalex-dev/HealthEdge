@@ -16,7 +16,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
       e.preventDefault();
       const result = await login(email, password, navigate, setError);
       if (result) {
-        navigate('/dashboard');
+        navigate('/home');
       } else {
         confirmAlert({
           title: 'Error',
