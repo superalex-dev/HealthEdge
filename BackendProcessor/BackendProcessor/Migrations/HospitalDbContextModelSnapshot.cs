@@ -89,11 +89,6 @@ namespace BackendProcessor.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)");
-
                     b.Property<string>("ContactNumber")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -117,10 +112,11 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("Specialization")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int>("RegionId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SpecializationId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -128,6 +124,10 @@ namespace BackendProcessor.Migrations
                         .HasColumnType("character varying(15)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
+
+                    b.HasIndex("SpecializationId");
 
                     b.ToTable("Doctors");
                 });
@@ -224,6 +224,23 @@ namespace BackendProcessor.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("BackendProcessor.Models.Region", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Regions");
+                });
+
             modelBuilder.Entity("BackendProcessor.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -253,6 +270,23 @@ namespace BackendProcessor.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
+                });
+
+            modelBuilder.Entity("BackendProcessor.Models.Specialization", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Specializations");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.User", b =>
@@ -347,6 +381,25 @@ namespace BackendProcessor.Migrations
                         .IsRequired();
 
                     b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
+                {
+                    b.HasOne("BackendProcessor.Models.Region", "Region")
+                        .WithMany()
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("BackendProcessor.Models.Specialization", "Specialization")
+                        .WithMany()
+                        .HasForeignKey("SpecializationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Region");
+
+                    b.Navigation("Specialization");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>

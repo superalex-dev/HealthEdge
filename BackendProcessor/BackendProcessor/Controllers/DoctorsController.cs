@@ -87,9 +87,14 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpGet("doctors/search")]
-        public async Task<IActionResult> SearchForDoctorAsync([FromQuery] string specialization, [FromQuery] bool needsToBeAPediatrician, [FromQuery] string cityPreference)
+        public async Task<IActionResult> SearchForDoctorAsync([FromQuery] int? specialtyId, [FromQuery] bool needsToBeAPediatrician, [FromQuery] int? regionId, [FromQuery] string? firstName, string? lastName)
         {
-            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specialization, needsToBeAPediatrician, cityPreference);
+            if (!specialtyId.HasValue && !regionId.HasValue && string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+            {
+                return BadRequest("At least one search parameter must be provided.");
+            }
+
+            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specialtyId, needsToBeAPediatrician, regionId, firstName, lastName);
 
             if (doctors == null || doctors.Count == 0)
             {
@@ -103,7 +108,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetSpecializations() 
         {
             var specializations = await _context.Doctors
-                .Select(d => d.Specialization)
+                .Select(d => d.SpecializationId)
                 .Distinct()
                 .ToListAsync();
 
@@ -119,7 +124,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetCities()
         {
             var cities = await _context.Doctors
-                .Select(d => d.City)
+                .Select(d => d.RegionId)
                 .Distinct()
                 .ToListAsync();
 

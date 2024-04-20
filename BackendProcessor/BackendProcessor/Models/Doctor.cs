@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.CodeAnalysis;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BackendProcessor.Models
@@ -21,16 +22,17 @@ namespace BackendProcessor.Models
         [StringLength(15)]
         public string Username { get; set; }
 
-        [StringLength(30)]
-        public string City { get; set; }
+        [ForeignKey("RegionId")]
+        public int? RegionId { get; set; }
+        public Region Region { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
 
         public bool IsPediatrician { get; set; }
 
-        [Required]
-        [StringLength(100)]
-        public string Specialization { get; set; }
+        [ForeignKey("SpecializationId")]
+        public int? SpecializationId { get; set; }
+        public Specialization Specialization { get; set; }
 
         [Required]
         [StringLength(50)]
