@@ -34,7 +34,7 @@ function RegisterPage() {
         user
       );
       if (response.status === 200) {
-        login(user.email, user.password, navigate, setError);        
+        login(user.email, user.password, navigate, setError);
         navigate("/register");
       }
     } catch (error) {
