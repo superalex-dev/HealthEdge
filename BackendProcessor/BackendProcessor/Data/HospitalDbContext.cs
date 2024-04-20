@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using BackendProcessor.Models;
+using Microsoft.CodeAnalysis;
 
 namespace BackendProcessor.Data
 {
@@ -17,6 +18,8 @@ namespace BackendProcessor.Data
         public DbSet<Room> Rooms { get; set; }
         public DbSet<VIPRoom> VIPRooms { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Specialization> Specializations { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -42,6 +45,18 @@ namespace BackendProcessor.Data
                 .HasMany(p => p.Appointments)
                 .WithOne(a => a.Patient)
                 .HasForeignKey(a => a.PatientId);
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne<Specialization>(s => s.Specialization)
+                .WithMany()
+                .HasForeignKey(d => d.SpecializationId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne<Region>(s => s.Region)
+                .WithMany()
+                .HasForeignKey(d => d.RegionId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

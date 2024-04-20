@@ -7,7 +7,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<IEnumerable<Doctor>> GetAllDoctorsAsync();
         Task<Doctor> GetDoctorAsync(int id);
         Task<Doctor> CreateDoctorAsync(Doctor doctor);
-        Task<ICollection<Doctor>> SearchForDoctorAsync(string specialization, bool needsToBeAPediatrician, string cityPreference);
+        Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, int? regionId, string? firstName, string? lastName);
         Task UpdateDoctorAsync(Doctor doctor);
         Task DeleteDoctorAsync(int id);
         Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids);
