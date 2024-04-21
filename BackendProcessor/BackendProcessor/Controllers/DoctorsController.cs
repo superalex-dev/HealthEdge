@@ -108,7 +108,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetSpecializations() 
         {
             var specializations = await _context.Doctors
-                .Select(d => d.SpecializationId)
+                .Select(d => d.Specialization.Name)
                 .Distinct()
                 .ToListAsync();
 
@@ -124,7 +124,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetCities()
         {
             var cities = await _context.Doctors
-                .Select(d => d.RegionId)
+                .Select(d => d.Region.Name)
                 .Distinct()
                 .ToListAsync();
 
