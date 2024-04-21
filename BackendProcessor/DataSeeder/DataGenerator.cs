@@ -15,68 +15,122 @@ namespace DataSeeder
         
         static readonly List<string> medicalSpecializations = new List<string>
         {
-            "Cardiology",
-            "Dermatology",
-            "Emergency Medicine",
-            "General Surgery",
-            "Neurology",
-            "Obstetrics and Gynecology",
-            "Oncology",
-            "Pediatrics",
-            "Psychiatry",
-            "Radiology"
+            "Акупунктура",
+            "Акушер-гинеколог",
+            "Акушерка",
+            "Алерголог",
+            "Алтернативни практики",
+            "Ангиолог",
+            "Анестезиолог",
+            "Боуен терапевт",
+            "Вирусолог",
+            "Вътрешни болести",
+            "Гастроентеролог",
+            "Гръден хирург",
+            "Дерматолог",
+            "Детски гастроентеролог",
+            "Детски ендокринолог",
+            "Детски кардиолог",
+            "Детски невролог",
+            "Детски нефролог",
+            "Детски психиатър",
+            "Детски пулмолог",
+            "Детски ревматолог",
+            "Детски хематолог",
+            "Детски хирург",
+            "Диетолог",
+            "Ендодонт",
+            "Ендокринолог",
+            "Естетичен дерматолог",
+            "Зъболекар (Стоматолог)",
+            "Изследване",
+            "Имплантолог",
+            "Имунолог",
+            "Инфекциозни болести",
+            "Кардиолог",
+            "Кардиохирург",
+            "Кинезитерапевт",
+            "Клинична лаборатория",
+            "Коуч",
+            "Лицево-челюстен хирург",
+            "Логопед",
+            "Лъчетерапевт",
+            "Мамолог",
+            "Манипулация",
+            "Медицинска генетика",
+            "Медицинска сестра",
+            "Микробиолог",
+            "Невролог",
+            "Неврохирург",
+            "Неонатолог",
+            "Нефролог (Бъбречни болести)",
+            "Нуклеарна медицина",
+            "Образна диагностика",
+            "Общопрактикуващ лекар",
+            "Озонотерапевт",
+            "Онколог",
+            "Оптометрист (Очен оптик)",
+            "Орален хирург",
+            "Ортодонт",
+            "Ортопед",
+            "Отоневролог",
+            "Офталмолог (Очен лекар)",
+            "Паразитолог",
+            "Пародонтолог",
+            "Педиатър",
+            "Пластичен хирург",
+            "Подиатър (Болести на ходилото)",
+            "Протетик",
+            "Профилактични прегледи",
+            "Психиатър",
+            "Психолог",
+            "Психотерапевт",
+            "Пулмолог (Белодробни болести)",
+            "Ревматолог",
+            "Репродуктивна медицина",
+            "Рехабилитатор",
+            "Спортна медицина",
+            "Съдов хирург",
+            "Токсиколог",
+            "УНГ",
+            "Уролог",
+            "Физиотерапевт",
+            "Хематолог (Клинична хематология)",
+            "Хематолог (Трансфузионна хематология)",
+            "Хирург",
+            "Хомеопат",
+            "Юмейхо терапевт"
         };
 
-        static readonly List<string> cities = new List<string>
+        static readonly List<string> regions = new List<string>
         {
-            "Sofia",
-            "Plovdiv",
-            "Varna",
-            "Burgas",
-            "Ruse",
-            "Pleven",
-            "Sliven",
-            "Dobrich",
-            "Shumen",
-            "Pernik",
-            "Haskovo",
-            "Yambol",
             "Blagoevgrad",
+            "Burgas",
+            "Varna",
             "Veliko Tarnovo",
+            "Vidin",
             "Vratsa",
             "Gabrovo",
-            "Asenovgrad",
-            "Vidin",
-            "Kazanlak",
-            "Kyustendil",
+            "Dobrich",
             "Kardzhali",
-            "Montana",
+            "Kyustendil",
             "Lovech",
-            "Silistra",
-            "Targovishte",
-            "Dupnitsa",
-            "Svishtov",
-            "Smolyan",
-            "Petrich",
-            "Samokov",
-            "Lom",
-            "Karlovo",
-            "Sevlievo",
-            "Nova Zagora",
-            "Velingrad",
-            "Cherven Bryag",
-            "Troyan",
-            "Aytos",
-            "Byala Slatina",
-            "Botevgrad",
-            "Gotse Delchev",
-            "Berkovitsa",
+            "Montana",
             "Pazardzhik",
-            "Harmanli",
-            "Karnobat",
-            "Svilengrad",
-            "Radomir",
-            "Radnevo"
+            "Pernik",
+            "Pleven",
+            "Plovdiv",
+            "Razgrad",
+            "Ruse",
+            "Silistra",
+            "Sliven",
+            "Smolyan",
+            "Sofia",
+            "Stara Zagora",
+            "Targovishte",
+            "Haskovo",
+            "Shumen",
+            "Yambol"
         };
 
         static readonly List<string> patientBloodTypes = new List<string>
@@ -235,19 +289,37 @@ namespace DataSeeder
         };
 
 
-        public static List<Doctor> GenerateDoctors(int count)
-        {
-            var doctorFaker = new Faker<Doctor>()
-                .RuleFor(d => d.FirstName, f => f.Name.FirstName())
-                .RuleFor(d => d.LastName, f => f.Name.LastName())
-                .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
-                .RuleFor(d => d.Specialization, f => f.PickRandom(medicalSpecializations))
-                .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(d => d.Email, f => f.Internet.Email())
-                .RuleFor(d => d.City, f => f.PickRandom(cities))
-                .RuleFor(d => d.IsPediatrician, f => f.Random.Bool());
+        //public static List<Doctor> GenerateDoctors(int count)
+        //{
+        //    var doctorFaker = new Faker<Doctor>()
+        //        .RuleFor(d => d.FirstName, f => f.Name.FirstName())
+        //        .RuleFor(d => d.LastName, f => f.Name.LastName())
+        //        .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
+        //        .RuleFor(d => d.Specialization, f => f.PickRandom(medicalSpecializations))
+        //        .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
+        //        .RuleFor(d => d.Email, f => f.Internet.Email())
+        //        .RuleFor(d => d.City, f => f.PickRandom(cities))
+        //        .RuleFor(d => d.IsPediatrician, f => f.Random.Bool());
 
-            return doctorFaker.Generate(count);
+        //    return doctorFaker.Generate(count);
+        //}
+
+        public static List<Region> GenerateRegions()
+        {
+            var regionFaker = new Faker<Region>()
+                .RuleFor(r => r.Name, f => f.PickRandom(regions));
+
+            return regionFaker.Generate(regions.Count);
+        }
+
+        public static List<Specialization> GenerateSpecializations()
+        {
+            //generate specializations but alphabetically from specializations
+            var specializations = medicalSpecializations.OrderBy(s => s).ToList();
+            var specializationFaker = new Faker<Specialization>()
+                .RuleFor(s => s.Name, f => specializations[f.IndexFaker]);
+
+            return specializationFaker.Generate(specializations.Count);
         }
 
         public static List<Patient> GeneratePatients(int count, ICollection<User> users)

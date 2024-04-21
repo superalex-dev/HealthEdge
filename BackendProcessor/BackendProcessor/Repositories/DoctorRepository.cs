@@ -74,7 +74,7 @@ namespace BackendProcessor.Repositories
         public async Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids)
         {
             var doctors = await _context.Doctors.Where(d => ids.Contains(d.Id)).ToListAsync();
-            
+
             if (doctors.Any())
             {
                 _context.Doctors.RemoveRange(doctors);
@@ -82,18 +82,18 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task<ICollection<Doctor>> SearchForDoctorAsync(string specialization, bool needsToBeAPediatrician, string cityPreference)
+        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, int? regionId, string? firstName, string? lastName)
         {
             var query = _context.Doctors.AsQueryable();
 
-            if (!string.IsNullOrEmpty(specialization))
+            if (specializationId.HasValue)
             {
-                query = query.Where(d => d.Specialization == specialization);
+                query = query.Where(d => d.SpecializationId == specializationId.Value);
             }
 
-            if (!string.IsNullOrEmpty(cityPreference))
+            if (regionId.HasValue)
             {
-                query = query.Where(d => d.City == cityPreference);
+                query = query.Where(d => d.RegionId == regionId.Value);
             }
 
             if (needsToBeAPediatrician)
@@ -101,9 +101,12 @@ namespace BackendProcessor.Repositories
                 query = query.Where(d => d.IsPediatrician);
             }
 
-            var doctors = await query.Include(d => d.Appointments).ToListAsync();
+            if (!string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            {
+                query = query.Where(d => d.FirstName.Contains(firstName) || d.LastName.Contains(lastName));
+            }
 
-            return doctors;
+            return await query.Include(d => d.Appointments).ToListAsync();
         }
     }
 }
