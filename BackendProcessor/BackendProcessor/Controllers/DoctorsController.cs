@@ -87,7 +87,13 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpGet("doctors/search")]
-        public async Task<IActionResult> SearchForDoctorAsync([FromQuery] int? specializationId, [FromQuery] bool needsToBeAPediatrician, [FromQuery] int? regionId, [FromQuery] int? insuranceId, [FromQuery] string? firstName, string? lastName)
+        public async Task<IActionResult> SearchForDoctorAsync(
+            [FromQuery] int? specializationId,
+            [FromQuery] bool needsToBeAPediatrician,
+            [FromQuery] int? regionId,
+            [FromQuery] int? insuranceId,
+            [FromQuery] string firstName,
+            [FromQuery] string lastName)
         {
             if (!specializationId.HasValue && !regionId.HasValue && !insuranceId.HasValue && string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
             {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import superHeroDoctor from '../assets/superhealthyedge.png';
 import './HomePage.css';
 
@@ -10,6 +11,7 @@ const HomePage = () => {
   const [insurances, setInsurances] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSpecializationsAndCities = async () => {
@@ -40,7 +42,7 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Search criteria:', search);
+    navigate('/search-results', { state: { search } });
   };
 
   if (loading) return <p>Loading...</p>;
