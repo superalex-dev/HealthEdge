@@ -20,6 +20,7 @@ namespace BackendProcessor.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Insurance> Insurance { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

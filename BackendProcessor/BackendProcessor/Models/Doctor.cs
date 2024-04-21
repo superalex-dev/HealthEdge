@@ -34,6 +34,8 @@ namespace BackendProcessor.Models
         public int? SpecializationId { get; set; }
         public Specialization Specialization { get; set; }
 
+        public bool Nzok { get; set; }
+
         [Required]
         [StringLength(50)]
         public string ContactNumber { get; set; }
