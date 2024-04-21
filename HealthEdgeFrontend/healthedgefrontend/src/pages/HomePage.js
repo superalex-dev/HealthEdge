@@ -4,9 +4,10 @@ import superHeroDoctor from '../assets/superhealthyedge.png';
 import './HomePage.css';
 
 const HomePage = () => {
-  const [search, setSearch] = useState({ specialization: '', city: '', name: '' });
+  const [search, setSearch] = useState({ specialization: '', city: '', insurance: '', name: '' });
   const [specializations, setSpecializations] = useState([]);
   const [cities, setCities] = useState([]);
+  const [insurances, setInsurances] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -14,12 +15,14 @@ const HomePage = () => {
     const fetchSpecializationsAndCities = async () => {
       setLoading(true);
       try {
-        const [specResponse, cityResponse] = await Promise.all([
+        const [specResponse, cityResponse, insuranceResponse] = await Promise.all([
           axios.get('http://localhost:5239/doctors/specializations'),
-          axios.get('http://localhost:5239/doctors/cities')
+          axios.get('http://localhost:5239/doctors/cities'),
+          axios.get('http://localhost:5239/doctors/insurances')
         ]);
         setSpecializations(specResponse.data);
         setCities(cityResponse.data);
+        setInsurances(insuranceResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
         setError('Failed to fetch data. Please try again later.');
@@ -66,6 +69,15 @@ const HomePage = () => {
               <option value="">Select city</option>
               {cities.map((city, index) => (
                 <option key={index} value={city}>{city}</option>
+              ))}
+            </select>
+          </div>
+          <div className="input-group">
+            <label htmlFor="insurance">Insurance fund:</label>
+            <select name="insurance" value={search.insurance} onChange={handleInputChange}>
+              <option value="">Select insurance fund</option>
+              {insurances.map((insurance, index) => (
+                <option key={index} value={insurance}>{insurance}</option>
               ))}
             </select>
           </div>
