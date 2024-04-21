@@ -36,6 +36,10 @@ namespace BackendProcessor.Models
 
         public bool Nzok { get; set; }
 
+        [ForeignKey("InsuranceId")]
+        public int? InsuranceId { get; set; }
+        public Insurance Insurance { get; set; }
+
         [Required]
         [StringLength(50)]
         public string ContactNumber { get; set; }
