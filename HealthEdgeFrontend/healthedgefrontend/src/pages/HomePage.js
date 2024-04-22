@@ -42,7 +42,8 @@ const HomePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/search-results', { state: { search } });
+    const query = new URLSearchParams(search).toString();
+    navigate(`/search-results?${query}`);
   };
 
   if (loading) return <p>Loading...</p>;

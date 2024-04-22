@@ -4,77 +4,77 @@ import { useLocation } from 'react-router-dom';
 
 const SearchResults = () => {
   const [doctors, setDoctors] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [specializations, setSpecializations] = useState([]);
-  const [regions, setRegions] = useState([]);
   const location = useLocation();
 
   useEffect(() => {
-    const fetchSpecializationsAndRegions = async () => {
-      try {
-        const [specializationsResponse, regionsResponse] = await Promise.all([
-          axios.get('http://localhost:5239/specializations'),
-          axios.get('http://localhost:5239/regions')
-        ]);
-        setSpecializations(specializationsResponse.data);
-        setRegions(regionsResponse.data);
-      } catch (error) {
-        console.error('Error fetching specializations and regions:', error);
-      }
+    const params = new URLSearchParams(location.search);
+    const queryParams = {
+      specializationId: params.get('specializationId'),
+      regionId: params.get('regionId'),
+      insuranceId: params.get('insuranceId'),
+      firstName: params.get('firstName'),
+      lastName: params.get('lastName')
     };
-
-    fetchSpecializationsAndRegions();
-  }, []);
-
-  const fetchDoctors = async (search) => {
-    setLoading(true);
-    const { specialization, city, name = "" } = search;
-    const selectedSpecialization = specializations.find(s => s.name === specialization);
-    const selectedCity = regions.find(c => c.name === city);
-    if (!selectedSpecialization || !selectedCity) {
-      console.error('Invalid search parameters:', search);
-      setError('Invalid search parameters. Please try again.');
+  
+    console.log("Received Query Params:", queryParams);
+  
+    if (!queryParams.specializationId && !queryParams.regionId && !queryParams.insuranceId && !queryParams.firstName && !queryParams.lastName) {
+      setError('At least one search parameter must be provided.');
       setLoading(false);
       return;
     }
-    try {
-      let params = {
-        specializationId: selectedSpecialization.id,
-        regionId: selectedCity.id
-      };
-      if (name) {
-        params.name = name;
-      }
-      const response = await axios.get('http://localhost:5239/doctors/search', { params });
-      setDoctors(response.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      setError('Failed to fetch data. Please try again later.');
-    }
-    setLoading(false);
-  };
+  
+    const fetchURL = `http://localhost:5239/doctors/search?${params.toString()}`;
+    console.log("Fetching data from:", fetchURL);
+  
+    axios.get(fetchURL)
+      .then(response => {
+        setDoctors(response.data);
+        setError('');
+      })
+      .catch(err => {
+        console.error('Error fetching data:', err);
+        setError(err.response?.data?.message || 'Failed to fetch data. Please try again later.');
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  
+  }, [location.search]);  
 
-  useEffect(() => {
-    if (location.state) {
-      fetchDoctors(location.state.search);
-    }
-  }, [location.state]);
+  function buildSearchParams(params) {
+    const searchParams = {};
+    ['specializationId', 'regionId', 'insuranceId', 'firstName', 'lastName', 'needsToBeAPediatrician'].forEach(key => {
+      const value = params.get(key);
+      if (value !== null) searchParams[key] = key === 'needsToBeAPediatrician' ? value === 'true' : value;
+    });
+    return searchParams;
+  }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  function isValidSearchParams(searchParams) {
+    return Object.values(searchParams).some(x => x !== null && x !== '');
+  }
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div>
       <h1>Search Results</h1>
-      {doctors.map(doctor => (
-        <div key={doctor.id}>
-          <h2>{doctor.name}</h2>
-          <p>{doctor.specialization}</p>
-          <p>{doctor.city}</p>
-          <p>{doctor.insurance}</p>
-        </div>
-      ))}
+      {doctors.length > 0 ? (
+        doctors.map(doctor => (
+          <div key={doctor.id}>
+            <h2>{doctor.name}</h2>
+            <p>Specialization: {doctor.specialization}</p>
+            <p>Location: {doctor.city}, {doctor.region}</p>
+            <p>Insurance Accepted: {doctor.insurance}</p>
+          </div>
+        ))
+      ) : (
+        <div>No doctors found matching your criteria.</div>
+      )}
     </div>
   );
 };
