@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import DoctorSearchComponent from '../components/doctors/DoctorSearchComponent';
 import { useNavigate } from 'react-router-dom';
 import superHeroDoctor from '../assets/superhealthyedge.png';
-import './HomePage.css';
 
 const HomePage = () => {
-  const [search, setSearch] = useState({ specialization: '', city: '', insurance: '', name: '' });
   const [specializations, setSpecializations] = useState([]);
   const [cities, setCities] = useState([]);
   const [insurances, setInsurances] = useState([]);
@@ -14,82 +13,42 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSpecializationsAndCities = async () => {
-      setLoading(true);
-      try {
-        const [specResponse, cityResponse, insuranceResponse] = await Promise.all([
-          axios.get('http://localhost:5239/doctors/specializations'),
-          axios.get('http://localhost:5239/doctors/cities'),
-          axios.get('http://localhost:5239/doctors/insurances')
-        ]);
-        setSpecializations(specResponse.data);
-        setCities(cityResponse.data);
-        setInsurances(insuranceResponse.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setError('Failed to fetch data. Please try again later.');
-      }
+    setLoading(true);
+    axios.all([
+      axios.get('http://localhost:5239/doctors/specializations'),
+      axios.get('http://localhost:5239/doctors/cities'),
+      axios.get('http://localhost:5239/doctors/insurances')
+    ]).then(axios.spread((specData, cityData, insuranceData) => {
+      setSpecializations(specData.data);
+      setCities(cityData.data);
+      setInsurances(insuranceData.data);
       setLoading(false);
-    };
-
-    fetchSpecializationsAndCities();
+    })).catch(error => {
+      console.error('Failed to fetch data:', error);
+      setError('Failed to fetch data');
+      setLoading(false);
+    });
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSearch(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const query = new URLSearchParams(search).toString();
+  const handleSearch = (searchParams) => {
+    const query = new URLSearchParams(searchParams).toString();
     navigate(`/search-results?${query}`);
   };
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="homepage">
-      <div className="logo-container">
-        <img src={superHeroDoctor} alt="Superhero Doctor" className="logo" />
-      </div>
-      <div className="content">
-        <h1 className="title">Find Your Doctor</h1>
-        <form onSubmit={handleSubmit} className="search-form">
-          <div className="input-group">
-            <label htmlFor="specialization">Specialization:</label>
-            <select name="specialization" value={search.specialization} onChange={handleInputChange}>
-              <option value="">Select specialization</option>
-              {specializations.map((spec, index) => (
-                <option key={index} value={spec}>{spec}</option>
-              ))}
-            </select>
-          </div>
-          <div className="input-group">
-            <label htmlFor="city">City:</label>
-            <select name="city" value={search.city} onChange={handleInputChange}>
-              <option value="">Select city</option>
-              {cities.map((city, index) => (
-                <option key={index} value={city}>{city}</option>
-              ))}
-            </select>
-          </div>
-          <div className="input-group">
-            <label htmlFor="insurance">Insurance fund:</label>
-            <select name="insurance" value={search.insurance} onChange={handleInputChange}>
-              <option value="">Select insurance fund</option>
-              {insurances.map((insurance, index) => (
-                <option key={index} value={insurance}>{insurance}</option>
-              ))}
-            </select>
-          </div>
-          <div className="input-group">
-            <label htmlFor="name">Doctor's Name:</label>
-            <input type="text" name="name" value={search.name} onChange={handleInputChange} placeholder="Enter doctor's name" />
-          </div>
-          <button type="submit" className="search-button">Search</button>
-        </form>
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+      <div className="bg-white p-6 rounded-lg shadow-lg">
+        <img src={superHeroDoctor} alt="Superhero Doctor" className="h-32 mx-auto" />
+        <h1 className="text-xl font-semibold text-center text-gray-800 mb-4">Find Your Doctor</h1>
+        <DoctorSearchComponent
+          specializations={specializations}
+          cities={cities}
+          insurances={insurances}
+          onSearch={handleSearch}
+        />
       </div>
     </div>
   );
