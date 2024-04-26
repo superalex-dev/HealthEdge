@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import DoctorSearchComponent from '../components/doctors/DoctorSearchComponent';
+import DoctorSearch from '../components/doctors/DoctorSearch';
 import { useNavigate } from 'react-router-dom';
 import superHeroDoctor from '../assets/superhealthyedge.png';
 
@@ -43,7 +43,7 @@ const HomePage = () => {
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <img src={superHeroDoctor} alt="Superhero Doctor" className="h-32 mx-auto" />
         <h1 className="text-xl font-semibold text-center text-gray-800 mb-4">Find Your Doctor</h1>
-        <DoctorSearchComponent
+        <DoctorSearch
           specializations={specializations}
           cities={cities}
           insurances={insurances}

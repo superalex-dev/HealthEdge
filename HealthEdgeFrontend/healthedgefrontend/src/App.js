@@ -11,7 +11,7 @@ import PatientDetails from './pages/Patients/PatientDetails';
 import BookAppointment from './pages/BookAppointment';
 import HomePage from './pages/HomePage';
 import DoctorsList from './pages/DoctorsList';
-import SearchResultsComponent from './components/doctors/SearchResultsComponent';
+import SearchResultsComponent from './components/doctors/SearchResults';
 
 function App() {
   return (
