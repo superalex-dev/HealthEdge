@@ -7,14 +7,11 @@
         public DateTime AppointmentTime { get; set; }
         public string Notes { get; set; }
         public string Status { get; set; }
+        public string Reason { get; set; }
+        public string PaymentMethod { get; set; }
 
-        public AppointmentCreationDto(int patientId, int doctorId, DateTime appointmentTime, string notes, string status)
+        public AppointmentCreationDto()
         {
-            PatientId = patientId;
-            DoctorId = doctorId;
-            AppointmentTime = appointmentTime;
-            Notes = notes;
-            Status = status;
         }
     }
 }

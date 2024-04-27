@@ -12,7 +12,7 @@ namespace DataSeeder
     public static class DataGenerator
     {
         private static int doctorUsernameSequence = 1;
-        
+
         static readonly List<string> medicalSpecializations = new List<string>
         {
             "Акупунктура",
@@ -100,6 +100,28 @@ namespace DataSeeder
             "Хирург",
             "Хомеопат",
             "Юмейхо терапевт"
+        };
+
+        static readonly List<string> insuranceFunds = new List<string>
+        {
+            "Аксиом",
+            "Алианц",
+            "Булстрад Живот",
+            "България Иншурънс",
+            "Групама",
+            "Дженерали",
+            "ДЗИ",
+            "Доверие",
+            "Евроинс",
+            "ЕЗК (ЕЗОК)",
+            "ЖЗИ",
+            "МетЛайф",
+            "Надежда",
+            "ОЗОК Инс",
+            "Съгласие",
+            "Уника",
+            "Фи Хелт",
+            "ЦКБ Живот"
         };
 
         static readonly List<string> regions = new List<string>
@@ -320,6 +342,15 @@ namespace DataSeeder
                 .RuleFor(s => s.Name, f => specializations[f.IndexFaker]);
 
             return specializationFaker.Generate(specializations.Count);
+        }
+
+        public static List<Insurance> GenerateInsurances()
+        {
+            var insuranceFund = insuranceFunds.OrderBy(i => i).ToList();
+            var insuranceFaker = new Faker<Insurance>()
+                .RuleFor(i => i.Name, f => insuranceFund[f.IndexFaker]);
+
+            return insuranceFaker.Generate(insuranceFunds.Count);
         }
 
         public static List<Patient> GeneratePatients(int count, ICollection<User> users)

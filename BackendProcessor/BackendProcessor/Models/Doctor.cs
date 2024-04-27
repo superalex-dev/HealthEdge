@@ -34,6 +34,12 @@ namespace BackendProcessor.Models
         public int? SpecializationId { get; set; }
         public Specialization Specialization { get; set; }
 
+        public bool Nzok { get; set; }
+
+        [ForeignKey("InsuranceId")]
+        public int? InsuranceId { get; set; }
+        public Insurance Insurance { get; set; }
+
         [Required]
         [StringLength(50)]
         public string ContactNumber { get; set; }
@@ -41,5 +47,10 @@ namespace BackendProcessor.Models
         [Required]
         [StringLength(100)]
         public string Email { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
+        public DateTime DateOfCreation { get; set; }
     }
 }

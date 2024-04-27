@@ -20,6 +20,7 @@ namespace BackendProcessor.Data
         public DbSet<User> Users { get; set; }
         public DbSet<Region> Regions { get; set; }
         public DbSet<Specialization> Specializations { get; set; }
+        public DbSet<Insurance> Insurance { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -56,6 +57,12 @@ namespace BackendProcessor.Data
                 .HasOne<Region>(s => s.Region)
                 .WithMany()
                 .HasForeignKey(d => d.RegionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Doctor>()
+                .HasOne<Insurance>(s => s.Insurance)
+                .WithMany()
+                .HasForeignKey(d => d.InsuranceId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

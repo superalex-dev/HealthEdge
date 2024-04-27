@@ -87,14 +87,20 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpGet("doctors/search")]
-        public async Task<IActionResult> SearchForDoctorAsync([FromQuery] int? specialtyId, [FromQuery] bool needsToBeAPediatrician, [FromQuery] int? regionId, [FromQuery] string? firstName, string? lastName)
+        public async Task<IActionResult> SearchForDoctorAsync(
+            [FromQuery] int? specializationId,
+            [FromQuery] bool needsToBeAPediatrician,
+            [FromQuery] int? regionId,
+            [FromQuery] int? insuranceId,
+            [FromQuery] string firstName,
+            [FromQuery] string lastName)
         {
-            if (!specialtyId.HasValue && !regionId.HasValue && string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
+            if (!specializationId.HasValue && !regionId.HasValue && !insuranceId.HasValue && string.IsNullOrWhiteSpace(firstName) && string.IsNullOrWhiteSpace(lastName))
             {
                 return BadRequest("At least one search parameter must be provided.");
             }
 
-            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specialtyId, needsToBeAPediatrician, regionId, firstName, lastName);
+            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, regionId, insuranceId, firstName, lastName);
 
             if (doctors == null || doctors.Count == 0)
             {
@@ -108,7 +114,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetSpecializations() 
         {
             var specializations = await _context.Doctors
-                .Select(d => d.SpecializationId)
+                .Select(d => d.Specialization.Name)
                 .Distinct()
                 .ToListAsync();
 
@@ -124,7 +130,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> GetCities()
         {
             var cities = await _context.Doctors
-                .Select(d => d.RegionId)
+                .Select(d => d.Region.Name)
                 .Distinct()
                 .ToListAsync();
 
@@ -134,6 +140,22 @@ namespace BackendProcessor.Controllers
             }
 
             return Ok(cities);
+        }
+
+        [HttpGet("doctors/insurances")]
+        public async Task<IActionResult> GetInsurances()
+        {
+            var insurances = await _context.Doctors
+                .Select(d => d.Insurance.Name)
+                .Distinct()
+                .ToListAsync();
+
+            if (!insurances.Any())
+            {
+                return NoContent();
+            }
+
+            return Ok(insurances);
         }
     }
 }

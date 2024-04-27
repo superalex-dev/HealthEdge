@@ -3,6 +3,7 @@ using System;
 using BackendProcessor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendProcessor.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240421155053_AddMoreFiltersToSearchDoctorProperly")]
+    partial class AddMoreFiltersToSearchDoctorProperly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,14 +45,6 @@ namespace BackendProcessor.Migrations
 
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Reason")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -102,12 +97,6 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DateOfCreation")
-                        .HasColumnType("timestamp with time zone");
-
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -117,9 +106,6 @@ namespace BackendProcessor.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
-
-                    b.Property<int?>("InsuranceId")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("IsPediatrician")
                         .HasColumnType("boolean");
@@ -144,8 +130,6 @@ namespace BackendProcessor.Migrations
                         .HasColumnType("character varying(15)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("InsuranceId");
 
                     b.HasIndex("RegionId");
 
@@ -424,11 +408,6 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
                 {
-                    b.HasOne("BackendProcessor.Models.Insurance", "Insurance")
-                        .WithMany()
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("BackendProcessor.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
@@ -438,8 +417,6 @@ namespace BackendProcessor.Migrations
                         .WithMany()
                         .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Insurance");
 
                     b.Navigation("Region");
 

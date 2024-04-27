@@ -82,29 +82,18 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, int? regionId, string? firstName, string? lastName)
+        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, int? regionId, int? insuranceId, string? firstName, string? lastName)
         {
             var query = _context.Doctors.AsQueryable();
 
-            if (specializationId.HasValue)
-            {
-                query = query.Where(d => d.SpecializationId == specializationId.Value);
-            }
-
-            if (regionId.HasValue)
-            {
-                query = query.Where(d => d.RegionId == regionId.Value);
-            }
-
-            if (needsToBeAPediatrician)
-            {
-                query = query.Where(d => d.IsPediatrician);
-            }
-
-            if (!string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
-            {
-                query = query.Where(d => d.FirstName.Contains(firstName) || d.LastName.Contains(lastName));
-            }
+            query = query.Where(d =>
+                (!specializationId.HasValue || d.SpecializationId == specializationId.Value) &&
+                (!needsToBeAPediatrician || d.IsPediatrician) &&
+                (!regionId.HasValue || d.RegionId == regionId.Value) &&
+                (!insuranceId.HasValue || d.InsuranceId == insuranceId.Value) &&
+                (string.IsNullOrEmpty(firstName) || d.FirstName.Contains(firstName)) &&
+                (string.IsNullOrEmpty(lastName) || d.LastName.Contains(lastName))
+            );
 
             return await query.Include(d => d.Appointments).ToListAsync();
         }
