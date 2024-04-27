@@ -47,5 +47,10 @@ namespace BackendProcessor.Models
         [Required]
         [StringLength(100)]
         public string Email { get; set; }
+
+        [Required]
+        public DateTime DateOfBirth { get; set; }
+
+        public DateTime DateOfCreation { get; set; }
     }
 }
