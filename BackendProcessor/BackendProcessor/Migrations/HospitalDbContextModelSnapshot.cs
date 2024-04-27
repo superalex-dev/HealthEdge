@@ -43,6 +43,14 @@ namespace BackendProcessor.Migrations
                     b.Property<int>("PatientId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -94,6 +102,12 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateOfCreation")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -104,6 +118,9 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
+                    b.Property<int?>("InsuranceId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("IsPediatrician")
                         .HasColumnType("boolean");
 
@@ -112,10 +129,13 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("RegionId")
+                    b.Property<bool>("Nzok")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("RegionId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SpecializationId")
+                    b.Property<int?>("SpecializationId")
                         .HasColumnType("integer");
 
                     b.Property<string>("Username")
@@ -125,11 +145,30 @@ namespace BackendProcessor.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("InsuranceId");
+
                     b.HasIndex("RegionId");
 
                     b.HasIndex("SpecializationId");
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("BackendProcessor.Models.Insurance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Insurance");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
@@ -385,17 +424,22 @@ namespace BackendProcessor.Migrations
 
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
                 {
+                    b.HasOne("BackendProcessor.Models.Insurance", "Insurance")
+                        .WithMany()
+                        .HasForeignKey("InsuranceId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("BackendProcessor.Models.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("BackendProcessor.Models.Specialization", "Specialization")
                         .WithMany()
                         .HasForeignKey("SpecializationId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Insurance");
 
                     b.Navigation("Region");
 

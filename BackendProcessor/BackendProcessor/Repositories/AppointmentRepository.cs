@@ -1,4 +1,5 @@
 ﻿using BackendProcessor.Data;
+using BackendProcessor.Helpers;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -6,10 +7,13 @@ using Microsoft.EntityFrameworkCore;
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly HospitalDbContext _context;
+    private readonly AppointmentHelper _appointmentHelper;
 
-    public AppointmentRepository(HospitalDbContext context)
+    public AppointmentRepository(HospitalDbContext context, AppointmentHelper appointmentHelper)
     {
-        _context = context;
+        _context = context;        
+        _appointmentHelper = appointmentHelper;
+
     }
 
     public async Task<IEnumerable<Appointment>> GetAllAppointmentsAsync() =>
@@ -38,25 +42,16 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> CreateAppointmentAsync(Appointment appointment)
     {
-        TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
-        TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
-        TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
-
-        if (appointment.AppointmentTime.TimeOfDay < startOfWorkDay ||
-            appointment.AppointmentTime.TimeOfDay > endOfWorkDay - appointmentDuration)
+        if (appointment == null)
         {
-            throw new InvalidOperationException("Appointment time is outside of working hours.");
+            throw new ArgumentNullException(nameof(appointment));
         }
 
-        var existingAppointment = await _context.Appointments
-            .FirstOrDefaultAsync(a => a.DoctorId == appointment.DoctorId &&
-                                      a.AppointmentTime >= appointment.AppointmentTime &&
-                                      a.AppointmentTime < appointment.AppointmentTime + appointmentDuration);
+        _appointmentHelper.ValidateAppointmentTime(appointment.AppointmentTime);
 
-        if (existingAppointment != null)
-        {
-            throw new InvalidOperationException("This time slot is already booked.");
-        }
+        await _appointmentHelper.CheckForOverlappingAppointments(appointment, _context);
+
+        _appointmentHelper.ValidateAppointmentDetails(appointment);
 
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();

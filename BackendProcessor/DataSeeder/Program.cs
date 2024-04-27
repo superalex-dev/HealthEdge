@@ -19,11 +19,13 @@ namespace Application
 
             //var doctors = DataGenerator.GenerateDoctors(48);
             //var regions = DataGenerator.GenerateRegions();
-            var specializations = DataGenerator.GenerateSpecializations();
+            //var specializations = DataGenerator.GenerateSpecializations();
+            var insurance = DataGenerator.GenerateInsurances();
             //var users = DataGenerator.GenerateUsers(100);
             //await dbContext.Users.AddRangeAsync(users);
             //await dbContext.Regions.AddRangeAsync(regions);
-            await dbContext.Specializations.AddRangeAsync(specializations);
+            //await dbContext.Specializations.AddRangeAsync(specializations);
+            await dbContext.Insurance.AddRangeAsync(insurance);
             await dbContext.SaveChangesAsync();
             //var patients = DataGenerator.GeneratePatients(100, users);
             //var rooms = DataGenerator.GenerateRooms(50);
