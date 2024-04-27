@@ -38,6 +38,11 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> CreateAppointmentAsync(Appointment appointment)
     {
+        if (appointment == null)
+        {
+            throw new ArgumentNullException(nameof(appointment));
+        }
+
         TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
         TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
         TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
@@ -56,6 +61,11 @@ public class AppointmentRepository : IAppointmentRepository
         if (existingAppointment != null)
         {
             throw new InvalidOperationException("This time slot is already booked.");
+        }
+
+        if (string.IsNullOrEmpty(appointment.Reason) || string.IsNullOrEmpty(appointment.PaymentMethod))
+        {
+            throw new InvalidOperationException("Reason and PaymentMethod cannot be null or empty.");
         }
 
         _context.Appointments.Add(appointment);
