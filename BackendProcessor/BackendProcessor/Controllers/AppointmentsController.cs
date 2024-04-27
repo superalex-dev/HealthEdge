@@ -53,9 +53,11 @@ public class AppointmentsController : ControllerBase
             {
                 PatientId = appointmentDto.PatientId,
                 DoctorId = appointmentDto.DoctorId,
-                AppointmentTime = appointmentDto.AppointmentTime,
+                AppointmentTime = appointmentDto.AppointmentTime.ToUniversalTime(),
                 Notes = appointmentDto.Notes,
-                Status = appointmentDto.Status
+                Status = appointmentDto.Status,
+                Reason = appointmentDto.Reason,
+                PaymentMethod = appointmentDto.PaymentMethod
             };
 
             var createdAppointment = await _appointmentRepository.CreateAppointmentAsync(appointment);
