@@ -60,7 +60,7 @@ const DoctorCard = ({ doctor }) => {
   const customFormatDate = (dateString) => {
     const date = new Date(dateString);
     const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); // getMonth() is zero-based
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
     if(year < 2000){
       return "Call for more information.";
@@ -68,12 +68,11 @@ const DoctorCard = ({ doctor }) => {
     const hours = date.getUTCHours() + 1;
     const minutes = date.getUTCMinutes().toString().padStart(2, '0');
     const suffix = hours >= 12 ? 'PM' : 'AM';
-    const formattedHour = ((hours + 11) % 12 + 1); // Convert 24h to 12h format
+    const formattedHour = ((hours + 11) % 12 + 1);
 
-    // Check if adding an hour crosses into the next day
     if (hours >= 24) {
-      hours -= 24; // Adjust hour back to '0' if it was '24'
-      date.setDate(date.getDate() + 1); // Increment the day
+      hours -= 24;
+      date.setDate(date.getDate() + 1);
     }
 
     return `${day}.${month}.${year}, ${formattedHour}:${minutes} ${suffix}`;
