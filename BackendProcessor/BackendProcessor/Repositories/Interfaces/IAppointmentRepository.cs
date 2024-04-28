@@ -11,6 +11,5 @@ public interface IAppointmentRepository
     Task<Appointment> CreateAppointmentAsync(Appointment appointment);
     Task EditAppointmentAsync(Appointment appointment);
     Task DeleteAppointmentAsync(int appointmentId);
-    Task<DateTime?> GetAvailaleSlots(int doctorId, DateTime desiredDate);
-    //Task<IEnumerable<DateTime>> GetAvailableSlots(int doctorId, DateTime desiredDate);
+    Task<Appointment> FindSoonestAvailableAppointment(int doctorId);
 }

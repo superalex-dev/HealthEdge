@@ -14,7 +14,7 @@ const PatientDetails = () => {
         setPatient(response.data);
       } catch (error) {
         console.error('Failed to fetch patient details:', error);
-        // Optionally handle the error, such as showing a message or redirecting
+        //error handling
       }
     };
 

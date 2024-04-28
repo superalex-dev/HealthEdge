@@ -3,11 +3,13 @@ using BackendProcessor.Helpers;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly HospitalDbContext _context;
     private readonly AppointmentHelper _appointmentHelper;
+    private readonly TimeSpan _appointmentDuration = new TimeSpan(0, 60, 0);    
 
     public AppointmentRepository(HospitalDbContext context, AppointmentHelper appointmentHelper)
     {
@@ -75,28 +77,11 @@ public class AppointmentRepository : IAppointmentRepository
         }
     }
 
-    public async Task<DateTime?> GetAvailaleSlots(int doctorId, DateTime desiredDate)
+    public async Task<Appointment> FindSoonestAvailableAppointment(int doctorId)
     {
-        TimeSpan startOfWorkDay = new TimeSpan(8, 30, 0);
-        TimeSpan endOfWorkDay = new TimeSpan(18, 30, 0);
-        TimeSpan appointmentDuration = TimeSpan.FromMinutes(60);
-
-        DateTime currentSlot = desiredDate.Date + startOfWorkDay;
-
-        var appointments = await _context.Appointments
-            .Where(a => a.DoctorId == doctorId &&
-                        a.AppointmentTime.Date == desiredDate.Date)
-            .ToListAsync();
-
-        while (currentSlot.TimeOfDay <= endOfWorkDay - appointmentDuration)
-        {
-            if (!appointments.Any(a => a.AppointmentTime == currentSlot))
-            {
-                return currentSlot;
-            }
-            currentSlot = currentSlot.Add(appointmentDuration);
-        }
-
-        return null;
+        return await _context.Appointments
+            .Where(a => a.DoctorId == doctorId)
+            .OrderBy(a => a.AppointmentTime)
+            .LastAsync();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Security.Policy;
 using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
@@ -9,6 +10,7 @@ namespace BackendProcessor.Controllers;
 public class AppointmentsController : ControllerBase
 {
     private readonly IAppointmentRepository _appointmentRepository;
+    private readonly TimeSpan _appointmentDuration = TimeSpan.FromMinutes(60);
 
     public AppointmentsController(IAppointmentRepository appointmentRepository)
     {
@@ -91,23 +93,16 @@ public class AppointmentsController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet("availableSlots/{doctorId}")]
-    public async Task<ActionResult<DateTime?>> GetAvailaleSlots(int doctorId, [FromQuery] DateTime date)
+    [HttpGet("find-soonest-slot")]
+    public async Task<IActionResult> FindSoonestSlot([FromQuery] int doctorId)
     {
-        if (date == default(DateTime))
+        var appointment = await _appointmentRepository.FindSoonestAvailableAppointment(doctorId);
+
+        if (appointment == null)
         {
-            return BadRequest("Date is required.");
+            return NotFound();
         }
 
-        DateTime utcDate = DateTime.SpecifyKind(date, DateTimeKind.Utc);
-
-        var earliestAvailableSlot = await _appointmentRepository.GetAvailaleSlots(doctorId, utcDate);
-
-        if (earliestAvailableSlot == null)
-        {
-            return NotFound("No available slots for this date.");
-        }
-
-        return Ok(earliestAvailableSlot);
+        return Ok(appointment);
     }
 }
