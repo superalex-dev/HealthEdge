@@ -8,8 +8,7 @@ using System.Runtime.CompilerServices;
 public class AppointmentRepository : IAppointmentRepository
 {
     private readonly HospitalDbContext _context;
-    private readonly AppointmentHelper _appointmentHelper;
-    private readonly TimeSpan _appointmentDuration = new TimeSpan(0, 60, 0);    
+    private readonly AppointmentHelper _appointmentHelper;  
 
     public AppointmentRepository(HospitalDbContext context, AppointmentHelper appointmentHelper)
     {
