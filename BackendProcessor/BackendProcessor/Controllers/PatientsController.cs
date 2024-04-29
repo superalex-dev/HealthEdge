@@ -148,5 +148,18 @@ namespace BackendProcessor.Controllers
 
             return Ok(patients);
         }
+
+        [HttpGet("patients/searchByUserNameOrEmail")]
+        public async Task<IActionResult> GetPatientByUserNameOrEmailAsync([FromQuery] string username, [FromQuery] string email)
+        {
+            var patient = await _patientRepository.GetPatientByUsernameEmail(username, email);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(patient);
+        }
     }
 }

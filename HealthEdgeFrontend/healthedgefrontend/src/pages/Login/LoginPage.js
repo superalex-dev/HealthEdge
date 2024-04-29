@@ -16,6 +16,20 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
       e.preventDefault();
       const result = await login(email, password, navigate, setError);
       if (result) {
+        const encodedEmail = email.replace('@', '%40');
+        const url = `http://localhost:5239/patients/searchByUserNameOrEmail?email=${encodedEmail}`;
+        await fetch(url).then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();  // Convert the response body to JSON
+        })
+        .then(data => {
+          localStorage.setItem('patientId', data.id);  // Store the id in the local storage
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
         navigate('/home');
       } else {
         confirmAlert({
