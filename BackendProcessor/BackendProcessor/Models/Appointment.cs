@@ -6,7 +6,6 @@ namespace BackendProcessor.Models
 {
     public class Appointment
     {
-        //treee se dobavi kato booking-a ot superdoc
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -25,9 +24,8 @@ namespace BackendProcessor.Models
         [Required]
         public DateTime AppointmentTime { get; set; }
 
-        [Required]
         [StringLength(50)]
-        public string Status { get; set; }
+        public string? Status { get; set; }
 
         [StringLength(500)]
         public string? Notes { get; set; }

@@ -90,6 +90,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> SearchForDoctorAsync(
             [FromQuery] int? specializationId,
             [FromQuery] bool needsToBeAPediatrician,
+            [FromQuery] bool hasNZOK,
             [FromQuery] int? regionId,
             [FromQuery] int? insuranceId,
             [FromQuery] string firstName,
@@ -100,7 +101,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest("At least one search parameter must be provided.");
             }
 
-            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, regionId, insuranceId, firstName, lastName);
+            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, hasNZOK, regionId, insuranceId, firstName, lastName);
 
             if (doctors == null || doctors.Count == 0)
             {
@@ -113,9 +114,8 @@ namespace BackendProcessor.Controllers
         [HttpGet("doctors/specializations")]
         public async Task<IActionResult> GetSpecializations() 
         {
-            var specializations = await _context.Doctors
-                .Select(d => d.Specialization.Name)
-                .Distinct()
+            var specializations = await _context.Specializations
+                .Select(s => new { Id = s.Id, Name = s.Name })
                 .ToListAsync();
 
             if (!specializations.Any())
@@ -123,15 +123,20 @@ namespace BackendProcessor.Controllers
                 return NoContent();
             }
 
+            specializations = specializations
+                .OrderBy(r => r.Name, new BulgarianStringComparer())
+                .Distinct()
+                .ToList();
+
+
             return Ok(specializations);
         }
 
         [HttpGet("doctors/cities")]
         public async Task<IActionResult> GetCities()
         {
-            var cities = await _context.Doctors
-                .Select(d => d.Region.Name)
-                .Distinct()
+            var cities = await _context.Regions
+                .Select(r => new { Id = r.Id, Name = r.Name })
                 .ToListAsync();
 
             if (!cities.Any())
@@ -139,15 +144,19 @@ namespace BackendProcessor.Controllers
                 return NoContent();
             }
 
+            cities = cities
+                .OrderBy(r => r.Name, new BulgarianStringComparer())
+                .Distinct()
+                .ToList();
+
             return Ok(cities);
         }
 
         [HttpGet("doctors/insurances")]
         public async Task<IActionResult> GetInsurances()
         {
-            var insurances = await _context.Doctors
-                .Select(d => d.Insurance.Name)
-                .Distinct()
+            var insurances = await _context.Insurance
+                .Select(i => new { Id = i.Id, Name = i.Name })
                 .ToListAsync();
 
             if (!insurances.Any())
@@ -155,7 +164,20 @@ namespace BackendProcessor.Controllers
                 return NoContent();
             }
 
+            insurances = insurances
+                .OrderBy(i => i.Name, new BulgarianStringComparer())
+                .Distinct()
+                .ToList();
+
             return Ok(insurances);
         }
+    }
+}
+
+public class BulgarianStringComparer : IComparer<string>
+{
+    public int Compare(string x, string y)
+    {
+        return string.Compare(x, y, new System.Globalization.CultureInfo("bg-BG"), System.Globalization.CompareOptions.StringSort);
     }
 }

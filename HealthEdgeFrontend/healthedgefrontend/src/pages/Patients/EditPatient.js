@@ -57,7 +57,7 @@ const EditPatient = () => {
               navigate('/patients');
             } catch (error) {
               console.error('Failed to update patient:', error);
-              // Optionally handle the error
+              //handle the error
             }
           }
         },

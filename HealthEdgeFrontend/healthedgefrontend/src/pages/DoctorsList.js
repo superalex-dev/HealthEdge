@@ -1,22 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import DoctorCard from '../components/doctors/DoctorCard';
 
-const DoctorsList = () => {
+const DoctorsList = () => { 
+  const location = useLocation();
   const [doctors, setDoctors] = useState([]);
 
   useEffect(() => {
-    const fetchDoctors = async () => {
-      try {
-        const response = await axios.get('http://localhost:5239/doctors/search');
-        setDoctors(response.data);
-      } catch (error) {
-        console.error("Failed to fetch doctors:", error);
-      }
-    };
+    if (location.state && location.state.doctors) {
+      setDoctors(location.state.doctors);
+    }
+  }, [location.state], [location.state.specialization]);
 
-    fetchDoctors();
-  }, []);
+  console.log(doctors);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
