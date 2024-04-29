@@ -14,6 +14,7 @@
         public bool IsPedeatrician { get; set; }
 
         public int SpecializationId { get; set; }
+        public List<AppointmentCreationDto> Appointments { get; set; }
 
         public bool Nzok { get; set; }
 

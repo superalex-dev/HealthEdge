@@ -1,4 +1,5 @@
 ﻿using BackendProcessor.Data;
+using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories;
 using BackendProcessor.Repositories.Interfaces;
@@ -108,7 +109,22 @@ namespace BackendProcessor.Controllers
                 return NoContent();
             }
 
-            return Ok(doctors);
+            var doctorDTOs = doctors.Select(d => new DoctorSearchResultDto
+            {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Email = d.Email,
+                Appointments = d.Appointments.Select(a => new AppointmentCreationDto
+                {
+                    Id = a.Id,
+                    AppointmentTime = a.AppointmentTime,
+                    Reason = a.Reason,
+                    Status = a.Status
+                }).ToList()
+            }).ToList();
+
+            return Ok(doctorDTOs);
         }
 
         [HttpGet("doctors/specializations")]

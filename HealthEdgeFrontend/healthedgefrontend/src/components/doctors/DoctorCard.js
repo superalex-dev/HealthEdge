@@ -57,26 +57,31 @@ const DoctorCard = ({ doctor }) => {
       });
   }, [doctor.insuranceId]);  
 
-  const customFormatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    if(year < 2000){
-      return "Call for more information.";
-    }
-    const hours = date.getUTCHours() + 1;
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-    const suffix = hours >= 12 ? 'PM' : 'AM';
-    const formattedHour = ((hours + 11) % 12 + 1);
+const customFormatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  if (year < 2000) {
+    return "Call for more information.";
+  }
 
-    if (hours >= 24) {
-      hours -= 24;
-      date.setDate(date.getDate() + 1);
-    }
+  let hours = date.getUTCHours() + 1;
+  let minutes = date.getUTCMinutes();
+  // Check if the appointment time is after 17:30
+  if (hours > 17 || (hours === 17 && minutes > 30)) {
+    // Set the time to the next day at 08:30 AM
+    date.setUTCDate(date.getUTCDate() + 1); // Increment the day
+    hours = 8; // Set hours to 08
+    minutes = 30; // Set minutes to 30
+  }
 
-    return `${day}.${month}.${year}, ${formattedHour}:${minutes} ${suffix}`;
-  };
+  const day = date.getUTCDate().toString().padStart(2, '0');
+  const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+  const formattedHour = ((hours + 11) % 12 + 1);
+  const formattedMinutes = minutes.toString().padStart(2, '0');
+  const suffix = hours >= 12 ? 'PM' : 'AM';
+
+  return `${day}.${month}.${year}, ${formattedHour}:${formattedMinutes} ${suffix}`;
+};
 
   let formattedDate = customFormatDate(earliestSlot);
 
