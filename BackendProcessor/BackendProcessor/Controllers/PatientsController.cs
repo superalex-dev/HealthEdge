@@ -43,26 +43,30 @@ namespace BackendProcessor.Controllers
             return Ok(patient);
         }
 
-        [HttpPost("patients/create/{userId}")]
-        public async Task<IActionResult> CreatePatientAsync(int userId, [FromBody] PatientCreationDto patientDto)
+        [HttpPost("patients/create")]
+        public async Task<IActionResult> CreatePatientAsync([FromBody] PatientCreationDto patientDto)
         {
-            var user = await _userRepository.GetUserByIdAsync(userId);
+            var existingPatient = await _userRepository.GetUserByUsernameEmail(patientDto.UserName, patientDto.Email);
+            var now = DateTime.UtcNow;
 
-            if (user == null)
+            if (existingPatient != null)
             {
-                return NotFound("User not found.");
+                return Conflict("A user with this username or email already exists.");
             }
 
             var patient = new Patient
             {
                 FirstName = patientDto.FirstName,
                 LastName = patientDto.LastName,
+                UserName = patientDto.UserName,
                 Email = patientDto.Email,
+                Password = BCrypt.Net.BCrypt.HashPassword(patientDto.Password),
                 DateOfBirth = patientDto.DateOfBirth,
                 Gender = patientDto.Gender,
+                BloodType = patientDto.BloodType,
                 ContactNumber = patientDto.ContactNumber,
                 Address = patientDto.Address,
-                UserId = userId
+                DateOfCreation = now
             };
 
             var createdPatient = await _patientRepository.CreatePatientAsync(patient);
@@ -71,12 +75,15 @@ namespace BackendProcessor.Controllers
                 createdPatient.Id,
                 createdPatient.FirstName,
                 createdPatient.LastName,
+                createdPatient.UserName,
                 createdPatient.Email,
+                createdPatient.Password,
                 createdPatient.DateOfBirth,
                 createdPatient.Gender,
+                createdPatient.BloodType,
                 createdPatient.ContactNumber,
                 createdPatient.Address,
-                userId
+                createdPatient.DateOfCreation
             );
 
             if (patientResponseDto == null)

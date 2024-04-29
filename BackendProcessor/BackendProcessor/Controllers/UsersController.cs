@@ -51,6 +51,7 @@ namespace BackendProcessor.Controllers
         public async Task<IActionResult> CreateUserAsync([FromBody] UserCreationDto userDto)
         {
             var existingUser = await _userRepository.GetUserByUsernameEmail(userDto.UserName, userDto.Email);
+            var now = DateTime.UtcNow;
 
             if (existingUser != null)
             {
@@ -64,7 +65,7 @@ namespace BackendProcessor.Controllers
                 UserName = userDto.UserName,
                 Email = userDto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
-                DateOfCreation = DateTime.UtcNow
+                DateOfCreation = now
             };
 
             var createdUser = await _userRepository.CreateUserAsync(user);

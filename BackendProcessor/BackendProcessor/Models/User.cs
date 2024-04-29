@@ -33,6 +33,6 @@ namespace BackendProcessor.Models
         [Required]
         public DateTime DateOfCreation { get; set; }
         
-        public ICollection<Patient> Patients { get; set; }
+        //public ICollection<Patient> Patients { get; set; }
     }
 }
