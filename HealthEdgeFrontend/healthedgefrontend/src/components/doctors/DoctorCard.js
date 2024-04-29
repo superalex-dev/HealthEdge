@@ -98,12 +98,12 @@ const customFormatDate = (dateString) => {
 
   let hours = date.getUTCHours() + 1;
   let minutes = date.getUTCMinutes();
-  // Check if the appointment time is after 17:30
+
   if (hours > 17 || (hours === 17 && minutes > 30)) {
-    // Set the time to the next day at 08:30 AM
-    date.setUTCDate(date.getUTCDate() + 1); // Increment the day
-    hours = 8; // Set hours to 08
-    minutes = 30; // Set minutes to 30
+
+    date.setUTCDate(date.getUTCDate() + 1);
+    hours = 8;
+    minutes = 30;
   }
 
   const day = date.getUTCDate().toString().padStart(2, '0');
@@ -120,27 +120,24 @@ const formatDate = (date) => {
   return date.toLocaleDateString('bg-BG', options);
 };
 
-// Function to handle selection
 const handleSelect = (day, time) => {
   setSelectedDate(`${formatDate(day)}, ${time}`);
-  setShowDropdown(false); // Close the dropdown after selection
+  setShowDropdown(false);
 };
 
   let formattedDate = customFormatDate(earliestSlot);
   
   const isTimeSlotTaken = (day, time) => {
     return appointments.some(appointment => {
-      const appointmentDate = new Date(appointment.appointmentTime); // This is in UTC
+      const appointmentDate = new Date(appointment.appointmentTime);
       appointmentDate.setDate(appointmentDate.getDate() - 1); 
-      const appointmentDay = appointmentDate.toISOString().split('T')[0]; // Keeps it in UTC and gets 'YYYY-MM-DD'
+      const appointmentDay = appointmentDate.toISOString().split('T')[0];
   
-      // Ensure that the local 'day' variable passed to this function is also in UTC format for accurate comparison
       let dayInUTC = new Date(day).toISOString().split('T')[0];
   
-      // For time, since it's already in 'HH:MM' format and you are comparing the same format, no need to adjust
       const localTime = new Date(appointmentDate.getTime() + (appointmentDate.getTimezoneOffset() * 60000));
-      const hours = localTime.getHours(); // Get hours in UTC
-      const minutes = localTime.getMinutes(); // Get minutes in UTC
+      const hours = localTime.getHours();
+      const minutes = localTime.getMinutes();
       const formattedTime = `${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}`;
   
     //  console.log(`Comparing: ${dayInUTC} === ${appointmentDay} && ${time} === ${formattedTime}`);
@@ -155,7 +152,6 @@ const handleSelect = (day, time) => {
   };
 
   const saveAppointment = () => {
-    // Here you can make an API call to save the appointment
     if (!selectedDate || !doctor) {
       return;
     }
@@ -188,12 +184,11 @@ console.log(URL);
       'ноември': 10, 'декември': 11
     };
   
-    // Example input: "четвъртък, 2 май, 10:30"
-    const parts = dateStr.split(', '); // ["четвъртък", "2 май", "10:30"]
-    const dayMonth = parts[1].split(' '); // ["2", "май"]
+    const parts = dateStr.split(', ');
+    const dayMonth = parts[1].split(' ');
     const day = parseInt(dayMonth[0]);
     const month = bulgarianMonths[dayMonth[1].toLowerCase()];
-    const time = parts[2].split(':'); // ["10", "30"]
+    const time = parts[2].split(':');
     const hours = parseInt(time[0]);
     const minutes = parseInt(time[1]);
   
