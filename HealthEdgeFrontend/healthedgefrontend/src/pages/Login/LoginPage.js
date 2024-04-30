@@ -22,10 +22,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
           if (!response.ok) {
             throw new Error('Network response was not ok');
           }
-          return response.json();  // Convert the response body to JSON
+          return response.json();
         })
         .then(data => {
-          localStorage.setItem('patientId', data.id);  // Store the id in the local storage
+          localStorage.setItem('patientId', data.id);
         })
         .catch(error => {
           console.error('Error:', error);

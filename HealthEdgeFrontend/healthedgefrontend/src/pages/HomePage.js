@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchDoctors from "../components/doctors/SearchDoctors"; // adjust the path as needed
+import SearchDoctors from "../components/doctors/SearchDoctors";
 
 const HomePage = () => {
   const [state, setState] = useState({
