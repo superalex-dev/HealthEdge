@@ -2,7 +2,7 @@
 
 <img src="https://github.com/superalex-dev/HealthEdge/blob/master/HealthEdgeFrontend/healthedgefrontend/src/assets/healthedgelogo.png" alt="HealthEdge Logo" width="200"/>
 
-**HealthEdge is a web application designed to revolutionize healthcare facility management, offering features for easy appointment bookings and comprehensive patient care. It empowers doctors with schedule management tools and monitoring capabilities, ensuring efficient patient communication and data security within an intuitive interface. 
+** HealthEdge is a web application designed to revolutionize healthcare facility management, offering features for easy appointment bookings and comprehensive patient care. It empowers doctors with schedule management tools and monitoring capabilities, ensuring efficient patient communication and data security within an intuitive interface. 
 
 ---
 
