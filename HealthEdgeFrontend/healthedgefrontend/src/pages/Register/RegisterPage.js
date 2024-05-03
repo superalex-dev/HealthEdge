@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/joy";
 import "./RegisterPage.css";
 import { login } from "../../utils/authUtils";
-import { LoginPage } from '../Login/LoginPage';
+import { LoginPage } from "../Login/LoginPage";
 
 function RegisterPage() {
   const [user, setUser] = useState({
@@ -13,6 +13,11 @@ function RegisterPage() {
     userName: "",
     email: "",
     password: "",
+    dateOfBirth: Date,
+    gender: "",
+    bloodType: "",
+    contactNumber: "",
+    address: "",
   });
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -28,14 +33,14 @@ function RegisterPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    console.log(user);
     try {
       const response = await axios.post(
-        "http://localhost:5239/users/create",
+        "http://localhost:5239/patients/create",
         user
       );
       if (response.status === 200) {
         login(user.email, user.password, navigate, setError);
-        navigate("/register");
       }
     } catch (error) {
       setError("Registration failed. Please try again.");
@@ -45,7 +50,7 @@ function RegisterPage() {
 
   const handleLoginClick = () => {
     navigate("/login");
-  }
+  };
 
   return (
     <div className="register-page">
@@ -103,6 +108,59 @@ function RegisterPage() {
             onChange={handleChange}
             required
           />
+          <div className="input-row">
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={user.dateOfBirth}
+              onChange={handleChange}
+              required
+            />
+
+            <select
+              name="gender"
+              value={user.gender}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select gender</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+            </select>
+
+            <select
+              name="bloodType"
+              value={user.bloodType}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select blood type</option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+          <input
+            type="text"
+            name="contactNumber"
+            placeholder="Contact number"
+            value={user.contactNumber}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={user.address}
+            onChange={handleChange}
+            required
+          />
           <Button color="primary" type="submit" fullWidth>
             Create account
           </Button>
@@ -111,7 +169,7 @@ function RegisterPage() {
           </Button>
         </form>
       </div>
-      <div className="inspiration-container">
+      {/* <div className="inspiration-container">
         <div className="testimonial">
           <blockquote>
             ”lorem" ipsum dolor sit amet, consectetur adipiscing elit. Integer
@@ -123,7 +181,7 @@ function RegisterPage() {
         <div className="user-count">
           Join professionals who trust HealthEdge with their needs!
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -50,7 +50,6 @@ public class AppointmentsController : ControllerBase
                 DoctorId = appointment.DoctorId,
                 AppointmentTime = appointment.AppointmentTime,
                 Notes = appointment.Notes,
-                Status = appointment.Status,
                 Reason = appointment.Reason,
                 PaymentMethod = appointment.PaymentMethod
             });
@@ -76,7 +75,6 @@ public class AppointmentsController : ControllerBase
                 DoctorId = appointmentDto.DoctorId,
                 AppointmentTime = appointmentDto.AppointmentTime,
                 Notes = appointmentDto.Notes,
-                Status = appointmentDto.Status,
                 Reason = appointmentDto.Reason,
                 PaymentMethod = appointmentDto.PaymentMethod
             };

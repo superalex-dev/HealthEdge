@@ -1,0 +1,107 @@
+.main-content {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  position: relative;
+}
+
+.profile-image {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.specialization-region {
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.star-icons {
+  display: flex;
+  align-items: center;
+}
+
+.ratings-text {
+  margin-left: 8px;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.earliest-slot {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.action-button {
+  background-color: #10b981;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.action-button:hover {
+  background-color: #059669;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.modal-heading {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.modal-button {
+  background-color: #ef4444;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.modal-button:hover {
+  background-color: #dc2626;
+}
+
+.time-slot {
+  padding: 8px 16px;
+  margin: 5px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.time-slot:hover {
+  background-color: #d1d5db;
+}
+
+.time-slot.disabled {
+  background-color: #9ca3af;
+  color: #374151;
+  cursor: not-allowed;
+  opacity: 0.5;
+}

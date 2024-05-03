@@ -9,9 +9,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Patients from './pages/Patients/Patients';
 import PatientDetails from './pages/Patients/PatientDetails';
 import BookAppointment from './pages/BookAppointment';
-import HomePage from './pages/HomePage';
+import HomePage from './pages/Home/HomePage';
 import DoctorsList from './pages/DoctorsList';
-import SearchResultsComponent from './components/doctors/SearchDoctors';
 
 function App() {
   return (
@@ -22,7 +21,6 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/lekari" element={<DoctorsList />} />
-        <Route path="/search-results" element={<SearchResultsComponent />} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />

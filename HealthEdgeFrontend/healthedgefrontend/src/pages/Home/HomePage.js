@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SearchDoctors from "../components/doctors/SearchDoctors";
+import styles from './HomePage.module.css';
 
 const HomePage = () => {
   const [state, setState] = useState({
@@ -148,10 +148,11 @@ const HomePage = () => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="specialization">Choose a specialization:</label>
-        <select id="specialization" onChange={handleSpecializationChange}>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Search for a Doctor</h1> 
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label htmlFor="specialization" className={styles.label}>Choose a specialization:</label>
+        <select id="specialization" onChange={handleSpecializationChange} className={styles.select}>
           <option value="">Select</option>
           {specializations.map((spec, index) => (
             <option key={index} value={JSON.stringify(spec)}>
@@ -160,8 +161,8 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="city">Choose your region:</label>
-        <select id="city" onChange={handleCityChange}>
+        <label htmlFor="city" className={styles.label}>Choose your region:</label>
+        <select id="city" onChange={handleCityChange} className={styles.select}>
           <option value="">Select</option>
           {cities.map((city, index) => (
             <option key={index} value={JSON.stringify(city)}>
@@ -170,8 +171,8 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="insurance">Choose your insurance fund:</label>
-        <select id="insurance" onChange={handleInsuranceChange}>
+        <label htmlFor="insurance" className={styles.label}>Choose your insurance fund:</label>
+        <select id="insurance" onChange={handleInsuranceChange} className={styles.select}>
           <option value="">Select</option>
           {insurances.map((ins, index) => (
             <option key={index} value={JSON.stringify(ins)}>
@@ -180,45 +181,48 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="firstName">First Name:</label>
+        <label htmlFor="firstName" className={styles.label}>First Name:</label>
         <input
           type="text"
           id="firstName"
           name="firstName"
           value={state.firstName}
           onChange={(e) => setState({ ...state, firstName: e.target.value })}
+          className={styles.input}
         />
 
-        <label htmlFor="lastName">Last Name:</label>
+        <label htmlFor="lastName" className={styles.label}>Last Name:</label>
         <input
           type="text"
           id="lastName"
           name="lastName"
           value={state.lastName}
           onChange={(e) => setState({ ...state, lastName: e.target.value })}
+          className={styles.input}
         />
 
-        <label htmlFor="pediatrician">Needs to be a pediatrician:</label>
+        <label htmlFor="pediatrician" className={styles.label}>Needs to be a pediatrician:</label>
         <select
           id="pediatrician"
           onChange={handlePediatricianChange}
-          onLoad={handlePediatricianChange}>
+          className={styles.select}>
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
 
-        <label htmlFor="nzok">NZOK:</label>
-        <select id="nzok" onChange={handleNZOKChange} onLoad={handleNZOKChange}>
+        <label htmlFor="nzok" className={styles.label}>NZOK:</label>
+        <select id="nzok" onChange={handleNZOKChange} className={styles.select}>
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className={styles.button}>Submit</button>
       </form>
     </div>
   );
+
 };
 
 export default HomePage;

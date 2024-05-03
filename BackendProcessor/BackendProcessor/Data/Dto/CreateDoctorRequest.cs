@@ -1,16 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BackendProcessor.Models
+namespace BackendProcessor.Data.Dto
 {
-    public class Doctor
+    public class CreateDoctorRequest
     {
-        [Key]
-        [Required]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string FirstName { get; set; }
@@ -18,27 +13,19 @@ namespace BackendProcessor.Models
         [Required]
         [StringLength(50)]
         public string LastName { get; set; }
-        
+
         [StringLength(15)]
         public string Username { get; set; }
 
-        [ForeignKey("RegionId")]
         public int? RegionId { get; set; }
-        public Region Region { get; set; }
-
-        public ICollection<Appointment> Appointments { get; set; }
 
         public bool IsPediatrician { get; set; }
 
-        [ForeignKey("SpecializationId")]
         public int? SpecializationId { get; set; }
-        public Specialization Specialization { get; set; }
 
         public bool Nzok { get; set; }
 
-        [ForeignKey("InsuranceId")]
-        public int? InsuranceId { get; set; }
-        public Insurance Insurance { get; set; }
+        public List<int> InsuranceIds { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -51,10 +38,6 @@ namespace BackendProcessor.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
 
-        public DateTime DateOfCreation { get; set; }
-
         public string ImageUrl { get; set; }
-
-        public ICollection<DoctorInsurance> DoctorInsurances { get; set; }
     }
 }
