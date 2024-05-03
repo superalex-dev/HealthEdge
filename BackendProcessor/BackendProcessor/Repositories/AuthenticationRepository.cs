@@ -23,7 +23,7 @@ namespace BackendProcessor.Repositories
         public async Task<AuthenticatedResponseModel> Login(UserLogin user)
         {
             Patient doesPatientExist = await context.Patients
-                .Where(u => u.Email == user.Email)
+                .Where(u => u.Email == user.Email || u.UserName == user.UserName)
                 .FirstOrDefaultAsync();
         
             if (doesPatientExist != null)
