@@ -22,6 +22,10 @@ namespace BackendProcessor.Models
         [StringLength(15)]
         public string Username { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string Password { get; set; }
+
         [ForeignKey("RegionId")]
         public int? RegionId { get; set; }
         public Region Region { get; set; }

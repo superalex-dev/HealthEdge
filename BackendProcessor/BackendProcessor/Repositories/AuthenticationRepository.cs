@@ -54,5 +54,44 @@ namespace BackendProcessor.Repositories
         
             return null;
         }
+
+        public async Task<bool> AdminLogin(UserLogin user)
+        {
+            var doesUserExist = await context.Users
+                .Where(u => u.Email == user.Email || u.UserName == user.UserName)
+                .FirstOrDefaultAsync();
+
+            if (doesUserExist != null)
+            {
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, doesUserExist.Password);
+
+                if (!isPasswordValid)
+                {
+                    Console.WriteLine("Passwords do not match");
+                    return false;
+                }
+
+                return true;
+            }
+
+            var doesDoctorExist = await context.Doctors
+                .Where(d => d.Email == user.Email || d.Username == user.UserName)
+                .FirstOrDefaultAsync();
+
+            if (doesDoctorExist != null)
+            {
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, doesDoctorExist.Password);
+
+                if (!isPasswordValid)
+                {
+                    Console.WriteLine("Passwords do not match");
+                    return false;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
     }
 }

@@ -25,5 +25,18 @@ namespace BackendProcessor.Controllers
 
             return Unauthorized();
         }
+
+        [HttpPost("admin-login")]
+        public async Task<ActionResult<bool>> AdminLogin([FromBody] UserLogin user)
+        {
+            bool isAdminLoginSuccessfull = await this._authenticationRepository.AdminLogin(user);
+
+            if (isAdminLoginSuccessfull)
+            {
+                return Ok(isAdminLoginSuccessfull);
+            }
+
+            return Unauthorized();
+        }
     }
 }
