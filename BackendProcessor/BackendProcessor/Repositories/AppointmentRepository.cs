@@ -48,11 +48,11 @@ public class AppointmentRepository : IAppointmentRepository
             throw new ArgumentNullException(nameof(appointment));
         }
 
-        _appointmentHelper.ValidateAppointmentTime(appointment.AppointmentTime);
+        //_appointmentHelper.ValidateAppointmentTime(appointment.AppointmentTime);
 
-        await _appointmentHelper.CheckForOverlappingAppointments(appointment, _context);
+       // await _appointmentHelper.CheckForOverlappingAppointments(appointment, _context);
 
-        _appointmentHelper.ValidateAppointmentDetails(appointment);
+        //_appointmentHelper.ValidateAppointmentDetails(appointment);
 
         _context.Appointments.Add(appointment);
         await _context.SaveChangesAsync();
@@ -82,5 +82,11 @@ public class AppointmentRepository : IAppointmentRepository
             .Where(a => a.DoctorId == doctorId)
             .OrderBy(a => a.AppointmentTime)
             .LastAsync();
+    }
+
+    public async Task<bool> IsAppointmentDateTaken(DateTime date)
+    {
+        return await _context.Appointments
+            .AnyAsync(a => a.AppointmentTime == date);
     }
 }

@@ -11,6 +11,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task UpdatePatientAsync(Patient patient);
         Task DeletePatientAsync(int id);
         Task<List<Patient>> SearchPatientAsync(string patientName);
+        Task<Patient> GetPatientByUsernameEmail(string username, string email);
         Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth);
     }
 }

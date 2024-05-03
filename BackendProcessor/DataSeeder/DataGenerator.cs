@@ -364,8 +364,7 @@ namespace DataSeeder
                 .RuleFor(p => p.BloodType, f => f.PickRandom(patientBloodTypes))
                 .RuleFor(p => p.ContactNumber, f => f.Phone.PhoneNumber())
                 .RuleFor(p => p.Address, f => f.Address.FullAddress())
-                .RuleFor(p => p.Email, f => f.Internet.Email())
-                .RuleFor(p => p.UserId, f => f.PickRandom(userIds));
+                .RuleFor(p => p.Email, f => f.Internet.Email());
 
             return patientFaker.Generate(count);
         }

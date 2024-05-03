@@ -46,17 +46,58 @@ namespace BackendProcessor.Controllers
         }
 
         [HttpPost("doctors/create")]
-        public async Task<IActionResult> CreateDoctorAsync([FromBody] Doctor doctor)
+        public async Task<ActionResult<DoctorDto>> CreateDoctor([FromBody] CreateDoctorRequest request)
         {
-            Doctor createdDoctor = await _doctorRepository.CreateDoctorAsync(doctor);
-            
-            if (createdDoctor == null)
+            var doctor = new Doctor
             {
-                return BadRequest();
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Username = request.Username,
+                RegionId = request.RegionId,
+                IsPediatrician = request.IsPediatrician,
+                SpecializationId = request.SpecializationId,
+                Nzok = request.Nzok,
+                ContactNumber = request.ContactNumber,
+                Email = request.Email,
+                DateOfBirth = request.DateOfBirth,
+                ImageUrl = request.ImageUrl
+            };
+
+            _context.Doctors.Add(doctor);
+
+            foreach (var insuranceId in request.InsuranceIds)
+            {
+                var doctorInsurance = new DoctorInsurance
+                {
+                    Doctor = doctor,
+                    InsuranceId = insuranceId
+                };
+
+                _context.DoctorInsurances.Add(doctorInsurance);
             }
 
-            return Ok(createdDoctor);
+            await _context.SaveChangesAsync();
+
+            var doctorDto = new DoctorDto
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Username = doctor.Username,
+                RegionId = doctor.RegionId,
+                IsPediatrician = doctor.IsPediatrician,
+                SpecializationId = doctor.SpecializationId,
+                Nzok = doctor.Nzok,
+                InsuranceIds = request.InsuranceIds,
+                ContactNumber = doctor.ContactNumber,
+                Email = doctor.Email,
+                DateOfBirth = doctor.DateOfBirth,
+                ImageUrl = doctor.ImageUrl
+            };
+
+            return Ok(doctorDto);
         }
+
 
         [HttpPut("doctors/edit/{Id}")]
         public async Task<IActionResult> EditDoctorAsync(int Id, [FromBody] Doctor doctor)
@@ -115,12 +156,12 @@ namespace BackendProcessor.Controllers
                 FirstName = d.FirstName,
                 LastName = d.LastName,
                 Email = d.Email,
+                ImageUrl = d.ImageUrl,
                 Appointments = d.Appointments.Select(a => new AppointmentCreationDto
                 {
                     Id = a.Id,
                     AppointmentTime = a.AppointmentTime,
-                    Reason = a.Reason,
-                    Status = a.Status
+                    Reason = a.Reason
                 }).ToList()
             }).ToList();
 

@@ -9,7 +9,7 @@ const Dashboard = () => {
   const handleSignOut = () => {
     console.log('Signing out...');
     signOut();
-    //navigate to the login page
+    window.location.replace('/login');
   };
 
   return (

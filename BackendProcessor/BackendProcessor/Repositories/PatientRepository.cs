@@ -62,6 +62,13 @@ namespace BackendProcessor.Repositories
             return patients;
         }
 
+        public async Task<Patient> GetPatientByUsernameEmail(string username, string email)
+        {
+            return await _context.Patients
+                .Where(u => u.UserName == username || u.Email == email)
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth)
         {
             var patients = await _context.Patients

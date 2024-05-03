@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-import DoctorCard from '../components/doctors/DoctorCard';
+import DoctorCard from '../components/doctors/doctorCard/DoctorCard';
+import styles from './DoctorsList.module.css';
 
 const DoctorsList = () => { 
   const location = useLocation();
   const [doctors, setDoctors] = useState([]);
+
+  console.log(doctors);
 
   useEffect(() => {
     if (location.state && location.state.doctors) {
@@ -13,10 +16,8 @@ const DoctorsList = () => {
     }
   }, [location.state], [location.state.specialization]);
 
-  console.log(doctors);
-
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className={styles.grid}>
       {doctors.map(doctor => (
         <DoctorCard key={doctor.id} doctor={doctor} />
       ))}

@@ -37,7 +37,25 @@ public class AppointmentsController : ControllerBase
     [HttpGet("doctor/{doctorId}")]
     public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointmentsByDoctorId(int doctorId)
     {
-        return Ok(await _appointmentRepository.GetAppointmentsByDoctorIdAsync(doctorId));
+        var appointments = await _appointmentRepository.GetAppointmentsByDoctorIdAsync(doctorId);
+
+        var appointmentResponseDTO = new List<AppointmentCreationDto>();
+
+        foreach (var appointment in appointments)
+        {
+            appointmentResponseDTO.Add(new AppointmentCreationDto
+            {
+                Id = appointment.Id,
+                PatientId = appointment.PatientId,
+                DoctorId = appointment.DoctorId,
+                AppointmentTime = appointment.AppointmentTime,
+                Notes = appointment.Notes,
+                Reason = appointment.Reason,
+                PaymentMethod = appointment.PaymentMethod
+            });
+        }   
+
+        return Ok(appointmentResponseDTO);
     }
     
     [HttpGet("patient/{patientId}")]
@@ -55,9 +73,8 @@ public class AppointmentsController : ControllerBase
             {
                 PatientId = appointmentDto.PatientId,
                 DoctorId = appointmentDto.DoctorId,
-                AppointmentTime = appointmentDto.AppointmentTime.ToUniversalTime(),
+                AppointmentTime = appointmentDto.AppointmentTime,
                 Notes = appointmentDto.Notes,
-                Status = appointmentDto.Status,
                 Reason = appointmentDto.Reason,
                 PaymentMethod = appointmentDto.PaymentMethod
             };

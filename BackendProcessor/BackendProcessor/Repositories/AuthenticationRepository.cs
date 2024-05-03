@@ -22,13 +22,13 @@ namespace BackendProcessor.Repositories
 
         public async Task<AuthenticatedResponseModel> Login(UserLogin user)
         {
-            User doesUserExist = await context.Users
+            Patient doesPatientExist = await context.Patients
                 .Where(u => u.Email == user.Email)
                 .FirstOrDefaultAsync();
         
-            if (doesUserExist != null)
+            if (doesPatientExist != null)
             {
-                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, doesUserExist.Password);
+                bool isPasswordValid = BCrypt.Net.BCrypt.Verify(user.Password, doesPatientExist.Password);
                 Console.WriteLine($"Password is valid: {isPasswordValid}");
         
                 if (!isPasswordValid)

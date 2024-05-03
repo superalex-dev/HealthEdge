@@ -20,7 +20,15 @@ namespace BackendProcessor.Models
 
         [Required]
         [StringLength(100)]
+        public string UserName { get; set; }
+
+        [Required]
+        [StringLength(100)]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        public string Password { get; set; }
 
         [Column(TypeName = "Date")]
         public DateOnly DateOfBirth { get; set; }
@@ -41,10 +49,9 @@ namespace BackendProcessor.Models
         [StringLength(255)]
         public string Address { get; set; }
 
-        public int? UserId { get; set; }
-        
-        public User? User { get; set; }
-
         public ICollection<Appointment> Appointments { get; set; }
+
+        [Required]
+        public DateTime DateOfCreation { get; set; }
     }
 }

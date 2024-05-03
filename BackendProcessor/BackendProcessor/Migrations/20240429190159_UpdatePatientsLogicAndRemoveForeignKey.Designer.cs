@@ -3,6 +3,7 @@ using System;
 using BackendProcessor.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BackendProcessor.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240429190159_UpdatePatientsLogicAndRemoveForeignKey")]
+    partial class UpdatePatientsLogicAndRemoveForeignKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,6 +53,10 @@ namespace BackendProcessor.Migrations
                     b.Property<string>("Reason")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasKey("Id");
 
@@ -113,10 +120,6 @@ namespace BackendProcessor.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int?>("InsuranceId")
                         .HasColumnType("integer");
 
@@ -151,21 +154,6 @@ namespace BackendProcessor.Migrations
                     b.HasIndex("SpecializationId");
 
                     b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("BackendProcessor.Models.DoctorInsurance", b =>
-                {
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("InsuranceId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("DoctorId", "InsuranceId");
-
-                    b.HasIndex("InsuranceId");
-
-                    b.ToTable("DoctorInsurances");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Insurance", b =>
@@ -468,25 +456,6 @@ namespace BackendProcessor.Migrations
                     b.Navigation("Specialization");
                 });
 
-            modelBuilder.Entity("BackendProcessor.Models.DoctorInsurance", b =>
-                {
-                    b.HasOne("BackendProcessor.Models.Doctor", "Doctor")
-                        .WithMany("DoctorInsurances")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BackendProcessor.Models.Insurance", "Insurance")
-                        .WithMany("DoctorInsurances")
-                        .HasForeignKey("InsuranceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Insurance");
-                });
-
             modelBuilder.Entity("BackendProcessor.Models.MedicalRecord", b =>
                 {
                     b.HasOne("BackendProcessor.Models.Doctor", "Doctor")
@@ -520,13 +489,6 @@ namespace BackendProcessor.Migrations
             modelBuilder.Entity("BackendProcessor.Models.Doctor", b =>
                 {
                     b.Navigation("Appointments");
-
-                    b.Navigation("DoctorInsurances");
-                });
-
-            modelBuilder.Entity("BackendProcessor.Models.Insurance", b =>
-                {
-                    b.Navigation("DoctorInsurances");
                 });
 
             modelBuilder.Entity("BackendProcessor.Models.Patient", b =>
