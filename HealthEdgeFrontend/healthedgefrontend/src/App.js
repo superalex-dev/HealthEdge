@@ -12,6 +12,7 @@ import BookAppointment from './pages/BookAppointment';
 import HomePage from './pages/Home/HomePage';
 import DoctorsList from './pages/DoctorsList';
 import AdminLoginPage from './pages/Login/AdminLoginPage';
+import AdminHomePage from './pages/Home/AdminHomePage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/edit-patient/:id" element={<EditPatient />} />
         <Route path="/patient-details/:id" element={<PatientDetails />} />
         <Route path="/adminLogin" element={<AdminLoginPage />} />
+        <Route path="/admin-dashboard" element={<AdminHomePage />} />
       </Routes>
     </Router>
   );

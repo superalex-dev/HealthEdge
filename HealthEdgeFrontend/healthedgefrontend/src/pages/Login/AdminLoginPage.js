@@ -1,16 +1,43 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
 import './AdminLoginPage.css';
 
 function AdminLoginPage() {
   const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(loginData);
+    const response = await fetch('http://localhost:5239/admin-login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(loginData),
+    });
+
+    const data = await response.json();
+
+    if (data) {
+      console.log('Login successful');
+      navigate('/admin-dashboard');
+    } else {
+      console.log('Login failed');
+      confirmAlert({
+        title: 'Error',
+        message: 'Invalid credentials. Please try again.',
+        buttons: [
+          {
+            label: 'Ok',
+          },
+        ],
+      });
+    }
   };
 
   return (
