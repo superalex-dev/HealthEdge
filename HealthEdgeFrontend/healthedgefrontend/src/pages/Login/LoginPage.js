@@ -48,6 +48,10 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
     navigate('/register');
   };
 
+  const handleDoctorOrAdminViewClick = () => {
+    navigate('/adminLogin')
+  }
+
   return (
     <div className="login-wrapper">
       <div className="login-form">
@@ -72,6 +76,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
           {/* <button type="submit">Log in</button> */}
           <Button color="primary" type="submit" onClick={handleSubmit}>Log in</Button>
           <Button color="danger" type="button" onClick={handleJoinUsClick}>Join us</Button>
+          <Button color="success" type="button" onClick={handleDoctorOrAdminViewClick}>Doctor or Admin account</Button>
         </form>
       </div>
     </div>
