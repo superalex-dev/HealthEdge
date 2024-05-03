@@ -25,32 +25,23 @@ namespace BackendProcessor.Repositories
             return await _context.Doctors.FindAsync(id);
         }
 
-        public async Task<Doctor> CreateDoctorAsync(Doctor doctor)
+        public async Task<Doctor> CreateDoctorAsync(Doctor doctor, IEnumerable<int> insuranceIds)
         {
-            var lastDoctor = await _context.Doctors
-                .OrderByDescending(d => d.Username)
-                .FirstOrDefaultAsync();
+            await _context.Doctors.AddAsync(doctor);
 
-            int nextNumber = 1;
-
-            if (lastDoctor != null && !string.IsNullOrEmpty(lastDoctor.Username))
+            foreach (var insuranceId in insuranceIds)
             {
-                var prefixLength = "healthedge".Length;
-
-                if (lastDoctor.Username.Length > prefixLength)
+                var doctorInsurance = new DoctorInsurance
                 {
-                    var lastNumberStr = lastDoctor.Username.Substring(prefixLength);
-                    if (int.TryParse(lastNumberStr, out var lastNumber))
-                    {
-                        nextNumber = lastNumber + 1;
-                    }
-                }
+                    Doctor = doctor,
+                    InsuranceId = insuranceId
+                };
+
+                await _context.DoctorInsurances.AddAsync(doctorInsurance);
             }
 
-            doctor.Username = $"healthedge{nextNumber:0000}";
-
-            await _context.Doctors.AddAsync(doctor);
             await _context.SaveChangesAsync();
+
             return doctor;
         }
 

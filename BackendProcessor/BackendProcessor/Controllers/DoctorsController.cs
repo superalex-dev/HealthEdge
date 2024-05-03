@@ -48,11 +48,31 @@ namespace BackendProcessor.Controllers
         [HttpPost("doctors/create")]
         public async Task<ActionResult<DoctorDto>> CreateDoctor([FromBody] CreateDoctorRequest request)
         {
+            var lastDoctor = await _context.Doctors
+                .OrderByDescending(d => d.Username)
+                .FirstOrDefaultAsync();
+
+            int nextNumber = 1;
+
+            if (lastDoctor != null && !string.IsNullOrEmpty(lastDoctor.Username))
+            {
+                var prefixLength = "healthedge".Length;
+
+                if (lastDoctor.Username.Length > prefixLength)
+                {
+                    var lastNumberStr = lastDoctor.Username.Substring(prefixLength);
+                    if (int.TryParse(lastNumberStr, out var lastNumber))
+                    {
+                        nextNumber = lastNumber + 1;
+                    }
+                }
+            }
+
             var doctor = new Doctor
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                Username = request.Username,
+                Username = $"healthedge{nextNumber:0000}",
                 RegionId = request.RegionId,
                 IsPediatrician = request.IsPediatrician,
                 SpecializationId = request.SpecializationId,
@@ -63,20 +83,7 @@ namespace BackendProcessor.Controllers
                 ImageUrl = request.ImageUrl
             };
 
-            _context.Doctors.Add(doctor);
-
-            foreach (var insuranceId in request.InsuranceIds)
-            {
-                var doctorInsurance = new DoctorInsurance
-                {
-                    Doctor = doctor,
-                    InsuranceId = insuranceId
-                };
-
-                _context.DoctorInsurances.Add(doctorInsurance);
-            }
-
-            await _context.SaveChangesAsync();
+            await _doctorRepository.CreateDoctorAsync(doctor, request.InsuranceIds);
 
             var doctorDto = new DoctorDto
             {

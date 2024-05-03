@@ -15,7 +15,7 @@ namespace BackendProcessor.Data.Dto
         public string LastName { get; set; }
 
         [StringLength(15)]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         public int? RegionId { get; set; }
 
