@@ -164,6 +164,7 @@ function RegisterPage() {
           <Button color="primary" type="submit" fullWidth>
             Create account
           </Button>
+          <hr></hr>
           <Button color="danger" type="button" onClick={handleLoginClick}>
             Already have an account
           </Button>
