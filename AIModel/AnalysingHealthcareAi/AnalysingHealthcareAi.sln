@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AnalysingHealthcareAi", "AnalysingHealthcareAi\AnalysingHealthcareAi.pyproj", "{1FCDCA46-42C5-477B-8D3D-FE026C54FF42}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FCDCA46-42C5-477B-8D3D-FE026C54FF42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FCDCA46-42C5-477B-8D3D-FE026C54FF42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {450937DD-71D5-475B-BF62-04145F0684B2}
+	EndGlobalSection
+EndGlobal
