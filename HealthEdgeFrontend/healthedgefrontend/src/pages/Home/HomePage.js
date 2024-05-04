@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './HomePage.module.css';
+import { RemoveShoppingCartRounded } from "@mui/icons-material";
 
 const HomePage = () => {
   const [state, setState] = useState({
@@ -132,11 +133,11 @@ const HomePage = () => {
         if (typeof hasNZOK === "boolean") {
           URL += `hasNZOK=${hasNZOK}&`;
         }
+        
+        let response = await axios.get(URL);
 
-
-        URL = URL.replace(/&$/, "");
-
-        const response = await axios.get(URL);
+        console.log(URL);
+        console.log("url resp: " + JSON.stringify(response.data));
 
         navigate('/lekari', { state: { doctors: response.data } });
       } catch (error) {

@@ -8,8 +8,6 @@ const DoctorsList = () => {
   const location = useLocation();
   const [doctors, setDoctors] = useState([]);
 
-  console.log(doctors);
-
   useEffect(() => {
     if (location.state && location.state.doctors) {
       setDoctors(location.state.doctors);
