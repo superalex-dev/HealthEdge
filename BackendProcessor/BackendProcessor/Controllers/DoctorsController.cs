@@ -164,6 +164,12 @@ namespace BackendProcessor.Controllers
                 LastName = d.LastName,
                 Email = d.Email,
                 ImageUrl = d.ImageUrl,
+                IsPediatrician = d.IsPediatrician,
+                Nzok = d.Nzok,
+                SpecializationId = d.SpecializationId,
+                RegionId = d.RegionId,
+                ContactNumber = d.ContactNumber,
+                InsuranceId = d.InsuranceId,
                 Appointments = d.Appointments.Select(a => new AppointmentCreationDto
                 {
                     Id = a.Id,
