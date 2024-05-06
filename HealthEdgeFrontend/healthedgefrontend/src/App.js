@@ -13,6 +13,7 @@ import HomePage from './pages/Home/HomePage';
 import DoctorsList from './pages/DoctorsList';
 import AdminLoginPage from './pages/Login/AdminLoginPage';
 import AdminHomePage from './pages/Home/AdminHomePage';
+import CreateDoctor from './pages/Doctors/CreateDoctor';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/lekari" element={<DoctorsList />} />
+        <Route path="/create-doctor" element={<CreateDoctor />} />
         <Route path="/dashboard" element={
           <ProtectedRoute>
             <Dashboard />

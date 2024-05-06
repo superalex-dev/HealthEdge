@@ -73,7 +73,7 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, bool hasNZOK, int? regionId, int? insuranceId, string? firstName, string? lastName)
+        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, bool hasNZOK, int? regionId, string? firstName, string? lastName)
         {
             var query = _context.Doctors.AsQueryable();
 
@@ -82,12 +82,11 @@ namespace BackendProcessor.Repositories
                 (!needsToBeAPediatrician || d.IsPediatrician) &&
                 (!hasNZOK || d.Nzok) &&
                 (!regionId.HasValue || d.RegionId == regionId.Value) &&
-                (!insuranceId.HasValue || d.InsuranceId == insuranceId.Value) &&
                 (string.IsNullOrEmpty(firstName) || d.FirstName.Contains(firstName)) &&
                 (string.IsNullOrEmpty(lastName) || d.LastName.Contains(lastName))
             );
 
-            return await query.Include(d => d.Appointments).ToListAsync();
+            return await query.Include(d => d.DoctorInsurances).ThenInclude(di => di.Insurance).ToListAsync();
         }
     }
 }

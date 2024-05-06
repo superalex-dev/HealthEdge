@@ -19,9 +19,9 @@ namespace Application
             var specializations = dbContext.Specializations.ToList();
             var insurances = dbContext.Insurance.ToList();
 
-            var doctors = DataGenerator.GenerateDoctors(48, regions, specializations, insurances);
-            await dbContext.Doctors.AddRangeAsync(doctors);
-            await dbContext.SaveChangesAsync();
+            //var doctors = DataGenerator.GenerateDoctors(48, regions, specializations, insurances);
+            //await dbContext.Doctors.AddRangeAsync(doctors);
+            //await dbContext.SaveChangesAsync();
 
             //var doctors = DataGenerator.GenerateDoctors(48);
             //var regions = DataGenerator.GenerateRegions();

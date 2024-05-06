@@ -17,6 +17,10 @@ namespace BackendProcessor.Data.Dto
         [StringLength(15)]
         public string? Username { get; set; }
 
+        [Required]
+        [StringLength(100)]
+        public string Password { get; set; }
+
         public int? RegionId { get; set; }
 
         public bool IsPediatrician { get; set; }
@@ -37,6 +41,8 @@ namespace BackendProcessor.Data.Dto
 
         [Required]
         public DateTime DateOfBirth { get; set; }
+
+        public DateTime? DateOfCreation { get; set; }
 
         public string ImageUrl { get; set; }
     }

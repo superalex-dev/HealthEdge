@@ -5,6 +5,7 @@ using BackendProcessor.Repositories;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
 namespace BackendProcessor.Controllers
 {
@@ -68,11 +69,14 @@ namespace BackendProcessor.Controllers
                 }
             }
 
+            var now = DateTime.UtcNow;
+
             var doctor = new Doctor
             {
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 Username = $"healthedge{nextNumber:0000}",
+                Password = BCrypt.Net.BCrypt.HashPassword(request.Password),
                 RegionId = request.RegionId,
                 IsPediatrician = request.IsPediatrician,
                 SpecializationId = request.SpecializationId,
@@ -80,6 +84,7 @@ namespace BackendProcessor.Controllers
                 ContactNumber = request.ContactNumber,
                 Email = request.Email,
                 DateOfBirth = request.DateOfBirth,
+                DateOfCreation = request.DateOfCreation = now,
                 ImageUrl = request.ImageUrl
             };
 
@@ -99,6 +104,7 @@ namespace BackendProcessor.Controllers
                 ContactNumber = doctor.ContactNumber,
                 Email = doctor.Email,
                 DateOfBirth = doctor.DateOfBirth,
+                DateOfCreation = doctor.DateOfCreation,
                 ImageUrl = doctor.ImageUrl
             };
 
@@ -150,7 +156,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest("At least one search parameter must be provided.");
             }
 
-            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, hasNZOK, regionId, insuranceId, firstName, lastName);
+            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, hasNZOK, regionId, firstName, lastName);
 
             if (doctors == null || doctors.Count == 0)
             {
@@ -169,7 +175,8 @@ namespace BackendProcessor.Controllers
                 SpecializationId = d.SpecializationId,
                 RegionId = d.RegionId,
                 ContactNumber = d.ContactNumber,
-                InsuranceId = d.InsuranceId,
+                InsuranceIds = d.DoctorInsurances.Select(di => di.InsuranceId).ToList(),
+                //InsuranceId = d.InsuranceId,
                 Appointments = d.Appointments.Select(a => new AppointmentCreationDto
                 {
                     Id = a.Id,
