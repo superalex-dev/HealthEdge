@@ -23,7 +23,7 @@ namespace BackendProcessor.Controllers
         [HttpGet("doctors/get")]
         public async Task<IActionResult> GetDoctorsAsync()
         {
-            IEnumerable<Doctor> doctors = await _doctorRepository.GetAllDoctorsAsync();
+            IEnumerable<DoctorDto> doctors = await _doctorRepository.GetAllDoctorsAsync();
 
             if (doctors == null || doctors.Count() == 0)
             {
@@ -36,7 +36,7 @@ namespace BackendProcessor.Controllers
         [HttpGet("doctors/get/{Id}")]
         public async Task<IActionResult> GetDoctorAsync(int Id)
         {
-            Doctor doctor = await _doctorRepository.GetDoctorAsync(Id);
+            DoctorDto doctor = await _doctorRepository.GetDoctorAsync(Id);
 
             if (doctor == null)
             {

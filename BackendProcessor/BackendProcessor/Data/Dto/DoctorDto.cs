@@ -17,5 +17,7 @@
         public DateTime DateOfBirth { get; set; }
         public DateTime? DateOfCreation { get; set; }
         public string ImageUrl { get; set; }
+
+        public List<InsuranceDto> Insurances { get; set; }
     }
 }
