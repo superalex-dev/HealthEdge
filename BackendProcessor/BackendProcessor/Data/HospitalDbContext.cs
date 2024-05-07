@@ -60,11 +60,11 @@ namespace BackendProcessor.Data
                 .HasForeignKey(d => d.RegionId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Doctor>()
-                .HasOne<Insurance>(s => s.Insurance)
-                .WithMany()
-                .HasForeignKey(d => d.InsuranceId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //modelBuilder.Entity<Doctor>()
+            //    .HasOne<Insurance>(s => s.Insurance)
+            //    .WithMany()
+            //    .HasForeignKey(d => d.InsuranceId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<DoctorInsurance>()
                 .HasKey(di => new { di.DoctorId, di.InsuranceId });

@@ -18,7 +18,8 @@
 
         public bool Nzok { get; set; }
 
-        public int? InsuranceId { get; set; }
+        //public int? InsuranceId { get; set; }
+        public List<int> InsuranceIds { get; set; }
 
         public string ContactNumber { get; set; }
 

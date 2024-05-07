@@ -1,4 +1,5 @@
 ﻿using BackendProcessor.Data;
+using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,61 @@ namespace BackendProcessor.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
+        public async Task<ICollection<DoctorDto>> GetAllDoctorsAsync()
         {
-            return await _context.Doctors.ToListAsync();
+            var doctors = await _context.Doctors
+                .Include(d => d.DoctorInsurances)
+                .ThenInclude(di => di.Insurance)
+                .ToListAsync();
+
+            return doctors.Select(d => new DoctorDto
+            {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Username = d.Username,
+                Password = d.Password,
+                RegionId = d.RegionId,
+                IsPediatrician = d.IsPediatrician,
+                SpecializationId = d.SpecializationId,
+                Nzok = d.Nzok,
+                Insurances = d.DoctorInsurances.Select(di => new InsuranceDto
+                {
+                    Id = di.Insurance.Id,
+                    Name = di.Insurance.Name
+                }).ToList()
+            }).ToList();
         }
 
-        public async Task<Doctor> GetDoctorAsync(int id)
+        public async Task<DoctorDto> GetDoctorAsync(int id)
         {
-            return await _context.Doctors.FindAsync(id);
+            var doctor = await _context.Doctors
+                .Include(d => d.DoctorInsurances)
+                .ThenInclude(di => di.Insurance)
+                .FirstOrDefaultAsync(d => d.Id == id);
+
+            if (doctor == null)
+            {
+                return null;
+            }
+
+            return new DoctorDto
+            {
+                Id = doctor.Id,
+                FirstName = doctor.FirstName,
+                LastName = doctor.LastName,
+                Username = doctor.Username,
+                Password = doctor.Password,
+                RegionId = doctor.RegionId,
+                IsPediatrician = doctor.IsPediatrician,
+                SpecializationId = doctor.SpecializationId,
+                Nzok = doctor.Nzok,
+                Insurances = doctor.DoctorInsurances.Select(di => new InsuranceDto
+                {
+                    Id = di.Insurance.Id,
+                    Name = di.Insurance.Name
+                }).ToList()
+            };
         }
 
         public async Task<Doctor> CreateDoctorAsync(Doctor doctor, IEnumerable<int> insuranceIds)
@@ -73,7 +121,7 @@ namespace BackendProcessor.Repositories
             }
         }
 
-        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, bool hasNZOK, int? regionId, int? insuranceId, string? firstName, string? lastName)
+        public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, bool hasNZOK, int? regionId, string? firstName, string? lastName)
         {
             var query = _context.Doctors.AsQueryable();
 
@@ -82,12 +130,11 @@ namespace BackendProcessor.Repositories
                 (!needsToBeAPediatrician || d.IsPediatrician) &&
                 (!hasNZOK || d.Nzok) &&
                 (!regionId.HasValue || d.RegionId == regionId.Value) &&
-                (!insuranceId.HasValue || d.InsuranceId == insuranceId.Value) &&
                 (string.IsNullOrEmpty(firstName) || d.FirstName.Contains(firstName)) &&
                 (string.IsNullOrEmpty(lastName) || d.LastName.Contains(lastName))
             );
 
-            return await query.Include(d => d.Appointments).ToListAsync();
+            return await query.Include(d => d.DoctorInsurances).ThenInclude(di => di.Insurance).ToListAsync();
         }
     }
 }

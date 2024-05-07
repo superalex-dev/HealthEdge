@@ -40,9 +40,9 @@ namespace BackendProcessor.Models
 
         public bool Nzok { get; set; }
 
-        [ForeignKey("InsuranceId")]
-        public int? InsuranceId { get; set; }
-        public Insurance Insurance { get; set; }
+        //[ForeignKey("InsuranceId")]
+        //public int? InsuranceId { get; set; }
+        //public Insurance Insurance { get; set; }
 
         [Required]
         [StringLength(50)]
@@ -55,7 +55,7 @@ namespace BackendProcessor.Models
         [Required]
         public DateTime DateOfBirth { get; set; }
 
-        public DateTime DateOfCreation { get; set; }
+        public DateTime? DateOfCreation { get; set; }
 
         public string ImageUrl { get; set; }
 

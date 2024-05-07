@@ -311,30 +311,30 @@ namespace DataSeeder
         };
 
 
-        public static List<Doctor> GenerateDoctors(int count, ICollection<Region> regions, ICollection<Specialization> specializations, ICollection<Insurance> insurances)
-        {
-            var regionIds = regions.Select(r => r.Id).ToList();
-            var specializationIds = specializations.Select(s => s.Id).ToList();
-            var insuranceIds = insurances.Select(i => i.Id).ToList();
+        //public static List<Doctor> GenerateDoctors(int count, ICollection<Region> regions, ICollection<Specialization> specializations, ICollection<Insurance> insurances)
+        //{
+        //    var regionIds = regions.Select(r => r.Id).ToList();
+        //    var specializationIds = specializations.Select(s => s.Id).ToList();
+        //    var insuranceIds = insurances.Select(i => i.Id).ToList();
 
-            var doctorFaker = new Faker<Doctor>()
-                .RuleFor(d => d.FirstName, f => f.Name.FirstName())
-                .RuleFor(d => d.LastName, f => f.Name.LastName())
-                .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
-                .RuleFor(d => d.Password, f => f.Internet.Password())
-                .RuleFor(d => d.RegionId, f => f.PickRandom(regionIds))
-                .RuleFor(d => d.IsPediatrician, f => f.Random.Bool())
-                .RuleFor(d => d.SpecializationId, f => f.PickRandom(specializationIds))
-                .RuleFor(d => d.Nzok, f => f.Random.Bool())
-                .RuleFor(d => d.InsuranceId, f => f.PickRandom(insuranceIds))
-                .RuleFor(d => d.ContactNumber, f => f.Phone.PhoneNumber())
-                .RuleFor(d => d.Email, f => f.Internet.Email())
-                .RuleFor(d => d.DateOfBirth, f => f.Date.Past(30, DateTime.Now.AddYears(-30)))
-                .RuleFor(d => d.DateOfCreation, f => f.Date.Recent())
-                .RuleFor(d => d.ImageUrl, f => f.Internet.Avatar());
+        //    var doctorFaker = new Faker<Doctor>()
+        //        .RuleFor(d => d.FirstName, f => f.Name.FirstName())
+        //        .RuleFor(d => d.LastName, f => f.Name.LastName())
+        //        .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
+        //        .RuleFor(d => d.Password, f => f.Internet.Password())
+        //        .RuleFor(d => d.RegionId, f => f.PickRandom(regionIds))
+        //        .RuleFor(d => d.IsPediatrician, f => f.Random.Bool())
+        //        .RuleFor(d => d.SpecializationId, f => f.PickRandom(specializationIds))
+        //        .RuleFor(d => d.Nzok, f => f.Random.Bool())
+        //        .RuleFor(d => d.InsuranceId, f => f.PickRandom(insuranceIds))
+        //        .RuleFor(d => d.ContactNumber, f => f.Phone.PhoneNumber())
+        //        .RuleFor(d => d.Email, f => f.Internet.Email())
+        //        .RuleFor(d => d.DateOfBirth, f => f.Date.Past(30, DateTime.Now.AddYears(-30)))
+        //        .RuleFor(d => d.DateOfCreation, f => f.Date.Recent())
+        //        .RuleFor(d => d.ImageUrl, f => f.Internet.Avatar());
 
-            return doctorFaker.Generate(count);
-        }
+        //    return doctorFaker.Generate(count);
+        //}
 
         public static List<Region> GenerateRegions()
         {
