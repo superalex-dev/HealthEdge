@@ -22,20 +22,19 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/lekari" element={<DoctorsList />} />
-        <Route path="/create-doctor" element={<CreateDoctor />} />
-        <Route path="/dashboard" element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } />
-        <Route path="/book-appointment" element={<BookAppointment />} />
-        <Route path="/patients" element={<Patients />} />
-        <Route path="/edit-patient/:id" element={<EditPatient />} />
-        <Route path="/patient-details/:id" element={<PatientDetails />} />
         <Route path="/adminLogin" element={<AdminLoginPage />} />
-        <Route path="/admin-dashboard" element={<AdminHomePage />} />
+        
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/lekari" element={<DoctorsList />} />
+          <Route path="/create-doctor" element={<CreateDoctor />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/book-appointment" element={<BookAppointment />} />
+          <Route path="/patients" element={<Patients />} />
+          <Route path="/edit-patient/:id" element={<EditPatient />} />
+          <Route path="/patient-details/:id" element={<PatientDetails />} />
+          <Route path="/admin-dashboard" element={<AdminHomePage />} />
+        </Route>
       </Routes>
     </Router>
   );
