@@ -23,18 +23,16 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/adminLogin" element={<AdminLoginPage />} />
-        
-        <Route element={<ProtectedRoute />}>
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/lekari" element={<DoctorsList />} />
-          <Route path="/create-doctor" element={<CreateDoctor />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/book-appointment" element={<BookAppointment />} />
-          <Route path="/patients" element={<Patients />} />
-          <Route path="/edit-patient/:id" element={<EditPatient />} />
-          <Route path="/patient-details/:id" element={<PatientDetails />} />
-          <Route path="/admin-dashboard" element={<AdminHomePage />} />
-        </Route>
+
+        <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+        <Route path="/lekari" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
+        <Route path="/create-doctor" element={<ProtectedRoute><CreateDoctor /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/book-appointment" element={<ProtectedRoute><BookAppointment /></ProtectedRoute>} />
+        <Route path="/patients" element={<ProtectedRoute><Patients /></ProtectedRoute>} />
+        <Route path="/edit-patient/:id" element={<ProtectedRoute><EditPatient /></ProtectedRoute>} />
+        <Route path="/patient-details/:id" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
+        <Route path="/admin-dashboard" element={<ProtectedRoute><AdminHomePage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
