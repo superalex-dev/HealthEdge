@@ -1,6 +1,7 @@
 ﻿using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
+using BackendProcessor.Services;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,10 +10,12 @@ namespace BackendProcessor.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _userRepository;
+        private readonly IEmailService _emailService;
 
-        public UserController(IUserRepository userRepository)
+        public UserController(IUserRepository userRepository, IEmailService emailService)
         {
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         [HttpGet("users/count")]
@@ -78,6 +81,8 @@ namespace BackendProcessor.Controllers
                 createdUser.Email,
                 createdUser.DateOfCreation
                 );
+
+            await _emailService.SendWelcomeAdminEmail(user.Email, user.UserName);
 
             return Ok(userReturnDto);
         }

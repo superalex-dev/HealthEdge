@@ -2,6 +2,8 @@
 {
     public interface IEmailService
     {
-        Task SendWelcomeEmail(string userEmail, string userName, string fromEmail, string fromName, string subject, string message);
+        Task SendWelcomeEmail(string userEmail, string userName);
+
+        Task SendWelcomeAdminEmail(string userEmail, string userName);
     }
 }

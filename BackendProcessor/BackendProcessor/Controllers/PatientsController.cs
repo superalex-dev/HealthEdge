@@ -11,9 +11,9 @@ namespace BackendProcessor.Controllers
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IUserRepository _userRepository;
-        private readonly EmailService _emailService;
+        private readonly IEmailService _emailService;
 
-        public PatientsController(IPatientRepository patientRepository, IUserRepository userRepository, EmailService emailService)
+        public PatientsController(IPatientRepository patientRepository, IUserRepository userRepository, IEmailService emailService)
         {
             _patientRepository = patientRepository;
             _userRepository = userRepository;
@@ -94,7 +94,7 @@ namespace BackendProcessor.Controllers
                 return BadRequest("Failed to create patient.");
             }
 
-            await _emailService.SendWelcomeEmail(patientDto.Email, patientDto.FirstName + " " + patientDto.LastName, "mr.naidobrixjr@gmail.com", "Alexander Boev - CEO of HealthEdge", "Welcome to HealthEdge", "Thank you for registering!");
+            await _emailService.SendWelcomeEmail(patientDto.Email, patientDto.FirstName + " " + patientDto.LastName);
 
             return Ok(patientResponseDto);
         }

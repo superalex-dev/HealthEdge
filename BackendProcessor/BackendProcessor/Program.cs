@@ -17,7 +17,7 @@ builder.Services.AddScoped<IInfoRepository, InfoRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<AppointmentHelper>();
-builder.Services.AddTransient<EmailService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddDbContext<HospitalDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("HospitalDbContext")));
