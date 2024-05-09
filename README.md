@@ -47,6 +47,6 @@ For support, please email [support@healthedge.com](mailto:support@healthedge.com
 ---
 
 ## License 📄
-HealthEdge is licensed under the [MIT License](LICENSE).
+HealthEdge is licensed under the [Apache-2.0](LICENSE).
 
 ---
