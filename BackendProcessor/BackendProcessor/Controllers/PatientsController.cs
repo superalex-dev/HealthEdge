@@ -2,6 +2,7 @@
 using BackendProcessor.Models;
 using BackendProcessor.Repositories;
 using BackendProcessor.Repositories.Interfaces;
+using BackendProcessor.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BackendProcessor.Controllers
@@ -10,11 +11,13 @@ namespace BackendProcessor.Controllers
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IUserRepository _userRepository;
+        private readonly EmailService _emailService;
 
-        public PatientsController(IPatientRepository patientRepository, IUserRepository userRepository)
+        public PatientsController(IPatientRepository patientRepository, IUserRepository userRepository, EmailService emailService)
         {
             _patientRepository = patientRepository;
             _userRepository = userRepository;
+            _emailService = emailService;
         }
 
         [HttpGet("patients/get")]
@@ -90,6 +93,8 @@ namespace BackendProcessor.Controllers
             {
                 return BadRequest("Failed to create patient.");
             }
+
+            await _emailService.SendWelcomeEmail(patientDto.Email, patientDto.FirstName + " " + patientDto.LastName, "mr.naidobrixjr@gmail.com", "Alexander Boev - CEO of HealthEdge", "Welcome to HealthEdge", "Thank you for registering!");
 
             return Ok(patientResponseDto);
         }

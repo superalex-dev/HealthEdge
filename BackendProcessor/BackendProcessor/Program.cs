@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BackendProcessor.Helpers;
+using BackendProcessor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,7 @@ builder.Services.AddScoped<IInfoRepository, InfoRepository>();
 builder.Services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<AppointmentHelper>();
+builder.Services.AddTransient<EmailService>();
 
 builder.Services.AddDbContext<HospitalDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("HospitalDbContext")));
