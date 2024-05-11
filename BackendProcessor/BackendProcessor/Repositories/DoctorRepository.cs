@@ -123,7 +123,12 @@ namespace BackendProcessor.Repositories
 
         public async Task<ICollection<Doctor>> SearchForDoctorAsync(int? specializationId, bool needsToBeAPediatrician, bool hasNZOK, int? regionId, string? firstName, string? lastName)
         {
-            var query = _context.Doctors.AsQueryable();
+            if (_context == null || _context.Doctors == null)
+            {
+                return new List<Doctor>();
+            }
+
+            IQueryable<Doctor> query = _context.Doctors.AsQueryable();
 
             query = query.Where(d =>
                 (!specializationId.HasValue || d.SpecializationId == specializationId.Value) &&
@@ -134,7 +139,15 @@ namespace BackendProcessor.Repositories
                 (string.IsNullOrEmpty(lastName) || d.LastName.Contains(lastName))
             );
 
-            return await query.Include(d => d.DoctorInsurances).ThenInclude(di => di.Insurance).ToListAsync();
+            try
+            {
+                var result = await query.Include(d => d.DoctorInsurances).ThenInclude(di => di.Insurance).ToListAsync();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new List<Doctor>();
+            }
         }
     }
 }

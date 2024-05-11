@@ -156,7 +156,15 @@ namespace BackendProcessor.Controllers
                 return BadRequest("At least one search parameter must be provided.");
             }
 
-            ICollection<Doctor> doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, hasNZOK, regionId, firstName, lastName);
+            ICollection<Doctor> doctors;
+            try
+            {
+                doctors = await _doctorRepository.SearchForDoctorAsync(specializationId, needsToBeAPediatrician, hasNZOK, regionId, firstName, lastName);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
 
             if (doctors == null || doctors.Count == 0)
             {
@@ -175,14 +183,13 @@ namespace BackendProcessor.Controllers
                 SpecializationId = d.SpecializationId,
                 RegionId = d.RegionId,
                 ContactNumber = d.ContactNumber,
-                InsuranceIds = d.DoctorInsurances.Select(di => di.InsuranceId).ToList(),
-                //InsuranceId = d.InsuranceId,
-                Appointments = d.Appointments.Select(a => new AppointmentCreationDto
+                InsuranceIds = d.DoctorInsurances?.Select(di => di.InsuranceId).ToList() ?? new List<int>(),
+                Appointments = d.Appointments?.Select(a => new AppointmentCreationDto
                 {
                     Id = a.Id,
                     AppointmentTime = a.AppointmentTime,
                     Reason = a.Reason
-                }).ToList()
+                }).ToList() ?? new List<AppointmentCreationDto>()
             }).ToList();
 
             return Ok(doctorDTOs);
