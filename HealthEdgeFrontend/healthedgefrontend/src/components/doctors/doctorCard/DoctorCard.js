@@ -333,7 +333,7 @@ const DoctorCard = ({ doctor }) => {
     const dateObject = createDateObject(2024, dateInfo);
     const formattedUTCDate = formatDateAsUTC(dateObject);
   
-    setSelectedDate(formattedUTCDate); // Update state here
+    setSelectedDate(formattedUTCDate);
   
     const patientId = getPatientId();
   
