@@ -32,6 +32,10 @@ export const signOut = () => {
   localStorage.removeItem('user');
 };
 
+export const adminSignOut = () => {
+  localStorage.removeItem('role');
+};
+
 export const getToken = () => {
   return localStorage.getItem('token');
 }

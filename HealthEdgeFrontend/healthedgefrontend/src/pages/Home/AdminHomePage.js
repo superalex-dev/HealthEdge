@@ -5,6 +5,7 @@ import Button from '@mui/joy/Button';
 import IconButton from '@mui/joy/IconButton';
 import OpenInNew from '@mui/icons-material/OpenInNew';
 import { useNavigate } from 'react-router-dom';
+import { adminSignOut } from '../../utils/authUtils';
 import './AdminHomePage.css';
 
 function AdminHomePage() {
@@ -20,12 +21,20 @@ function AdminHomePage() {
   const handleUsersNavigate = () => {
     navigate('/users');
   }
+
+  const handleSignOut = () => {
+    adminSignOut();
+    navigate('/login');
+  }
+
+
   return (
     <div>
       <h1>Admin Home Page</h1>
       <Button sx={{ margin: 1 }} color="primary" type="button" onClick={handlePatientsNavigate}>Patients</Button>
       <Button sx={{ margin: 1 }} color="danger" type="button" onClick={handleDoctorsNavigate}>Doctors</Button>
       <Button sx={{ margin: 1 }} color="success" type="button" onClick={handleUsersNavigate}>Users</Button>
+      <Button sx={{ margin: 1 }} color="secondary" type="button" onClick={handleSignOut}>Sign Out</Button>
       <br></br>
       <br></br>
       <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
