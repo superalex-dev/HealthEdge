@@ -13,5 +13,6 @@ namespace BackendProcessor.Repositories.Interfaces
         Task UpdateDoctorAsync(Doctor doctor);
         Task DeleteDoctorAsync(int id);
         Task DeleteMultipleDoctorsAsync(IEnumerable<int> ids);
+        Task DeleteAllDoctorsAsync();
     }
 }

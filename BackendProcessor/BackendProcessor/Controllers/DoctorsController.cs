@@ -141,6 +141,14 @@ namespace BackendProcessor.Controllers
             return Ok();
         }
 
+        [HttpDelete("doctors/deleteAllDoctors")]
+        public async Task<IActionResult> DeleteAllDoctors()
+        {
+            await _doctorRepository.DeleteAllDoctorsAsync();
+
+            return Ok();
+        }
+
         [HttpGet("doctors/search")]
         public async Task<IActionResult> SearchForDoctorAsync(
             [FromQuery] int? specializationId,

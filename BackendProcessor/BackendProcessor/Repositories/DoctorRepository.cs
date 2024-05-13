@@ -34,6 +34,12 @@ namespace BackendProcessor.Repositories
                 IsPediatrician = d.IsPediatrician,
                 SpecializationId = d.SpecializationId,
                 Nzok = d.Nzok,
+                InsuranceIds = d.DoctorInsurances.Select(di => di.InsuranceId).ToList(),
+                ContactNumber = d.ContactNumber,
+                Email = d.Email,
+                DateOfBirth = d.DateOfBirth,
+                DateOfCreation = d.DateOfCreation,
+                ImageUrl = d.ImageUrl,
                 Insurances = d.DoctorInsurances.Select(di => new InsuranceDto
                 {
                     Id = di.Insurance.Id,
@@ -65,6 +71,12 @@ namespace BackendProcessor.Repositories
                 IsPediatrician = doctor.IsPediatrician,
                 SpecializationId = doctor.SpecializationId,
                 Nzok = doctor.Nzok,
+                InsuranceIds = doctor.DoctorInsurances.Select(di => di.InsuranceId).ToList(),
+                ContactNumber = doctor.ContactNumber,
+                Email = doctor.Email,
+                DateOfBirth = doctor.DateOfBirth,
+                DateOfCreation = doctor.DateOfCreation,
+                ImageUrl = doctor.ImageUrl,
                 Insurances = doctor.DoctorInsurances.Select(di => new InsuranceDto
                 {
                     Id = di.Insurance.Id,
@@ -149,5 +161,13 @@ namespace BackendProcessor.Repositories
                 return new List<Doctor>();
             }
         }
+
+        public async Task DeleteAllDoctorsAsync()
+        {
+            foreach (var entity in _context.Doctors)
+                _context.Doctors.Remove(entity);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }
