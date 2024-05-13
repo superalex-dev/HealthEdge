@@ -170,7 +170,7 @@ const DoctorCard = ({ doctor }) => {
   const [specialization, setSpecialization] = useState(0);
   const [appointments, setAppointments] = useState([]);
   const [region, setRegion] = useState(0);
-  const [insurance, setInsurance] = useState(0);
+  const [insurances, setInsurances] = useState([]);
   const [reason, setReason] = useState();
   const [paymentMethod, setPaymentMethod] = useState("");
   const [notes, setAdditionalNotes] = useState();
@@ -207,9 +207,28 @@ const DoctorCard = ({ doctor }) => {
         setEarliestSlot(data.appointmentTime);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        //console.error("Error:", error);
       });
   }, [doctor.id]);
+
+  useEffect(() => {
+    const ids = doctor.insuranceIds;
+    
+    ids.forEach(id => {
+      const url = `http://localhost:5239/insurances/${id}`;
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          setInsurances(prev => [...prev, data.name]);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    
+    })
+  }, [doctor.id, doctor.insuranceIds]);
+
+  console.log(insurances)
 
   useEffect(() => {
     const url = `http://localhost:5239/specializations/${doctor.specializationId}`;
@@ -246,18 +265,6 @@ const DoctorCard = ({ doctor }) => {
         console.error("error:", error);
       });
   }, [doctor.regionId]);
-
-  useEffect(() => {
-    const url = `http://localhost:5239/insurances/${doctor.insuranceId}`;
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        setInsurance(data);
-      })
-      .catch((error) => {
-        console.error("error:", error);
-      });
-  }, [doctor.insuranceId]);
 
   const customFormatDate = (dateString) => {
     const date = new Date(dateString);
@@ -302,6 +309,7 @@ const DoctorCard = ({ doctor }) => {
     return appointments.some((appointment) => {
       const appointmentDate = new Date(appointment.appointmentTime);
       appointmentDate.setDate(appointmentDate.getDate());
+      //appointmentDate.setDate(appointmentDate.getDate() - 1);
       const appointmentDay = appointmentDate.toISOString().split("T")[0];
 
       let dayInUTC = new Date(day).toISOString().split("T")[0];
@@ -328,16 +336,16 @@ const DoctorCard = ({ doctor }) => {
     if (!selectedDate || !doctor) {
       return;
     }
-  
+
     const dateInfo = parseBulgarianDate(selectedDate);
     const dateObject = createDateObject(2024, dateInfo);
     const formattedUTCDate = formatDateAsUTC(dateObject);
-  
+
     setSelectedDate(formattedUTCDate);
-  
+
     const patientId = getPatientId();
-  
-    const URL = `http://localhost:5239/create?PatientId=${patientId}&DoctorId=${doctor.id}&AppointmentTime=${selectedDate}&Notes=${notes}&Reason=${reason}&PaymentMethod=${paymentMethod}`;
+
+    const URL = `http://localhost:5239/create?PatientId=${patientId}&DoctorId=${doctor.id}&AppointmentTime=${formattedUTCDate}&Notes=${notes}&Reason=${reason}&PaymentMethod=${paymentMethod}`;
     console.log(URL);
     axios
       .post(URL)
@@ -399,7 +407,23 @@ const DoctorCard = ({ doctor }) => {
     return date.toISOString();
   }
 
-  console.log(doctor);
+  //console.log(doctor);
+
+  insurances.forEach((ins) => {
+    if (/^\d+$/.test(ins)) {
+      const URL = `http://localhost:5239/insurances/${ins}`;
+
+      fetch(URL)
+        .then((response) => response.json())
+        .then((data) => {
+          var index = insurances.indexOf(ins);
+          insurances[index] = data.name;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  });
 
   return (
     <div style={styles.mainContent}>
@@ -420,6 +444,8 @@ const DoctorCard = ({ doctor }) => {
         <b>Регион: </b> {region.name}
         <br></br>
         <b>Специализация:</b> {specialization.name}
+        <br></br>
+        <b>Застрахователи: </b> {insurances.join(", ")}
       </p>
       <p
         style={styles.earliestSlot}
@@ -473,7 +499,7 @@ const DoctorCard = ({ doctor }) => {
         <>
           <p>{`Избрано: ${selectedDate}`}</p>
           <button
-            style={styles.finalizeButton}
+            style={styles.actionButton}
             onClick={() => setShowForm(true)}
           >
             Запази

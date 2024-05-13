@@ -15,12 +15,20 @@ const DoctorsList = () => {
   }, [location.state], [location.state.specialization]);
 
   return (
-    <div className={styles.grid}>
-      {doctors.map(doctor => (
-        <DoctorCard key={doctor.id} doctor={doctor} />
-      ))}
+    <div>
+      <div className={styles.header}>
+        <h1>Search Results</h1>
+      </div>
+      <div className={styles.grid}>
+        {doctors.map(doctor => (
+          <div key={doctor.id} className={styles.smallDoctorCard}>
+            <DoctorCard doctor={doctor} />
+          </div>
+        ))}
+      </div>
     </div>
   );
+  
 };
 
 export default DoctorsList;

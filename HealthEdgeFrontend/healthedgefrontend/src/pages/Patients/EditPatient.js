@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import './EditPatient.css'; 
+
 
 const EditPatient = () => {
   const [patient, setPatient] = useState({
@@ -70,93 +71,91 @@ const EditPatient = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10">
-      <h2 className="text-2xl font-bold mb-5 text-center">Edit Patient</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="edit-patient-container">
+      <h2 className="edit-patient-heading">Edit Patient</h2>
+      <form onSubmit={handleSubmit} className="edit-patient-form">
         <div>
-          <label className="block text-sm font-medium text-gray-700">First Name:</label>
+          <label className="edit-patient-label">First Name:</label>
           <input
             type="text"
             name="firstName"
             value={patient.firstName}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Last Name:</label>
+          <label className="edit-patient-label">Last Name:</label>
           <input
             type="text"
             name="lastName"
             value={patient.lastName}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Email:</label>
+          <label className="edit-patient-label">Email:</label>
           <input
             type="email"
             name="email"
             value={patient.email}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Date of Birth:</label>
+          <label className="edit-patient-label">Date of Birth:</label>
           <input
             type="date"
             name="dateOfBirth"
             value={patient.dateOfBirth.slice(0, 10)}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Gender:</label>
+          <label className="edit-patient-label">Gender:</label>
           <input
             type="text"
-            name= "gender"
-            value = {patient.gender}
-            onChange = {handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            name="gender"
+            value={patient.gender}
+            onChange={handleChange}
+            className="edit-patient-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">Blood type:</label>
+          <label className="edit-patient-label">Blood type:</label>
           <input
             type="text"
             name="bloodType"
             value={patient.bloodType}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
-          </div>
-          <div>
-          <label className="block text-sm font-medium text-gray-700"> Contact Number:</label>
+        </div>
+        <div>
+          <label className="edit-patient-label">Contact Number:</label>
           <input
             type="text"
             name="contactNumber"
             value={patient.contactNumber}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
-          </div>
-          <div>
-          <label className="block text-sm font-medium text-gray-700"> Address:</label>
+        </div>
+        <div>
+          <label className="edit-patient-label">Address:</label>
           <input
             type="text"
             name="address"
             value={patient.address}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="edit-patient-input"
           />
-          </div>
-          <div>
         </div>
-        <button type="submit" className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Update Patient
+        <button type="submit" className="edit-patient-button">
+          Edit Patient
         </button>
       </form>
     </div>

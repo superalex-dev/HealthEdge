@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import './PatientDetails.css';
 
 const PatientDetails = () => {
   const [patient, setPatient] = useState({});
@@ -22,73 +23,45 @@ const PatientDetails = () => {
   }, [id]);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Patient Details</h1>
-      <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">
-            {patient.firstName} {patient.lastName}
-          </h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            Personal details and more.
-          </p>
+    <div className="patient-details-container">
+      <h1 className="patient-details-heading">Patient Details</h1>
+      <div className="patient-details-card">
+        <div className="patient-details-section">
+          <h3>{patient.firstName} {patient.lastName}</h3>
+          <p>Personal details and more.</p>
         </div>
-        <div className="border-t border-gray-200">
+        <div className="patient-details-section">
           <dl>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Full name</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.firstName} {patient.lastName}
-              </dd>
+            <div>
+              <b>Full name: </b>  {patient.firstName} {patient.lastName}
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Email address</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.email}
-              </dd>
+            <div>
+              <b>Email address:</b>  {patient.email}
             </div>
-            <div className="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Date of birth</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {new Date(patient.dateOfBirth).toLocaleDateString()}
-              </dd>
+            <div>
+              <b>Date of birth:</b>  {new Date(patient.dateOfBirth).toLocaleDateString()}
             </div>
-            <div className="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">Phone number</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.contactNumber}
-              </dd>
+            <div>
+              <b>Phone number:</b>  {patient.contactNumber}
             </div>
-            <div className='bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
-              <dt className="text-sm font-medium text-gray-500">Gender</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.gender}
-                </dd>
+            <div>
+              <b>Gender:</b>  {patient.gender}
             </div>
-            <div className='bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
-              <dt className="text-sm font-medium text-gray-500">Blood Type</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.bloodType}
-              </dd>
+            <div>
+              <b>Blood type:</b>  {patient.bloodType}
             </div>
-            <div className='bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
-              <dt className="text-sm font-medium text-gray-500">Address</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.address}
-              </dd>
+            <div>
+              <b>Address:</b>  {patient.address}
             </div>
-            <div className='bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6'>
-              <dt className="text-sm font-medium text-gray-500">UserId</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
-                {patient.userId}
-              </dd>
+            <div>
+              <b>UserId:</b>  {patient.Id}
             </div>
           </dl>
         </div>
       </div>
       <button
         onClick={() => navigate('/patients')}
-        className="mt-4 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        className="back-button"
       >
         Back to Patients List
       </button>

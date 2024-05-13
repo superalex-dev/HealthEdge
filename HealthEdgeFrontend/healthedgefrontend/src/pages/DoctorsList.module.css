@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 16px;
-  padding: 20px;
+  margin: 5rem 20rem 5rem 20rem;
 }
 
 @media (min-width: 768px) {
@@ -16,4 +16,26 @@
   .grid {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Header styles */
+.header {
+  text-align: center;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+.header h1 {
+  font-size: 45px; /* Adjust as needed */
+  font-family:'Montserrat', sans-serif  ;
+  margin: 2rem;
+}
+
+/* Doctor card styles */
+.smallDoctorCard {
+  margin: 10px;
+  border: 3px solid #ccc;
+  border-radius: 15px;
+  padding: 10px;
 }
