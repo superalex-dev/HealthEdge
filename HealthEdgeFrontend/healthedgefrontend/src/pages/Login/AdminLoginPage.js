@@ -25,6 +25,8 @@ function AdminLoginPage() {
 
     if (data) {
       console.log('Login successful');
+      // After successful login
+      localStorage.setItem('role', 'admin');
       navigate('/admin-dashboard');
     } else {
       console.log('Login failed');

@@ -32,7 +32,7 @@ function App() {
         <Route path="/patients" element={<ProtectedRoute><Patients /></ProtectedRoute>} />
         <Route path="/edit-patient/:id" element={<ProtectedRoute><EditPatient /></ProtectedRoute>} />
         <Route path="/patient-details/:id" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
-        <Route path="/admin-dashboard" element={<ProtectedRoute><AdminHomePage /></ProtectedRoute>} />
+        <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminHomePage /></ProtectedRoute>} />
       </Routes>
     </Router>
   );
