@@ -311,30 +311,83 @@ namespace DataSeeder
         };
 
 
-        //public static List<Doctor> GenerateDoctors(int count, ICollection<Region> regions, ICollection<Specialization> specializations, ICollection<Insurance> insurances)
-        //{
-        //    var regionIds = regions.Select(r => r.Id).ToList();
-        //    var specializationIds = specializations.Select(s => s.Id).ToList();
-        //    var insuranceIds = insurances.Select(i => i.Id).ToList();
+        public static List<Doctor> GenerateFullDoctors(int count, ICollection<Region> regions, ICollection<Specialization> specializations, ICollection<Insurance> insurances)
+        {
+            var faker = new Faker();
+            var doctors = new List<Doctor>();
 
-        //    var doctorFaker = new Faker<Doctor>()
-        //        .RuleFor(d => d.FirstName, f => f.Name.FirstName())
-        //        .RuleFor(d => d.LastName, f => f.Name.LastName())
-        //        .RuleFor(d => d.Username, f => $"healthedge{doctorUsernameSequence++.ToString().PadLeft(4, '0')}")
-        //        .RuleFor(d => d.Password, f => f.Internet.Password())
-        //        .RuleFor(d => d.RegionId, f => f.PickRandom(regionIds))
-        //        .RuleFor(d => d.IsPediatrician, f => f.Random.Bool())
-        //        .RuleFor(d => d.SpecializationId, f => f.PickRandom(specializationIds))
-        //        .RuleFor(d => d.Nzok, f => f.Random.Bool())
-        //        .RuleFor(d => d.InsuranceId, f => f.PickRandom(insuranceIds))
-        //        .RuleFor(d => d.ContactNumber, f => f.Phone.PhoneNumber())
-        //        .RuleFor(d => d.Email, f => f.Internet.Email())
-        //        .RuleFor(d => d.DateOfBirth, f => f.Date.Past(30, DateTime.Now.AddYears(-30)))
-        //        .RuleFor(d => d.DateOfCreation, f => f.Date.Recent())
-        //        .RuleFor(d => d.ImageUrl, f => f.Internet.Avatar());
+            foreach (var region in regions)
+            {
+                foreach (var specialization in specializations)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        var doctorInsurances = faker.PickRandom(insurances, faker.Random.Int(1, insurances.Count)).ToList();
+                        var doctor = new Doctor
+                        {
+                            FirstName = faker.Name.FirstName(),
+                            LastName = faker.Name.LastName(),
+                            Username = $"healthedge{++doctorUsernameSequence:0000}",
+                            Password = BCrypt.Net.BCrypt.HashPassword(faker.Internet.Password()),
+                            RegionId = region.Id,
+                            IsPediatrician = faker.Random.Bool(),
+                            SpecializationId = specialization.Id,
+                            Nzok = faker.Random.Bool(),
+                            ContactNumber = faker.Phone.PhoneNumber(),
+                            Email = faker.Internet.Email(),
+                            DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
+                            DateOfCreation = DateTime.UtcNow,
+                            ImageUrl = faker.Internet.Avatar(),
+                            DoctorInsurances = doctorInsurances.Select(insurance => new DoctorInsurance { InsuranceId = insurance.Id }).ToList()
+                        };
+                        doctors.Add(doctor);
+                    }
+                }
+            }
 
-        //    return doctorFaker.Generate(count);
-        //}
+            return doctors;
+        }
+
+        public static List<Doctor> GenerateDoctorsInRegion(int count, int regionId, ICollection<Insurance> insurances, ICollection<Specialization> specializations)
+        {
+            if (insurances == null || insurances.Count == 0)
+            {
+                throw new ArgumentException("Insurances collection cannot be null or empty.", nameof(insurances));
+            }
+
+            if (specializations == null || specializations.Count == 0)
+            {
+                throw new ArgumentException("Specializations collection cannot be null or empty.", nameof(specializations));
+            }
+
+            var faker = new Faker();
+            var doctors = new List<Doctor>();
+
+            for (int i = 0; i < count; i++)
+            {
+                var doctorInsurances = faker.PickRandom(insurances, faker.Random.Int(1, insurances.Count)).ToList();
+                var doctor = new Doctor
+                {
+                    FirstName = faker.Name.FirstName(),
+                    LastName = faker.Name.LastName(),
+                    Username = $"healthedge{++doctorUsernameSequence:0000}",
+                    Password = BCrypt.Net.BCrypt.HashPassword(faker.Internet.Password()),
+                    RegionId = regionId,
+                    IsPediatrician = faker.Random.Bool(),
+                    SpecializationId = faker.PickRandom(specializations).Id,
+                    Nzok = faker.Random.Bool(),
+                    ContactNumber = faker.Phone.PhoneNumber(),
+                    Email = faker.Internet.Email(),
+                    DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
+                    DateOfCreation = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.Local),
+                    ImageUrl = faker.Internet.Avatar(),
+                    DoctorInsurances = doctorInsurances.Select(insurance => new DoctorInsurance { InsuranceId = insurance.Id }).ToList()
+                };
+                doctors.Add(doctor);
+            }
+
+            return doctors;
+        }
 
         public static List<Region> GenerateRegions()
         {

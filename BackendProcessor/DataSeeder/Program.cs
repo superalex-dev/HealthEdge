@@ -15,9 +15,28 @@ namespace Application
 
             await using var dbContext = new HospitalDbContext(optionsBuilder.Options);
 
-            var regions = dbContext.Regions.ToList();
-            var specializations = dbContext.Specializations.ToList();
             var insurances = dbContext.Insurance.ToList();
+            var specializations = dbContext.Specializations.ToList();
+
+            var doctors = DataGenerator.GenerateDoctorsInRegion(10, 23, insurances, specializations);
+
+            foreach (var doctor in doctors)
+            {
+                dbContext.Doctors.Add(doctor);
+                await dbContext.SaveChangesAsync();
+            }
+
+            //var regions = dbContext.Regions.ToList();
+            //var specializations = dbContext.Specializations.ToList();
+            //var insurances = dbContext.Insurance.ToList();
+
+            //var doctors = DataGenerator.GenerateDoctors(10, regions, specializations, insurances);
+
+            //foreach (var doctor in doctors)
+            //{
+            //    dbContext.Doctors.Add(doctor);
+            //    await dbContext.SaveChangesAsync();
+            //}
 
             //var doctors = DataGenerator.GenerateDoctors(48, regions, specializations, insurances);
             //await dbContext.Doctors.AddRangeAsync(doctors);
