@@ -122,4 +122,15 @@ public class AppointmentsController : ControllerBase
 
         return Ok(appointment);
     }
+    
+    [HttpGet("doctor/{doctorId}/patients")]
+    public async Task<ActionResult<IEnumerable<Patient>>> GetPatientsByDoctorId(int doctorId)
+    {
+        var patients = await _appointmentRepository.GetPatientsByDoctorIdAsync(doctorId);
+        if (patients == null)
+        {
+            return NotFound();
+        }
+        return Ok(patients);
+    }
 }

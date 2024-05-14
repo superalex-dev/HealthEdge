@@ -89,4 +89,23 @@ public class AppointmentRepository : IAppointmentRepository
         return await _context.Appointments
             .AnyAsync(a => a.AppointmentTime == date);
     }
+
+    public async Task<IEnumerable<Appointment>> GetPatientsByDoctorIdAsync(int doctorId)
+    {
+        var localNow = DateTime.Now;
+        var todayStartLocal = new DateTime(localNow.Year, localNow.Month, localNow.Day, 8, 30, 0);
+        var todayEndLocal = new DateTime(localNow.Year, localNow.Month, localNow.Day, 18, 30, 0);
+
+        var todayStartUtc = TimeZoneInfo.ConvertTimeToUtc(todayStartLocal, TimeZoneInfo.Local);
+        var todayEndUtc = TimeZoneInfo.ConvertTimeToUtc(todayEndLocal, TimeZoneInfo.Local);
+
+        var appointments = await _context.Appointments
+            .Where(a => a.DoctorId == doctorId &&
+                        a.AppointmentTime >= todayStartUtc &&
+                        a.AppointmentTime <= todayEndUtc)
+            .Include(a => a.Patient)
+            .ToListAsync();
+
+        return appointments;
+    }
 }
