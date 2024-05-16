@@ -1,0 +1,49 @@
+.form-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h1 {
+  text-align: center;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+
+.medical-record-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.medical-record-form label {
+  font-weight: bold;
+  color: #333;
+}
+
+.medical-record-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.medical-record-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.medical-record-form button:hover {
+  background-color: #45a049;
+}

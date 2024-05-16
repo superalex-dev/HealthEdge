@@ -1,4 +1,5 @@
 ﻿using BackendProcessor.Data;
+using BackendProcessor.Data.Dto;
 using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +77,41 @@ namespace BackendProcessor.Repositories
                 .ToListAsync();
 
             return patients;
+        }
+
+        public async Task<List<MedicalRecord>> GetPatientMedicalRecords(int partientId)
+        {
+            var medicalRecords = await _context.MedicalRecords
+                .Where(mr => mr.PatientId == partientId)
+                .ToListAsync();
+            
+            return medicalRecords;
+        }
+
+        public async Task<bool> AddPatientMedicalRecord(int patientId, MedicalRecordDto medicalRecordDto)
+        {
+            var patient = await _context.Patients
+                .Include(p => p.MedicalRecords)
+                .FirstOrDefaultAsync(p => p.Id == patientId);
+
+            if (patient != null)
+            {
+                var medicalRecord = new MedicalRecord
+                {
+                    Id = medicalRecordDto.Id,
+                    DoctorId = medicalRecordDto.DoctorId,
+                    PatientId = medicalRecordDto.PatientId,
+                    RecordDate = medicalRecordDto.RecordDate,
+                    Diagnosis = medicalRecordDto.Diagnosis,
+                    Treatment = medicalRecordDto.Treatment
+                };
+
+                patient.MedicalRecords.Add(medicalRecord);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

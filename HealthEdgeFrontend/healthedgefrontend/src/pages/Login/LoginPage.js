@@ -57,7 +57,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
       <div className="login-form">
         <h1>HealthEdge</h1>
         <h2>The better hospital management</h2>
-        <p>Please log in using your admin credentials</p>
+        <p>Please log in using your credentials</p>
         <form onSubmit={login}>
           <label htmlFor="email">Email</label>
           <input
@@ -74,7 +74,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
             onChange={(e) => setPassword(e.target.value)}
           />
           {/* <button type="submit">Log in</button> */}
-          <Button color="primary" type="submit" onClick={handleSubmit}>Log in</Button>
+          <Button color="primary" style={{marginTop: "2rem"}} type="submit" onClick={handleSubmit}>Log in</Button>
           <Button color="danger" type="button" onClick={handleJoinUsClick}>Join us</Button>
           <Button color="success" type="button" onClick={handleDoctorOrAdminViewClick}>Doctor or Admin account</Button>
         </form>

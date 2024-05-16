@@ -4,6 +4,7 @@ using BackendProcessor.Models;
 using BackendProcessor.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Runtime.CompilerServices;
+using BackendProcessor.Data.Dto;
 
 public class AppointmentRepository : IAppointmentRepository
 {
@@ -90,22 +91,28 @@ public class AppointmentRepository : IAppointmentRepository
             .AnyAsync(a => a.AppointmentTime == date);
     }
 
-    public async Task<IEnumerable<Appointment>> GetPatientsByDoctorIdAsync(int doctorId)
-    {
-        var localNow = DateTime.Now;
-        var todayStartLocal = new DateTime(localNow.Year, localNow.Month, localNow.Day, 8, 30, 0);
-        var todayEndLocal = new DateTime(localNow.Year, localNow.Month, localNow.Day, 18, 30, 0);
+    //public async Task<IEnumerable<Patient>> GetPatientsByDoctorIdAsync(int doctorId)
+    //{
+    //    //var todayStartUtc = DateTime.UtcNow.Date;
+    //    //var todayEndUtc = todayStartUtc.AddDays(1);
 
-        var todayStartUtc = TimeZoneInfo.ConvertTimeToUtc(todayStartLocal, TimeZoneInfo.Local);
-        var todayEndUtc = TimeZoneInfo.ConvertTimeToUtc(todayEndLocal, TimeZoneInfo.Local);
+    //    //var appointments = await _context.Appointments
+    //    //    .Where(a => a.DoctorId == doctorId &&
+    //    //                a.AppointmentTime.ToUniversalTime() >= todayStartUtc &&
+    //    //                a.AppointmentTime.ToUniversalTime() < todayEndUtc)
+    //    //    .Include(a => a.Patient)
+    //    //    .ToListAsync();
 
-        var appointments = await _context.Appointments
-            .Where(a => a.DoctorId == doctorId &&
-                        a.AppointmentTime >= todayStartUtc &&
-                        a.AppointmentTime <= todayEndUtc)
-            .Include(a => a.Patient)
-            .ToListAsync();
-
-        return appointments;
-    }
+    //    //return appointments.Select(a => new PatientDto
+    //    //{
+    //    //    Id = a.Id,
+    //    //    FirstName = a.Patient.FirstName,
+    //    //    LastName = a.Patient.LastName,
+    //    //    UserName = a.Patient.UserName,
+    //    //    Email = a.Patient.Email,
+    //    //    DateOfBirth = a.Patient.DateOfBirth,
+    //    //    Gender = a.Patient.Gender,
+    //    //    BloodType = a.Patient.BloodType,
+    //    //}); ;
+    //}
 }

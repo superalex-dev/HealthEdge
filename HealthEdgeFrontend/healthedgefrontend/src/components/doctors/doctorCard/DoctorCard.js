@@ -308,9 +308,9 @@ const DoctorCard = ({ doctor }) => {
   const isTimeSlotTaken = (day, time) => {
     return appointments.some((appointment) => {
       const appointmentDate = new Date(appointment.appointmentTime);
-      appointmentDate.setDate(appointmentDate.getDate());
-      //appointmentDate.setDate(appointmentDate.getDate() - 1);
-      const appointmentDay = appointmentDate.toISOString().split("T")[0];
+      //appointmentDate.setDate(appointmentDate.getDate());
+      appointmentDate.setDate(appointmentDate.getDate() - 1);
+      const appointmentDay = appointmentDate.toISOString().split("T")[0]; 
 
       let dayInUTC = new Date(day).toISOString().split("T")[0];
 
@@ -443,13 +443,15 @@ const DoctorCard = ({ doctor }) => {
       <p style={styles.specializationRegion}>
         <b>Регион: </b> {region.name}
         <br></br>
+        <br></br>
         <b>Специализация:</b> {specialization.name}
+        <br></br>
         <br></br>
         <b>Застрахователи: </b> {insurances.join(", ")}
       </p>
       <p
         style={styles.earliestSlot}
-      >{`Най-ранен свободен час: ${formattedDate}`}</p>
+      ><b>{`Най-ранен свободен час: ${formattedDate}`}</b></p>
       <button style={styles.actionButton} onClick={() => setShowDropdown(true)}>
         Запази час
       </button>

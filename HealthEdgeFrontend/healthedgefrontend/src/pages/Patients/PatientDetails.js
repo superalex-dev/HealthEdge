@@ -53,9 +53,6 @@ const PatientDetails = () => {
             <div>
               <b>Address:</b>  {patient.address}
             </div>
-            <div>
-              <b>UserId:</b>  {patient.Id}
-            </div>
           </dl>
         </div>
       </div>

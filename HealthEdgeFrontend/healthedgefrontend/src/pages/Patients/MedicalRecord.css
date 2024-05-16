@@ -1,0 +1,40 @@
+.container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.container h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.records-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.record-card {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+  width: 300px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.record-card h2 {
+  color: #333;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.record-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.record-card p strong {
+  color: #000;
+}

@@ -166,5 +166,41 @@ namespace BackendProcessor.Controllers
 
             return Ok(patient);
         }
+
+        [HttpGet("patients/{Id}/medical-records")]
+        public async Task<IActionResult> GetPatientMedicalRecordsAsync(int Id)
+        {
+            var medicalRecords = await _patientRepository.GetPatientMedicalRecords(Id);
+
+            if (medicalRecords == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(medicalRecords);
+        }
+
+        [HttpPost("patients/{patientId}/medical-records/add")]
+        public async Task<IActionResult> AddMedicalRecordAsync(int patientId, [FromBody] MedicalRecordDto medicalRecordDto)
+        {
+            var patient = await _patientRepository.GetPatientByIdAsync(patientId);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            medicalRecordDto.PatientId = patientId;
+            medicalRecordDto.RecordDate = DateTime.UtcNow;
+
+            var isMedicalRecordSuccesfullyCreated = await _patientRepository.AddPatientMedicalRecord(patientId, medicalRecordDto);
+
+            if (!isMedicalRecordSuccesfullyCreated)
+            {
+                return BadRequest("Failed to add medical record.");
+            }
+
+            return Ok(medicalRecordDto);
+        }
     }
 }

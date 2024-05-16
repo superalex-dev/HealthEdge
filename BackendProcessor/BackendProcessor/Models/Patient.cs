@@ -51,6 +51,8 @@ namespace BackendProcessor.Models
 
         public ICollection<Appointment> Appointments { get; set; }
 
+        public ICollection<MedicalRecord> MedicalRecords { get; set; }
+
         [Required]
         public DateTime DateOfCreation { get; set; }
     }

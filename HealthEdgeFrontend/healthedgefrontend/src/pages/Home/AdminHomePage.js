@@ -29,22 +29,22 @@ function AdminHomePage() {
 
 
   return (
-    <div>
+    <div className="admin-container">
       <h1>Admin Home Page</h1>
-      <Button sx={{ margin: 1 }} color="primary" type="button" onClick={handlePatientsNavigate}>Patients</Button>
-      <Button sx={{ margin: 1 }} color="danger" type="button" onClick={handleDoctorsNavigate}>Doctors</Button>
-      <Button sx={{ margin: 1 }} color="success" type="button" onClick={handleUsersNavigate}>Users</Button>
-      <Button sx={{ margin: 1 }} color="secondary" type="button" onClick={handleSignOut}>Sign Out</Button>
+      <Button sx={{ margin: 1 }} className="primary" type="button" onClick={handlePatientsNavigate}>Patients</Button>
+      <Button sx={{ margin: 1 }} className="danger" type="button" onClick={handleDoctorsNavigate}>Doctors</Button>
+      <Button sx={{ margin: 1 }} className="success" type="button" onClick={handleUsersNavigate}>Users</Button>
+      <Button sx={{ margin: 1 }} className="secondary" type="button" onClick={handleSignOut}>Sign Out</Button>
       <br></br>
       <br></br>
-      <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
-      <Button component="a" href="/create-doctor" startDecorator={<OpenInNew />}>
-        Create New Doctor Or Admin Account
-      </Button>
-      <IconButton aria-label="Create New Doctor Or Admin Account" component="a" href="/create-doctor">
-        <OpenInNew />
-      </IconButton>
-    </Box>
+      <Box className="box">
+        <Button component="a" href="/create-doctor" startDecorator={<OpenInNew />}>
+          Create New Doctor Or Admin Account
+        </Button>
+        <IconButton aria-label="Create New Doctor Or Admin Account" component="a" href="/create-doctor" className="icon-button">
+          <OpenInNew />
+        </IconButton>
+      </Box>
     </div>
   );
 }

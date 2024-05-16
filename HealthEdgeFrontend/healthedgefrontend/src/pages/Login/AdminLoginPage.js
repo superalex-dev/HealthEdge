@@ -24,9 +24,9 @@ function AdminLoginPage() {
     const data = await response.json();
 
     if (data) {
-      console.log('Login successful');
-      // After successful login
+      console.log(data);
       localStorage.setItem('role', 'admin');
+      localStorage.setItem('doctorId', data.id);
       navigate('/admin-dashboard');
     } else {
       console.log('Login failed');

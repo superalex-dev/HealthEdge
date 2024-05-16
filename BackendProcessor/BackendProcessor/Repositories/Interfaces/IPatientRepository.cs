@@ -1,4 +1,5 @@
-﻿using BackendProcessor.Models;
+﻿using BackendProcessor.Data.Dto;
+using BackendProcessor.Models;
 
 namespace BackendProcessor.Repositories.Interfaces
 {
@@ -13,5 +14,7 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<List<Patient>> SearchPatientAsync(string patientName);
         Task<Patient> GetPatientByUsernameEmail(string username, string email);
         Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth);
+        Task<List<MedicalRecord>> GetPatientMedicalRecords(int partientId);
+        Task<bool> AddPatientMedicalRecord(int patientId, MedicalRecordDto medicalRecordDto);
     }
 }

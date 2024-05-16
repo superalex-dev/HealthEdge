@@ -148,8 +148,13 @@ const HomePage = () => {
     ff();
   };
 
+  const MedicalRecords = () => {
+    navigate('/medicalRecords');
+  }
+
   return (
     <div className={styles.container}>
+      <button className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</button>
       <h1 className={styles.heading}>Search for a Doctor</h1> 
       <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="specialization" className={styles.label}>Choose a specialization:</label>
@@ -219,7 +224,7 @@ const HomePage = () => {
           <option value="No">No</option>
         </select>
 
-        <button type="submit" className={styles.button}>Submit</button>
+        <button type="submit" className={styles.button}>Search</button>
       </form>
     </div>
   );

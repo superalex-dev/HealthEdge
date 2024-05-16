@@ -1,3 +1,82 @@
-/* .admin-button {
+.admin-container {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-container h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.admin-container button {
   margin: 10px;
-} */
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.admin-container .primary {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.admin-container .primary:hover {
+  opacity: 80%;
+}
+
+.admin-container .danger {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.admin-container .danger:hover {
+  opacity: 80%;
+}
+
+.admin-container .success {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.admin-container .success:hover {
+  opacity: 80%;
+}
+
+.admin-container .secondary {
+  background-color: red;
+  color: white;
+}
+
+.admin-container .secondary:hover {
+  opacity: 80%;
+}
+
+.admin-container .box {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.admin-container .box button {
+  padding: 10px;
+  font-size: 14px;
+}
+
+.admin-container .box .icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.admin-container .box .icon-button:hover {
+  transform: scale(1.1);
+}

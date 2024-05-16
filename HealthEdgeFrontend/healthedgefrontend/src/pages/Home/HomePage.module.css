@@ -4,6 +4,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  padding: 4rem;
   background-color: #f4f4f9;
 }
 
@@ -44,7 +45,7 @@
 
 .button {
   padding: 10px;
-  background-color: #007bff;
+  background-color: #4CAF50;
   color: white;
   border: none;
   border-radius: 5px;
@@ -53,7 +54,7 @@
 }
 
 .button:hover {
-  background-color: #0056b3;
+  opacity: 80%;;
 }
 
 @media (max-width: 768px) {
@@ -73,4 +74,18 @@
 
 .formSection:last-child {
   margin-bottom: 0;
+}
+
+.recordsButton {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 12rem;
+  height: 3rem;
+  margin: 2rem;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  z-index: 1000;
 }
