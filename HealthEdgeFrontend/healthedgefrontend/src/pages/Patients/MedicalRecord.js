@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./MedicalRecord.css";
+import { Button } from '@mui/joy';
 
 const MedicalRecord = () => {
   const [medicalRecords, setMedicalRecords] = useState([]);
   const [patient, setPatient] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const patientId = localStorage.getItem("patientId");
@@ -106,6 +108,7 @@ const MedicalRecord = () => {
             </p>
           </div>
         ))}
+        <Button color="success" style={{marginTop: "2rem"}} type="button" onClick={() => navigate('/home')}>Doctor or Admin account</Button>
       </div>
     </div>
   );

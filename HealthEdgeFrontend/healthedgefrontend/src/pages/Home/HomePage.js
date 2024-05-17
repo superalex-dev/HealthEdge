@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from './HomePage.module.css';
 import { RemoveShoppingCartRounded } from "@mui/icons-material";
+import { Button } from '@mui/joy';
 
 const HomePage = () => {
   const [state, setState] = useState({
@@ -154,7 +155,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.container}>
-      <button className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</button>
+      {/* <button className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</button> */}
       <h1 className={styles.heading}>Search for a Doctor</h1> 
       <form onSubmit={handleSubmit} className={styles.form}>
         <label htmlFor="specialization" className={styles.label}>Choose a specialization:</label>
@@ -224,7 +225,9 @@ const HomePage = () => {
           <option value="No">No</option>
         </select>
 
-        <button type="submit" className={styles.button}>Search</button>
+        {/* <button type="submit" className={styles.button}>Search</button> */}
+        <Button color="success" type="submit" className={styles.button}>Search</Button>
+        <Button color="success" className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</Button>
       </form>
     </div>
   );

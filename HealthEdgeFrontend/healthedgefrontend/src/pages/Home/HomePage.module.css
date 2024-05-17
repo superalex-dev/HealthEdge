@@ -76,7 +76,12 @@
   margin-bottom: 0;
 }
 
-.recordsButton {
+.button {
+  margin-bottom: 1.5rem;
+}
+
+
+/* .recordsButton {
   position: absolute;
   top: 1rem;
   left: 1rem;
@@ -88,4 +93,4 @@
   border: none;
   cursor: pointer;
   z-index: 1000;
-}
+} */
