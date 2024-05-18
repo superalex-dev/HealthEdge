@@ -7,12 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BackendProcessor.Controllers;
 
-public class AppointmentsController : ControllerBase
+public class AppointmentsReposotry : ControllerBase
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly TimeSpan _appointmentDuration = TimeSpan.FromMinutes(60);
 
-    public AppointmentsController(IAppointmentRepository appointmentRepository)
+    public AppointmentsReposotry(IAppointmentRepository appointmentRepository)
     {
         _appointmentRepository = appointmentRepository;
     }
