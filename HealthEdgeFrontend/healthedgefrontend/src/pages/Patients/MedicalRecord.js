@@ -108,8 +108,9 @@ const MedicalRecord = () => {
             </p>
           </div>
         ))}
-        <Button color="success" style={{marginTop: "2rem"}} type="button" onClick={() => navigate('/home')}>Doctor or Admin account</Button>
       </div>
+      <Button color="success" style={{marginTop: "2rem"}} className="button1" type="button" onClick={() => navigate('/home')}>Doctor or Admin account</Button>
+
     </div>
   );
 };

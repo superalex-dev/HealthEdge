@@ -335,7 +335,7 @@ namespace DataSeeder
                             Nzok = faker.Random.Bool(),
                             ContactNumber = faker.Phone.PhoneNumber(),
                             Email = faker.Internet.Email(),
-                            DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
+                            //DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
                             DateOfCreation = DateTime.UtcNow,
                             ImageUrl = faker.Internet.Avatar(),
                             DoctorInsurances = doctorInsurances.Select(insurance => new DoctorInsurance { InsuranceId = insurance.Id }).ToList()
@@ -378,7 +378,7 @@ namespace DataSeeder
                     Nzok = faker.Random.Bool(),
                     ContactNumber = faker.Phone.PhoneNumber(),
                     Email = faker.Internet.Email(),
-                    DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
+                    //DateOfBirth = faker.Date.Past(30, DateTime.Now.AddYears(-30)),
                     DateOfCreation = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.Local),
                     ImageUrl = faker.Internet.Avatar(),
                     DoctorInsurances = doctorInsurances.Select(insurance => new DoctorInsurance { InsuranceId = insurance.Id }).ToList()

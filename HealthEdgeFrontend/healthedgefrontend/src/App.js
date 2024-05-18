@@ -5,6 +5,7 @@ import LoginPage from './pages/Login/LoginPage';
 import Dashboard from './pages/Dashboard';
 import RegisterPage from './pages/Register/RegisterPage';
 import EditPatient from './pages/Patients/EditPatient';
+import EditDoctor from './pages/Doctors/EditDoctor';
 import ProtectedRoute from './components/ProtectedRoute';
 import Patients from './pages/Patients/Patients';
 import PatientDetails from './pages/Patients/PatientDetails';
@@ -16,7 +17,8 @@ import AdminHomePage from './pages/Home/AdminHomePage';
 import CreateDoctor from './pages/Doctors/CreateDoctor';
 import MedicalRecord from './pages/Patients/MedicalRecord';
 import AddMedicalRecord from './pages/Patients/AddMedicalRecord';
-import DoctorListCard from './components/doctors/DoctorListCard';
+import DoctorDetails from './pages/Doctors/DoctorDetails';
+import Doctors from './pages/Doctors/Doctors';
 
 function App() {
   return (
@@ -30,13 +32,15 @@ function App() {
         <Route path="/add-medical-record" element={<ProtectedRoute><AddMedicalRecord /></ProtectedRoute>} />
         <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/lekari" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
-        <Route path="/doctors" element={<ProtectedRoute><DoctorListCard /></ProtectedRoute>} />
+        <Route path="/doctors" element={<ProtectedRoute><Doctors /></ProtectedRoute>} />
         <Route path="/create-doctor" element={<ProtectedRoute><CreateDoctor /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/book-appointment" element={<ProtectedRoute><BookAppointment /></ProtectedRoute>} />
         <Route path="/patients" element={<ProtectedRoute><Patients /></ProtectedRoute>} />
         <Route path="/edit-patient/:id" element={<ProtectedRoute><EditPatient /></ProtectedRoute>} />
+        <Route path="/edit-doctor/:id" element={<ProtectedRoute><EditDoctor /></ProtectedRoute>} />
         <Route path="/patient-details/:id" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
+        <Route path="/doctor-details/:id" element={<ProtectedRoute><DoctorDetails /></ProtectedRoute>} />
         <Route path="/admin-dashboard" element={<ProtectedRoute role="admin"><AdminHomePage /></ProtectedRoute>} />
       </Routes>
     </Router>

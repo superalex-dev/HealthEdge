@@ -14,7 +14,7 @@
         public List<int> InsuranceIds { get; set; }
         public string ContactNumber { get; set; }
         public string Email { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public DateTime? DateOfCreation { get; set; }
         public string ImageUrl { get; set; }
 

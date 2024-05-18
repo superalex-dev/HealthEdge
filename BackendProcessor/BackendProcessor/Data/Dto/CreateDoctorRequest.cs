@@ -40,7 +40,7 @@ namespace BackendProcessor.Data.Dto
         public string Email { get; set; }
 
         [Required]
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
 
         public DateTime? DateOfCreation { get; set; }
 

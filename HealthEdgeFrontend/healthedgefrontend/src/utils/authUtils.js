@@ -30,6 +30,7 @@ export const getCurrentUser = () => {
 export const signOut = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('user');
+  window.location.replace('/login');
 };
 
 export const adminSignOut = () => {
