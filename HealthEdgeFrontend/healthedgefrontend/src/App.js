@@ -16,6 +16,7 @@ import AdminHomePage from './pages/Home/AdminHomePage';
 import CreateDoctor from './pages/Doctors/CreateDoctor';
 import MedicalRecord from './pages/Patients/MedicalRecord';
 import AddMedicalRecord from './pages/Patients/AddMedicalRecord';
+import DoctorListCard from './components/doctors/DoctorListCard';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/add-medical-record" element={<ProtectedRoute><AddMedicalRecord /></ProtectedRoute>} />
         <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
         <Route path="/lekari" element={<ProtectedRoute><DoctorsList /></ProtectedRoute>} />
+        <Route path="/doctors" element={<ProtectedRoute><DoctorListCard /></ProtectedRoute>} />
         <Route path="/create-doctor" element={<ProtectedRoute><CreateDoctor /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/book-appointment" element={<ProtectedRoute><BookAppointment /></ProtectedRoute>} />
