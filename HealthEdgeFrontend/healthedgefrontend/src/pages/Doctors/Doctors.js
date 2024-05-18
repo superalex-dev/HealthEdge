@@ -5,6 +5,7 @@ import DoctorCard from "../../components/doctors/doctorCard/DoctorCard";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import "../Doctors/Doctors.css"
+import { Button } from "@mui/material";
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
@@ -59,9 +60,18 @@ const Doctors = () => {
     navigate(`/doctor-details/${doctorId}`);
   };
 
+  const handleAdminRedirect = () => {
+    navigate('/admin-dashboard');
+  };
+
   return (
     <div className="doctors-directory-container">
       <h1 className="doctors-directory-heading">Doctors Directory</h1>
+      <div className="center-button">
+        <button className="admin-redirect" onClick={handleAdminRedirect}>
+          Back to the admin dashboard
+        </button>
+      </div>
       <div>
         {doctors.map((doctor) => (
           <div className="doctor-card-container">

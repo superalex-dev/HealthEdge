@@ -79,3 +79,28 @@
 .doctor-card-buttons button:hover {
   filter: brightness(90%);
 }
+
+.admin-redirect {
+  background-color: #0051ff;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.admin-redirect:hover {
+  background-color: #ff0000;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
