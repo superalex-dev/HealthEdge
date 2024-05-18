@@ -178,7 +178,7 @@ const HomePage = () => {
         <Button
           color="success"
           className={`${styles.button}`}
-          style={{ marginTop: "1rem", marginBottom: "2rem" }}
+          // style={{ marginTop: "1rem", marginBottom: "2rem" }}
           onClick={MedicalRecords}
         >
           My medical records
