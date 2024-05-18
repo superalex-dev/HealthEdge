@@ -88,16 +88,21 @@ namespace BackendProcessor.Repositories
         public async Task<Doctor> CreateDoctorAsync(Doctor doctor, IEnumerable<int> insuranceIds)
         {
             await _context.Doctors.AddAsync(doctor);
+            await _context.SaveChangesAsync(); // Save changes so that doctor.Id is generated
 
             foreach (var insuranceId in insuranceIds)
             {
-                var doctorInsurance = new DoctorInsurance
-                {
-                    Doctor = doctor,
-                    InsuranceId = insuranceId
-                };
+                var existingDoctorInsurance = await _context.DoctorInsurances
+                    .FirstOrDefaultAsync(di => di.DoctorId == doctor.Id && di.InsuranceId == insuranceId);
 
-                await _context.DoctorInsurances.AddAsync(doctorInsurance);
+                if (existingDoctorInsurance == null)
+                {
+                    _context.DoctorInsurances.Add(new DoctorInsurance
+                    {
+                        DoctorId = doctor.Id,
+                        InsuranceId = insuranceId
+                    });
+                }
             }
 
             await _context.SaveChangesAsync();

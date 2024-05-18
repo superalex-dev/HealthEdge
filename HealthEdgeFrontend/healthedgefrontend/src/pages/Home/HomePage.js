@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from './HomePage.module.css';
+import styles from "./HomePage.module.css";
 import { RemoveShoppingCartRounded } from "@mui/icons-material";
-import { Button } from '@mui/joy';
-import { confirmAlert } from 'react-confirm-alert';
+import { Button } from "@mui/joy";
+import { getCurrentUser, signOut } from '../../utils/authUtils.js';
+import { confirmAlert } from "react-confirm-alert";
 
 const HomePage = () => {
   const [state, setState] = useState({
@@ -19,6 +20,12 @@ const HomePage = () => {
     needsToBeAPediatrician: null,
     hasNZOK: null,
   });
+
+  const handleSignOut = () => {
+    console.log('Signing out...');
+    signOut();
+    window.location.replace('/login');
+  };
 
   const [specializations, setSpecializations] = useState([]);
   const [cities, setCities] = useState([]);
@@ -89,15 +96,6 @@ const HomePage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    confirmAlert({
-      title: 'Error',
-      message: 'Specialization and city are required.',
-      buttons: [
-        {
-          label: 'Ok',
-        },
-      ],
-    });
     console.log("Form submitted with state:", state);
 
     const ff = async () => {
@@ -144,15 +142,24 @@ const HomePage = () => {
         if (typeof hasNZOK === "boolean") {
           URL += `hasNZOK=${hasNZOK}&`;
         }
-        
+
         let response = await axios.get(URL);
 
         console.log(URL);
         console.log("url resp: " + JSON.stringify(response.data));
 
-        navigate('/lekari', { state: { doctors: response.data } });
+        navigate("/lekari", { state: { doctors: response.data } });
       } catch (error) {
         console.error("Error fetching data:", error);
+        confirmAlert({
+          title: "Error",
+          message: "Specialization and city are required.",
+          buttons: [
+            {
+              label: "Ok",
+            },
+          ],
+        });
       }
     };
 
@@ -160,16 +167,32 @@ const HomePage = () => {
   };
 
   const MedicalRecords = () => {
-    navigate('/medicalRecords');
-  }
+    navigate("/medicalRecords");
+  };
 
   return (
     <div className={styles.container}>
       {/* <button className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</button> */}
-      <h1 className={styles.heading}>Search for a Doctor</h1> 
+      <h1 className={styles.heading}>Search for a Doctor</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label htmlFor="specialization" className={styles.label}>Choose a specialization:</label>
-        <select id="specialization" onChange={handleSpecializationChange} className={styles.select}>
+        <Button
+          color="success"
+          className={`${styles.button}`}
+          style={{ marginTop: "1rem", marginBottom: "2rem" }}
+          onClick={MedicalRecords}
+        >
+          My medical records
+        </Button>
+
+        <label htmlFor="specialization" className={styles.label}>
+          Choose a specialization:
+        </label>
+        <select
+          id="specialization"
+          onChange={handleSpecializationChange}
+          className={styles.select}
+          required="true"
+        >
           <option value="">Select</option>
           {specializations.map((spec, index) => (
             <option key={index} value={JSON.stringify(spec)}>
@@ -178,8 +201,10 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="city" className={styles.label}>Choose your region:</label>
-        <select id="city" onChange={handleCityChange} className={styles.select}>
+        <label htmlFor="city" className={styles.label}>
+          Choose your region:
+        </label>
+        <select id="city" onChange={handleCityChange} className={styles.select} required="true">
           <option value="">Select</option>
           {cities.map((city, index) => (
             <option key={index} value={JSON.stringify(city)}>
@@ -188,8 +213,14 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="insurance" className={styles.label}>Choose your insurance fund:</label>
-        <select id="insurance" onChange={handleInsuranceChange} className={styles.select}>
+        <label htmlFor="insurance" className={styles.label}>
+          Choose your insurance fund:
+        </label>
+        <select
+          id="insurance"
+          onChange={handleInsuranceChange}
+          className={styles.select}
+        >
           <option value="">Select</option>
           {insurances.map((ins, index) => (
             <option key={index} value={JSON.stringify(ins)}>
@@ -198,7 +229,9 @@ const HomePage = () => {
           ))}
         </select>
 
-        <label htmlFor="firstName" className={styles.label}>First Name:</label>
+        <label htmlFor="firstName" className={styles.label}>
+          First Name:
+        </label>
         <input
           type="text"
           id="firstName"
@@ -208,7 +241,9 @@ const HomePage = () => {
           className={styles.input}
         />
 
-        <label htmlFor="lastName" className={styles.label}>Last Name:</label>
+        <label htmlFor="lastName" className={styles.label}>
+          Last Name:
+        </label>
         <input
           type="text"
           id="lastName"
@@ -218,17 +253,22 @@ const HomePage = () => {
           className={styles.input}
         />
 
-        <label htmlFor="pediatrician" className={styles.label}>Needs to be a pediatrician:</label>
+        <label htmlFor="pediatrician" className={styles.label}>
+          Needs to be a pediatrician:
+        </label>
         <select
           id="pediatrician"
           onChange={handlePediatricianChange}
-          className={styles.select}>
+          className={styles.select}
+        >
           <option value="">Select</option>
           <option value="Yes">Yes</option>
           <option value="No">No</option>
         </select>
 
-        <label htmlFor="nzok" className={styles.label}>NZOK:</label>
+        <label htmlFor="nzok" className={styles.label}>
+          NZOK:
+        </label>
         <select id="nzok" onChange={handleNZOKChange} className={styles.select}>
           <option value="">Select</option>
           <option value="Yes">Yes</option>
@@ -236,12 +276,21 @@ const HomePage = () => {
         </select>
 
         {/* <button type="submit" className={styles.button}>Search</button> */}
-        <Button color="success" type="submit" className={styles.button}>Search</Button>
-        <Button color="success" className={`${styles.button} ${styles.recordsButton}`} onClick={MedicalRecords}>My medical records</Button>
+        <Button color="success" type="submit" className={styles.button}>
+          Search
+        </Button>
+
+        <Button
+          color="danger"
+          className={`${styles.button}`}
+          style={{ marginTop: "1rem", marginBottom: "2rem" }}
+          onClick={handleSignOut}
+        >
+          Sign out
+        </Button>
       </form>
     </div>
   );
-
 };
 
 export default HomePage;
