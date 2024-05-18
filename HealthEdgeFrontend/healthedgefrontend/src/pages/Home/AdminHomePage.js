@@ -39,9 +39,9 @@ function AdminHomePage() {
       <br></br>
       <Box className="box">
         <Button component="a" href="/create-doctor" startDecorator={<OpenInNew />}>
-          Create New Doctor Or Admin Account
+          Create New Doctor Account
         </Button>
-        <IconButton aria-label="Create New Doctor Or Admin Account" component="a" href="/create-doctor" className="icon-button">
+        <IconButton aria-label="Create New Doctor Account" component="a" href="/create-doctor" className="icon-button">
           <OpenInNew />
         </IconButton>
       </Box>

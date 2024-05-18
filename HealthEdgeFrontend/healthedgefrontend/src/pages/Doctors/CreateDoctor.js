@@ -135,14 +135,14 @@ const CreateDoctorForm = () => {
             onChange={handleInputChange}
           />
       <select name="regionId" value={doctor.regionId} onChange={handleInputChange}>
-        <option value="">Select Region</option>
+        <option value="">Избери Регион</option>
         {regions.map(region => <option key={region.id} value={region.id}>{region.name}</option>)}
       </select>
       <select name="specializationId" value={doctor.specializationId} onChange={handleInputChange}>
-        <option value="">Select Specialization</option>
+        <option value="">Избери Специализация</option>
         {specializations.map(specialization => <option key={specialization.id} value={specialization.id}>{specialization.name}</option>)}
       </select>
-      <h3>Select insurances:</h3>
+      <h3>Избери здравноосигурителни фондове:</h3>
       {insurances.map((insurance) => (
         <div key={insurance.id}>
           <label>
@@ -159,9 +159,9 @@ const CreateDoctorForm = () => {
       ))}
       <br></br>
       <input type="checkbox" name="isPediatrician" checked={doctor.isPediatrician} onChange={handleInputChange} />
-      <label htmlFor="isPediatrician">Is a pediatrician</label>
+      <label htmlFor="isPediatrician">Педиатър ли е?</label>
       <input type="checkbox" style={{marginLeft: "3rem"}} name="nzok" checked={doctor.nzok} onChange={handleInputChange} />
-      <label htmlFor="nzok">Has NZOK</label>
+      <label htmlFor="nzok">Работи ли с  NZOK?</label>
       <button type="submit">Submit</button>
     </form>
   );
