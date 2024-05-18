@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./CreateDoctor.css";
+import { useNavigate } from 'react-router-dom';
 
 const CreateDoctorForm = () => {
   const [doctor, setDoctor] = useState({
@@ -22,6 +23,7 @@ const CreateDoctorForm = () => {
   const [specializations, setSpecializations] = useState([]);
   const [insurances, setInsurances] = useState([]);
   const [selectedInsurances, setSelectedInsurances] = useState(doctor.insuranceIds || []);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,6 +100,7 @@ const CreateDoctorForm = () => {
         });
 
       alert('Doctor profile created successfully!');
+      navigate('/doctors');
       // setDoctor({
       //   firstName: '',
       //   lastName: '',
