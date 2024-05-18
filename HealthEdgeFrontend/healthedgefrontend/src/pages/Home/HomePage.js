@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from './HomePage.module.css';
 import { RemoveShoppingCartRounded } from "@mui/icons-material";
 import { Button } from '@mui/joy';
+import { confirmAlert } from 'react-confirm-alert';
 
 const HomePage = () => {
   const [state, setState] = useState({
@@ -88,6 +89,15 @@ const HomePage = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    confirmAlert({
+      title: 'Error',
+      message: 'Specialization and city are required.',
+      buttons: [
+        {
+          label: 'Ok',
+        },
+      ],
+    });
     console.log("Form submitted with state:", state);
 
     const ff = async () => {
