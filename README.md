@@ -45,5 +45,6 @@ For support, please email [support@healthedge.com](mailto:support@healthedge.com
 
 ## License 📄
 HealthEdge is licensed under the [Apache-2.0](LICENSE).
+Also please read our [Terms and Conditioning](https://docs.google.com/document/d/1FrodI2JhR99iOWQzPlniHNKRHVYD20zALzqaopPsxxk/edit?usp=sharing).
 
 ---
