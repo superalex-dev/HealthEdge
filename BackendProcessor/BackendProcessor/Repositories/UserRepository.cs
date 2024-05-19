@@ -55,7 +55,10 @@ namespace BackendProcessor.Repositories
 
             user.FirstName = userDto.FirstName;
             user.LastName = userDto.LastName;
+            user.UserName = userDto.UserName;
             user.Email = userDto.Email;
+            user.ContactNumber = userDto.ContactNumber;
+            user.DateOfBirth = userDto.DateOfBirth;
 
             await _context.SaveChangesAsync();
 
