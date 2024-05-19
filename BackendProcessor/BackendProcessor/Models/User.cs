@@ -32,5 +32,11 @@ namespace BackendProcessor.Models
 
         [Required]
         public DateTime DateOfCreation { get; set; }
+        
+        [StringLength(50)]
+        public string ContactNumber { get; set; }
+        
+        [Column(TypeName = "Date")]
+        public DateOnly DateOfBirth { get; set; }
     }
 }

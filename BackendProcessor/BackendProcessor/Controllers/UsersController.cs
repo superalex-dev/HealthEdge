@@ -68,7 +68,9 @@ namespace BackendProcessor.Controllers
                 UserName = userDto.UserName,
                 Email = userDto.Email,
                 Password = BCrypt.Net.BCrypt.HashPassword(userDto.Password),
-                DateOfCreation = now
+                DateOfCreation = now,
+                ContactNumber = userDto.ContactNumber,
+                DateOfBirth = userDto.DateOfBirth
             };
 
             var createdUser = await _userRepository.CreateUserAsync(user);
@@ -79,8 +81,9 @@ namespace BackendProcessor.Controllers
                 createdUser.LastName,
                 createdUser.UserName,
                 createdUser.Email,
-                createdUser.DateOfCreation
-                );
+                createdUser.DateOfCreation,
+                createdUser.ContactNumber,
+                createdUser.DateOfBirth);
 
             await _emailService.SendWelcomeAdminEmail(user.Email, user.UserName);
 
@@ -106,12 +109,14 @@ namespace BackendProcessor.Controllers
                 }
             }
 
-            var editUserDto = new EditUserDto(currentUser.Id, currentUser.FirstName, currentUser.LastName, currentUser.UserName, currentUser.Email);
+            var editUserDto = new EditUserDto(currentUser.Id, currentUser.FirstName, currentUser.LastName, currentUser.UserName, currentUser.Email, currentUser.ContactNumber, currentUser.DateOfBirth);
 
             editUserDto.FirstName = userDto.FirstName;
             editUserDto.LastName = userDto.LastName;
             editUserDto.Email = userDto.Email;
             editUserDto.UserName = userDto.UserName;
+            editUserDto.ContactNumber = userDto.ContactNumber;
+            editUserDto.DateOfBirth = userDto.DateOfBirth;
 
             var editedUser = await _userRepository.EditUserAsync(Id, editUserDto);
 
