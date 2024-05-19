@@ -213,20 +213,22 @@ const DoctorCard = ({ doctor }) => {
 
   useEffect(() => {
     const ids = doctor.insuranceIds;
-    
-    ids.forEach(id => {
+  
+    const insurancePromises = ids.map((id) => {
       const url = `http://localhost:5239/insurances/${id}`;
-      fetch(url)
+  
+      return fetch(url)
         .then((response) => response.json())
-        .then((data) => {
-          setInsurances(prev => [...prev, data.name]);
-        })
+        .then((data) => data.name)
         .catch((error) => {
           console.error("Error:", error);
         });
-    
-    })
-  }, [doctor.id, doctor.insuranceIds]);
+    });
+  
+    Promise.all(insurancePromises).then((insuranceNames) => {
+      setInsurances(insuranceNames);
+    });
+  }, [doctor.insuranceIds]);
 
   console.log(insurances)
 
