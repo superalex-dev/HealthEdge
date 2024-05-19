@@ -19,6 +19,9 @@ import MedicalRecord from './pages/Patients/MedicalRecord';
 import AddMedicalRecord from './pages/Patients/AddMedicalRecord';
 import DoctorDetails from './pages/Doctors/DoctorDetails';
 import Doctors from './pages/Doctors/Doctors';
+import Users from './pages/Users/Users';
+import UserDetails from './pages/Users/UserDetails';
+import EditUser from './pages/Users/EditUser';
 
 function App() {
   return (
@@ -38,6 +41,9 @@ function App() {
         <Route path="/book-appointment" element={<ProtectedRoute><BookAppointment /></ProtectedRoute>} />
         <Route path="/patients" element={<ProtectedRoute><Patients /></ProtectedRoute>} />
         <Route path="/edit-patient/:id" element={<ProtectedRoute><EditPatient /></ProtectedRoute>} />
+        <Route path="/users" element={<ProtectedRoute><Users /></ProtectedRoute>} />
+        <Route path="/user-details/:id" element={<ProtectedRoute><UserDetails /></ProtectedRoute>} />
+        <Route path="/edit-user/:id" element={<ProtectedRoute><EditUser /></ProtectedRoute>} />
         <Route path="/edit-doctor/:id" element={<ProtectedRoute><EditDoctor /></ProtectedRoute>} />
         <Route path="/patient-details/:id" element={<ProtectedRoute><PatientDetails /></ProtectedRoute>} />
         <Route path="/doctor-details/:id" element={<ProtectedRoute><DoctorDetails /></ProtectedRoute>} />
