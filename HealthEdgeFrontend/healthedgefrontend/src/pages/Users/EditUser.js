@@ -97,6 +97,16 @@ const EditUser = () => {
           />
         </div>
         <div>
+          <label className="edit-user-label">Username:</label>
+          <input
+            type="text"
+            name="userName"
+            value={user.userName}
+            onChange={handleChange}
+            className="edit-user-input"
+          />
+        </div>
+        <div>
           <label className="edit-user-label">Email:</label>
           <input
             type="email"
