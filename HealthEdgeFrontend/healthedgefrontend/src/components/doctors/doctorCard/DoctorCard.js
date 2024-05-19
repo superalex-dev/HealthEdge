@@ -200,7 +200,7 @@ const DoctorCard = ({ doctor }) => {
   };
 
   useEffect(() => {
-    const url = `http://localhost:5239/find-soonest-slot?doctorId=${doctor.id}`;
+    const url = `http://localhost:5239/appointments/find-soonest-slot?doctorId=${doctor.id}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -347,7 +347,7 @@ const DoctorCard = ({ doctor }) => {
 
     const patientId = getPatientId();
 
-    const URL = `http://localhost:5239/create?PatientId=${patientId}&DoctorId=${doctor.id}&AppointmentTime=${formattedUTCDate}&Notes=${notes}&Reason=${reason}&PaymentMethod=${paymentMethod}`;
+    const URL = `http://localhost:5239/appointments/create?PatientId=${patientId}&DoctorId=${doctor.id}&AppointmentTime=${formattedUTCDate}&Notes=${notes}&Reason=${reason}&PaymentMethod=${paymentMethod}`;
     console.log(URL);
     axios
       .post(URL)
