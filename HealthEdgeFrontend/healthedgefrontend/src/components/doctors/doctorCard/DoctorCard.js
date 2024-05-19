@@ -308,8 +308,8 @@ const DoctorCard = ({ doctor }) => {
   const isTimeSlotTaken = (day, time) => {
     return appointments.some((appointment) => {
       const appointmentDate = new Date(appointment.appointmentTime);
-      //appointmentDate.setDate(appointmentDate.getDate());
-      appointmentDate.setDate(appointmentDate.getDate() - 1);
+      appointmentDate.setDate(appointmentDate.getDate());
+      // appointmentDate.setDate(appointmentDate.getDate() - 1);
       const appointmentDay = appointmentDate.toISOString().split("T")[0]; 
 
       let dayInUTC = new Date(day).toISOString().split("T")[0];
