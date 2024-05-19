@@ -7,11 +7,11 @@ HealthEdge is a web application designed to revolutionize healthcare facility ma
 ---
 
 ## Table of Contents
-- [Features](#features-)
-- [Installation](#installation-)
-- [Usage](#usage-)
-- [Support](#support-)
-- [License](#license-)
+
+- [Features 🌟](#features-)
+- [Usage 💡 & Installation 🛠️](#usage--installation-)
+- [Support 🤝](#support-)
+- [License 📄](#license-)
 
 ---
 
