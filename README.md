@@ -16,12 +16,17 @@ HealthEdge is a web application designed to revolutionize healthcare facility ma
 ---
 
 ## Features 🌟
+
 HealthEdge offers a range of features to improve hospital management:
+
 - **Advanced Scheduling:** Streamlines appointment and resource management. 📅
 - **Patient Records Management:** Secure and efficient handling of patient data. 📚
+- **User-Friendly Interface:** Ensures ease of use for all staff members and patients. 👥
+
+### Future Features
+
 - **Billing and Insurance Integration:** Simplifies financial processes. 💲
 - **Customizable Reporting:** Provides insightful analytics and reports. 📊
-- **User-Friendly Interface:** Ensures ease of use for all staff members. 👥
 
 ---
 
