@@ -79,10 +79,38 @@ public class AppointmentRepository : IAppointmentRepository
 
     public async Task<Appointment> FindSoonestAvailableAppointment(int doctorId)
     {
-        return await _context.Appointments
+        var startOfWorkDay = new TimeSpan(10, 30, 0);
+        var endOfWorkDay = new TimeSpan(17, 30, 0);
+        
+        var _appointmentDuration = TimeSpan.FromHours(1);
+        
+        var currentDate = DateTime.UtcNow.Date;
+        
+        var existingAppointments = await _context.Appointments
             .Where(a => a.DoctorId == doctorId)
-            .OrderBy(a => a.AppointmentTime)
-            .LastAsync();
+            .Select(a => a.AppointmentTime)
+            .ToListAsync();
+        
+        for (int day = 0; day < 30; day++)
+        {
+            var date = currentDate.AddDays(day);
+
+            for (var time = startOfWorkDay; time < endOfWorkDay; time = time.Add(_appointmentDuration))
+            {
+                var potentialAppointmentTime = date + time;
+                
+                if (!existingAppointments.Any(a => a == potentialAppointmentTime))
+                {
+                    return await Task.FromResult(new Appointment
+                    {
+                        DoctorId = doctorId,
+                        AppointmentTime = potentialAppointmentTime
+                    });
+                }
+            }
+        }
+        
+        return await Task.FromResult<Appointment>(null);
     }
 
     public async Task<bool> IsAppointmentDateTaken(DateTime date)

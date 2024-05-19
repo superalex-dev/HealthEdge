@@ -204,7 +204,11 @@ const DoctorCard = ({ doctor }) => {
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        setEarliestSlot(data.appointmentTime);
+        const date = new Date(data.appointmentTime);
+
+        date.setHours(date.getHours() - 1);
+  
+        setEarliestSlot(date.toISOString());
       })
       .catch((error) => {
         //console.error("Error:", error);
