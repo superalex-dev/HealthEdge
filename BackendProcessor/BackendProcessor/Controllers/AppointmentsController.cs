@@ -17,13 +17,13 @@ public class AppointmentsController : ControllerBase
         _appointmentRepository = appointmentRepository;
     }
 
-    [HttpGet("get")]
+    [HttpGet("appointments/get")]
     public async Task<ActionResult<IEnumerable<Appointment>>> GetAppointments()
     {
         return Ok(await _appointmentRepository.GetAllAppointmentsAsync());
     }
     
-    [HttpGet("get/{Id}")]
+    [HttpGet("appointments/get/{Id}")]
     public async Task<ActionResult<Appointment>> GetAppointment(int Id)
     {
         var appointment = await _appointmentRepository.GetAppointmentByIdAsync(Id);
@@ -64,7 +64,7 @@ public class AppointmentsController : ControllerBase
         return Ok(await _appointmentRepository.GetAppointmentsByPatientIdAsync(patientId));
     }
 
-    [HttpPost("create")]
+    [HttpPost("appointments/create")]
     public async Task<ActionResult<Appointment>> CreateAppointment(AppointmentCreationDto appointmentDto)
     {
         try
@@ -92,7 +92,7 @@ public class AppointmentsController : ControllerBase
         }
     }
 
-    [HttpPut("edit/{Id}")]
+    [HttpPut("appointments/edit/{Id}")]
     public async Task<IActionResult> EditAppointment(int Id, Appointment appointment)
     {
         if (Id != appointment.Id)
@@ -103,14 +103,14 @@ public class AppointmentsController : ControllerBase
         return NoContent();
     }
     
-    [HttpDelete("delete/{Id}")]
+    [HttpDelete("appointments/appointments/delete/{Id}")]
     public async Task<IActionResult> DeleteAppointment(int Id)
     {
         await _appointmentRepository.DeleteAppointmentAsync(Id);
         return NoContent();
     }
 
-    [HttpGet("find-soonest-slot")]
+    [HttpGet("appointments/find-soonest-slot")]
     public async Task<IActionResult> FindSoonestSlot([FromQuery] int doctorId)
     {
         var appointment = await _appointmentRepository.FindSoonestAvailableAppointment(doctorId);
