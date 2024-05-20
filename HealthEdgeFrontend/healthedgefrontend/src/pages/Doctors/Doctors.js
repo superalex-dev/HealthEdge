@@ -78,6 +78,7 @@ const Doctors = () => {
           <div className="flex justify-between items-center">
             <div>
               <h3>{`${doctor.firstName} ${doctor.lastName}`}</h3>
+              <p><b>Id: </b>{doctor.id}</p>
               <p><b>Email: </b>{doctor.email}</p>
               <p><b>Phone number: </b>{doctor.contactNumber}</p>
             </div>

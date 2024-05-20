@@ -54,9 +54,18 @@ const Patients = () => {
     });
   };
 
+  const handleAdminRedirect = () => {
+    navigate('/admin-dashboard');
+  };
+
   return (
     <div className="patients-directory-container">
       <h1 className="patients-directory-heading" style={{"textAlign": "center"}}>Patients Directory</h1>
+      <div className="center-button">
+        <button className="admin-redirect" onClick={handleAdminRedirect}>
+          Back to the admin dashboard
+        </button>
+      </div>
       <div>
         {patients.map((patient) => (
           <PatientCard
