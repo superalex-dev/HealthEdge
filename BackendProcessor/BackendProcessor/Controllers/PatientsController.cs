@@ -202,12 +202,5 @@ namespace BackendProcessor.Controllers
 
             return Ok(medicalRecordDto);
         }
-        
-        [HttpDelete("patients/{patientId}/medical-records/delete-all")]
-        public async Task<IActionResult> DeleteAllMedicalRecordsForPatientAsync(int patientId)
-        {
-            await _patientRepository.DeleteAllMedicalRecordsForPatientAsync(patientId);
-            return Ok();
-        }
     }
 }

@@ -113,13 +113,5 @@ namespace BackendProcessor.Repositories
 
             return false;
         }
-        
-        public async Task DeleteAllMedicalRecordsForPatientAsync(int patientId)
-        {
-            var medicalRecordsForPatient = _context.MedicalRecords
-                .Where(mr => mr.PatientId == patientId);
-            _context.MedicalRecords.RemoveRange(medicalRecordsForPatient);
-            await _context.SaveChangesAsync();
-        }
     }
 }

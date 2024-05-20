@@ -16,6 +16,5 @@ namespace BackendProcessor.Repositories.Interfaces
         Task<List<Patient>> SearchPatientByDateOfBirthAsync(DateOnly patientDateOfBirth);
         Task<List<MedicalRecord>> GetPatientMedicalRecords(int partientId);
         Task<bool> AddPatientMedicalRecord(int patientId, MedicalRecordDto medicalRecordDto);
-        Task DeleteAllMedicalRecordsForPatientAsync(int patientId);
     }
 }
